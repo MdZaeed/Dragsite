@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 /**
  * Created by BrainStation on 4/4/16.
  */
-public class GalleryViewWidget extends LinearLayout {
+public class GalleryViewWidget extends BaseLinearLayout {
 
     Context context;
     public GalleryViewWidget(Context context) {

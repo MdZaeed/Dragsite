@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 /**
  * Created by BS-86 on 4/1/2016.
  */
-public class ImageViewWidget extends LinearLayout {
+public class ImageViewWidget extends BaseLinearLayout {
 
     Context context;
     public ImageViewWidget(Context context) {

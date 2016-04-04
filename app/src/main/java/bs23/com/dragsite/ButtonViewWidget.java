@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 /**
  * Created by BrainStation on 4/4/16.
  */
-public class ButtonViewWidget extends LinearLayout {
+public class ButtonViewWidget extends BaseLinearLayout {
 
     Context context;
     public ButtonViewWidget(Context context) {

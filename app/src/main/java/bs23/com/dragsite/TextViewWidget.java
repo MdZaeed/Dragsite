@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 
-public class TextViewWidget extends LinearLayout {
+public class TextViewWidget extends BaseLinearLayout {
     Context context;
     public TextViewWidget(Context context) {
         super(context);

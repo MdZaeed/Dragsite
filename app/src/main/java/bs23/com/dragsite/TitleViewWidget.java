@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 
-public class TitleViewWidget extends LinearLayout {
+public class TitleViewWidget extends BaseLinearLayout {
 
     Context context;
 

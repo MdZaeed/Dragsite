@@ -8,10 +8,12 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="150dp"
         android:src="@drawable/ic_add_white_18dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="150dp"
         android:text="Add Image"
         android:textColor="@android:color/holo_blue_dark"/>
 

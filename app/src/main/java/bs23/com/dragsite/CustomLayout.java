@@ -8,7 +8,7 @@ import android.widget.TextView;
 /**
  * Created by BS-86 on 3/31/2016.
  */
-public class CustomLayout extends LinearLayout {
+public class CustomLayout extends BaseLinearLayout {
     public CustomLayout(Context context) {
         super(context);
 

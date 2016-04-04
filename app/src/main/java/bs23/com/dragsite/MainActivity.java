@@ -12,29 +12,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayout linearLayout;
+    RelativeLayout mainRelativeLayout;
     Button button;
     SlidingUpPanelLayout slidingUpPanelLayout;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecommnededStoreAdapter recommnededStoreAdapter;
+    private int id=99;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_alt);
 
-        linearLayout=(LinearLayout) findViewById(R.id.lllllll);
+        mainRelativeLayout=(RelativeLayout) findViewById(R.id.rl_main);
 
         recyclerView=(RecyclerView) findViewById(R.id.rv_elements_list_add_dialog);
+
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
 
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -81,12 +87,14 @@ public class MainActivity extends AppCompatActivity {
 /*        button=(Button) findViewById(R.id.button_to_drag);
         button.setOnTouchListener(new MyTouchListener());
         button.setOnDragListener(new MyDragListener());*/
-        linearLayout.setOnDragListener(new MyDragListener());
+        mainRelativeLayout.setOnDragListener(new MyDragListener());
     }
 
     public void showDialog(View view) {
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
+/*
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+*/
     }
 
     final class MyTouchListener implements View.OnTouchListener {
@@ -126,15 +134,17 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case DragEvent.ACTION_DROP:
                     // Dropped, reassign View to ViewGroup
+/*
+                    Log.d("And we do the dropping ", "" + view);
+*/
                     View view = (View) event.getLocalState();
-                    LinearLayout container = (LinearLayout) v;
                     if(((TextView) view).getText().equals("Text"))
                     {
 /*                        Button button = new Button(getApplicationContext());
                         button.setText("Hi hello");
                         container.addView(button);*/
                         CustomLayout customLayout=new CustomLayout(getApplicationContext());
-                        container.addView(customLayout);
+                        addElementsInRelativeLayout((ViewGroup) v, customLayout);
                         ViewGroup.LayoutParams params=customLayout.getLayoutParams();
                         params.width= ViewGroup.LayoutParams.MATCH_PARENT;
                         params.height=ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -146,17 +156,18 @@ public class MainActivity extends AppCompatActivity {
                         button.setText("Hi hello");
                         container.addView(button);*/
                         ImageViewWidget customLayout=new ImageViewWidget(getApplicationContext());
-                        container.addView(customLayout);
+                        addElementsInRelativeLayout((ViewGroup)v,customLayout);
                         ViewGroup.LayoutParams params=customLayout.getLayoutParams();
                         params.width= ViewGroup.LayoutParams.MATCH_PARENT;
                         params.height=ViewGroup.LayoutParams.WRAP_CONTENT;
                         customLayout.setLayoutParams(params);
                         customLayout.addContents();
                     }
-                    Log.d("And we do the dropping ", "" + view);
                     Log.d("Up Goes the mountain", "Working drag dropped " + v);
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
+/*                    Log.d("And we do the dropping ", "" + view);
+                    Log.d("Up Goes the mountain", "Working drag dropped " + v);*/
                     break;
                 default:
                     Log.d("Up Goes the mountain", "Working drag ended " + v);
@@ -165,4 +176,105 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
+
+    private void addElementsInRelativeLayout(ViewGroup droppedOnLayout,BaseLinearLayout childToBeAdded)
+    {
+        try
+        {
+            RelativeLayout relativeLayout=(RelativeLayout) droppedOnLayout;
+            mainRelativeLayout.addView(childToBeAdded);
+            childToBeAdded.setId(uniqueIdGenerator());
+            childToBeAdded.setOnDragListener(new MyDragListener());
+            return;
+        } catch (Exception e)
+        {
+            childToBeAdded.setId(uniqueIdGenerator());
+
+/*            BaseLinearLayout linearLayout1=(BaseLinearLayout) droppedOnLayout;
+            RelativeLayout.LayoutParams relaLayoutParams=(RelativeLayout.LayoutParams)linearLayout1.getLayoutParams();
+            linearLayout1.setAboveId(childToBeAdded.getId())*/;
+
+            int aboveId=((BaseLinearLayout)droppedOnLayout).getAboveId();
+            int belowId=setUpAboveLayoutParameters(droppedOnLayout, childToBeAdded);
+
+/*
+            Log.d("Below id & Above", belowId + "   " + aboveId);
+*/
+
+
+/*
+            Log.d("Below id & Above", relaLayoutParams.getRules()[RelativeLayout.BELOW] + "   " + relaLayoutParams.getRules()[RelativeLayout.ABOVE]);
+*/
+
+/*            BaseLinearLayout belowLinearLayout2=null;
+            RelativeLayout.LayoutParams relaLayoutParams1=null;
+            if(aboveId!=0) {
+                belowLinearLayout2 = (BaseLinearLayout) this.findViewById(aboveId);
+                relaLayoutParams1 = (RelativeLayout.LayoutParams) belowLinearLayout2.getLayoutParams();
+                relaLayoutParams1.addRule(RelativeLayout.BELOW, childToBeAdded.getId());
+                mainRelativeLayout.updateViewLayout(belowLinearLayout2, relaLayoutParams1);
+            }*/
+
+            setUpBelowLayoutParameters(aboveId, childToBeAdded);
+
+/*            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            p.addRule(RelativeLayout.BELOW, droppedOnLayout.getId());
+            if(aboveId!=0) {
+                childToBeAdded.setAboveId(aboveId);
+            }
+            mainRelativeLayout.addView(childToBeAdded, p);*/
+
+            setUpNewChildParameters((BaseLinearLayout)droppedOnLayout,aboveId,childToBeAdded);
+
+
+/*            RelativeLayout.LayoutParams relaLayoutParams=(RelativeLayout.LayoutParams)childToBeAdded.getLayoutParams();
+*//*            for(int i=0;i<relaLayoutParams.getRules().length;i++) {
+                Log.d("Below id", relaLayoutParams.getRules()[i] + "   " + i);
+            }*//*
+            Log.d("Below id", relaLayoutParams.getRules()[RelativeLayout.BELOW] + "   ");*/
+/*
+            mainRelativeLayout.updateViewLayout(linearLayout1, relaLayoutParams);
+*/
+
+            childToBeAdded.setOnDragListener(new MyDragListener());
+            return;
+        }
+    }
+
+    private int uniqueIdGenerator()
+    {
+        id++;
+        return id;
+    }
+
+    private int setUpAboveLayoutParameters(ViewGroup linearLayout,BaseLinearLayout child)
+    {
+        BaseLinearLayout droppedOnLayout=(BaseLinearLayout) linearLayout;
+        RelativeLayout.LayoutParams relaLayoutParams=(RelativeLayout.LayoutParams)droppedOnLayout.getLayoutParams();
+        droppedOnLayout.setAboveId(child.getId());
+        return relaLayoutParams.getRules()[RelativeLayout.BELOW];
+    }
+
+    private void setUpBelowLayoutParameters(int layoutId,BaseLinearLayout child)
+    {
+        BaseLinearLayout belowLinearLayout=null;
+        RelativeLayout.LayoutParams relaLayoutParamsOfBelow=null;
+        if(layoutId!=0) {
+            belowLinearLayout = (BaseLinearLayout) this.findViewById(layoutId);
+            relaLayoutParamsOfBelow = (RelativeLayout.LayoutParams) belowLinearLayout.getLayoutParams();
+            relaLayoutParamsOfBelow.addRule(RelativeLayout.BELOW, child.getId());
+            mainRelativeLayout.updateViewLayout(belowLinearLayout, relaLayoutParamsOfBelow);
+        }
+    }
+
+    private void setUpNewChildParameters(BaseLinearLayout linearLayout,int aboveId,BaseLinearLayout child)
+    {
+        RelativeLayout.LayoutParams parameters = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        parameters.addRule(RelativeLayout.BELOW, linearLayout.getId());
+        if(aboveId!=0) {
+            child.setAboveId(aboveId);
+        }
+        mainRelativeLayout.addView(child, parameters);
+    }
+
 }

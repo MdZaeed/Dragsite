@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-/**
- * Created by BrainStation on 4/4/16.
- */
+
 public class TextViewWidget extends LinearLayout {
     Context context;
     public TextViewWidget(Context context) {

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecommnededStoreAdapter recommnededStoreAdapter;
+    BaseLinearLayout lastBaseLinearLayout;
     private int id=99;
 
     @Override
@@ -119,6 +120,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onDrag(View v, DragEvent event) {
+/*
+            isInLowerHalf((ViewGroup) v,event);
+*/
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
                     Log.d("Up Goes the mountain", "Working Drag started " + v);
@@ -144,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         button.setText("Hi hello");
                         container.addView(button);*/
                         CustomLayout customLayout=new CustomLayout(getApplicationContext());
-                        addElementsInRelativeLayout((ViewGroup) v, customLayout);
+                        addElementsInRelativeLayout((ViewGroup) v, customLayout,event);
                         ViewGroup.LayoutParams params=customLayout.getLayoutParams();
                         params.width= ViewGroup.LayoutParams.MATCH_PARENT;
                         params.height=ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -156,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                         button.setText("Hi hello");
                         container.addView(button);*/
                         ImageViewWidget customLayout=new ImageViewWidget(getApplicationContext());
-                        addElementsInRelativeLayout((ViewGroup)v,customLayout);
+                        addElementsInRelativeLayout((ViewGroup)v,customLayout,event);
                         ViewGroup.LayoutParams params=customLayout.getLayoutParams();
                         params.width= ViewGroup.LayoutParams.MATCH_PARENT;
                         params.height=ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -177,17 +181,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addElementsInRelativeLayout(ViewGroup droppedOnLayout,BaseLinearLayout childToBeAdded)
+    private void addElementsInRelativeLayout(ViewGroup droppedOnLayout,BaseLinearLayout childToBeAdded,DragEvent dragEvent)
     {
         try
         {
             RelativeLayout relativeLayout=(RelativeLayout) droppedOnLayout;
-            mainRelativeLayout.addView(childToBeAdded);
             childToBeAdded.setId(uniqueIdGenerator());
+            if(lastBaseLinearLayout!=null)
+            {
+                setUpAboveLayoutParameters(lastBaseLinearLayout,childToBeAdded);
+                setUpNewChildParameters(lastBaseLinearLayout,0,childToBeAdded);
+            }else
+            {
+                mainRelativeLayout.addView(childToBeAdded);
+            }
             childToBeAdded.setOnDragListener(new MyDragListener());
+
+            lastBaseLinearLayout=childToBeAdded;
             return;
         } catch (Exception e)
         {
+
+            int topLayoutId=((RelativeLayout.LayoutParams)droppedOnLayout.getLayoutParams()).getRules()[RelativeLayout.BELOW];
+            if(!isInLowerHalf(droppedOnLayout,dragEvent) && topLayoutId!=0)
+            {
+                droppedOnLayout=(ViewGroup) findViewById(topLayoutId);
+            }
             childToBeAdded.setId(uniqueIdGenerator());
 
 /*            BaseLinearLayout linearLayout1=(BaseLinearLayout) droppedOnLayout;
@@ -195,8 +214,8 @@ public class MainActivity extends AppCompatActivity {
             linearLayout1.setAboveId(childToBeAdded.getId())*/;
 
             int aboveId=((BaseLinearLayout)droppedOnLayout).getAboveId();
-            int belowId=setUpAboveLayoutParameters(droppedOnLayout, childToBeAdded);
 
+            setUpAboveLayoutParameters(droppedOnLayout,childToBeAdded);
 /*
             Log.d("Below id & Above", belowId + "   " + aboveId);
 */
@@ -237,6 +256,11 @@ public class MainActivity extends AppCompatActivity {
 */
 
             childToBeAdded.setOnDragListener(new MyDragListener());
+
+            if(aboveId==0)
+            {
+                lastBaseLinearLayout=childToBeAdded;
+            }
             return;
         }
     }
@@ -275,6 +299,21 @@ public class MainActivity extends AppCompatActivity {
             child.setAboveId(aboveId);
         }
         mainRelativeLayout.addView(child, parameters);
+    }
+
+    private boolean isInLowerHalf(ViewGroup droppedOnLayout,DragEvent dragEvent)
+    {
+        if(dragEvent.getY() < ( droppedOnLayout.getTop()+ (droppedOnLayout.getHeight()/2) ) - droppedOnLayout.getTop() )
+        {
+            return false;
+        }else
+        {
+            return true;
+        }
+/*
+        Log.d("Drop position" , dragEvent.getY() + "");
+        Log.d("Drop position" , droppedOnLayout.getTop() + "");
+        return true;*/
     }
 
 }

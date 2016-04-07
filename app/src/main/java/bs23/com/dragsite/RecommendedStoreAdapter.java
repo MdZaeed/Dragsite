@@ -14,11 +14,11 @@ import java.util.List;
 /**
  * Created by Ashraful on 3/3/2016.
  */
-public class RecommnededStoreAdapter extends RecyclerView.Adapter {
+public class RecommendedStoreAdapter extends RecyclerView.Adapter {
     List<ElementsModel> elements;
     protected Context context;
 
-    public RecommnededStoreAdapter(Context context, List<ElementsModel> elements) {
+    public RecommendedStoreAdapter(Context context, List<ElementsModel> elements) {
         this.context = context;
         this.elements = elements;
     }

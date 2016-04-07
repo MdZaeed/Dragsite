@@ -2,6 +2,7 @@ package bs23.com.dragsite;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 public class ImageViewWidget extends BaseLinearLayout {
 
     Context context;
+
     public ImageViewWidget(Context context) {
         super(context);
         this.context=context;
@@ -18,8 +20,10 @@ public class ImageViewWidget extends BaseLinearLayout {
 
     public void addContents()
     {
-        super.addView(LayoutInflater.from(context).inflate(R.layout.image_view,null),new ViewGroup.LayoutParams(
+        super.addView(LayoutInflater.from(context).inflate(R.layout.image_view, null), new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        addBottomVIew(context);
     }
 }

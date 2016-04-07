@@ -18,5 +18,7 @@ public class CustomLayout extends BaseLinearLayout {
         textView.setText("NOOOOOO");
         super.addView(textView);
         super.addView(button);
+
+        addBottomVIew(context);
     }
 }

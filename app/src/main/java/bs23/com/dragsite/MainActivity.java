@@ -46,10 +46,23 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<ElementsModel> getElementsList() {
         ArrayList temp = new ArrayList<>();
-        temp.add(new ElementsModel("Text", android.R.drawable.ic_input_add));
-        temp.add(new ElementsModel("Image", android.R.drawable.ic_menu_report_image));
-        temp.add(new ElementsModel("Video", android.R.drawable.btn_star_big_on));
-        temp.add(new ElementsModel("Nothing", android.R.drawable.ic_menu_week));
+        temp.add(new ElementsModel("Title", R.drawable.ic_title_black_48dp));
+        temp.add(new ElementsModel("Text", R.drawable.ic_format_align_left_black_48dp));
+        temp.add(new ElementsModel("Image", R.drawable.ic_image_black_48dp));
+        temp.add(new ElementsModel("Gallery", R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Slide show",R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Map",R.drawable.ic_place_black_48dp));
+        temp.add(new ElementsModel("Divider",R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Spacer",R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Button",R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Search Box",R.drawable.ic_search_black_48dp));
+        temp.add(new ElementsModel("HD Video",R.drawable.ic_switch_video_black_48dp));
+        temp.add(new ElementsModel("Audio",R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Youtube",R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("File",R.drawable.ic_insert_drive_file_black_48dp));
+        temp.add(new ElementsModel("Block Quote",R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Social Icons",R.drawable.ic_share_black_48dp));
+        temp.add(new ElementsModel("Products",R.drawable.ic_label_outline_black_48dp));
         return temp;
     }
 
@@ -168,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
             if (aboveId == 0) {
                 lastBaseLinearLayout = childToBeAdded;
             }
+
             return;
         }
     }

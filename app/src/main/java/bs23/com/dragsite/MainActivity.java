@@ -103,21 +103,16 @@ public class MainActivity extends AppCompatActivity {
                 case DragEvent.ACTION_DROP:
                     View view = (View) event.getLocalState();
                     if (((TextView) view).getText().equals("Text")) {
-                        CustomLayout customLayout = new CustomLayout(getApplicationContext());
-                        addElementsInRelativeLayout((ViewGroup) v, customLayout, event);
-                        ViewGroup.LayoutParams params = customLayout.getLayoutParams();
-                        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                        customLayout.setLayoutParams(params);
+                        TextViewWidget customLayout = new TextViewWidget(getApplicationContext());
+                        addNewElementsOfType(v,customLayout,event);
                     }
                     if (((TextView) view).getText().equals("Image")) {
                         ImageViewWidget customLayout = new ImageViewWidget(getApplicationContext());
-                        addElementsInRelativeLayout((ViewGroup) v, customLayout, event);
-                        ViewGroup.LayoutParams params = customLayout.getLayoutParams();
-                        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                        customLayout.setLayoutParams(params);
-                        customLayout.addContents();
+                        addNewElementsOfType(v,customLayout,event);
+                    }
+                    if (((TextView) view).getText().equals("Title")) {
+                        TitleViewWidget customLayout = new TitleViewWidget(getApplicationContext());
+                        addNewElementsOfType(v,customLayout,event);
                     }
 /*
                     Log.d("Up Goes the mountain", "Working drag dropped " + v);
@@ -242,6 +237,21 @@ public class MainActivity extends AppCompatActivity {
             BaseLinearLayout baseLinearLayout1 = (BaseLinearLayout) findViewById(idToBeWhited);
             baseLinearLayout1.setBottomViewColor(android.R.color.white);
         }
+    }
+
+    private void setLayoutParameters(BaseLinearLayout customLayout)
+    {
+        ViewGroup.LayoutParams params = customLayout.getLayoutParams();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        customLayout.setLayoutParams(params);
+    }
+
+    private void addNewElementsOfType(View v,BaseLinearLayout customLayout,DragEvent event)
+    {
+        addElementsInRelativeLayout((ViewGroup) v, customLayout, event);
+        setLayoutParameters(customLayout);
+        customLayout.addContents();
     }
 
 }

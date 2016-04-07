@@ -21,4 +21,9 @@ public class CustomLayout extends BaseLinearLayout {
 
         addBottomVIew(context);
     }
+
+    @Override
+    public void addContents() {
+
+    }
 }

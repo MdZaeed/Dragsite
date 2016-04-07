@@ -19,5 +19,7 @@ public class TitleViewWidget extends BaseLinearLayout {
         super.addView(LayoutInflater.from(context).inflate(R.layout.title_view,null),new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        addBottomVIew(context);
     }
 }

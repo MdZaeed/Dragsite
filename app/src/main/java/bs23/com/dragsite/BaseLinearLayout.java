@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 /**
  * Created by BS-86 on 4/4/2016.
  */
-public class BaseLinearLayout extends LinearLayout {
+public abstract class BaseLinearLayout extends LinearLayout {
     private int aboveId=0;
     View bottomView;
 
@@ -38,4 +38,7 @@ public class BaseLinearLayout extends LinearLayout {
     {
         bottomView.setBackgroundColor(getResources().getColor(color));
     }
+
+    public abstract void addContents();
+
 }

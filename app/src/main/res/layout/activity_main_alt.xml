@@ -10,11 +10,13 @@
     sothree:umanoFadeColor="@android:color/transparent"
     sothree:umanoPanelHeight="10dp"
     sothree:umanoShadowHeight="4dp"
+    sothree:umanoOverlay="false"
     tools:context="bs23.com.slidingpanetest.MainActivity">
 
     <ScrollView
+        android:id="@+id/sv_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/holo_green_light"
         android:fillViewport="true"
         android:orientation="vertical">

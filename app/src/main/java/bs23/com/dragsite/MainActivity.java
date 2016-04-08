@@ -1,6 +1,8 @@
 package bs23.com.dragsite;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,21 +11,25 @@ import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
+    ScrollView mainScrollView;
     RelativeLayout mainRelativeLayout;
     SlidingUpPanelLayout slidingUpPanelLayout;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecommendedStoreAdapter recommendedStoreAdapter;
     BaseLinearLayout lastBaseLinearLayout;
+    EditOptionsDialog editOptionsDialog;
     private int id = 99;
 
     @Override
@@ -32,7 +38,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_alt);
 
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.rl_main);
+        mainScrollView=(ScrollView) findViewById(R.id.sv_main);
+
+        setUpSlidingPane();
+        chotokoro();
+    }
+
+    private void setUpSlidingPane() {
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
+        Button hideButton=(Button) findViewById(R.id.btn_cancel_add_dialog);
+        hideButton.setOnClickListener(this);
+        mainRelativeLayout.setOnClickListener(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_elements_list_add_dialog);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -40,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recommendedStoreAdapter = new RecommendedStoreAdapter(this, getElementsList());
         recyclerView.setAdapter(recommendedStoreAdapter);
-
-        chotokoro();
     }
 
     private ArrayList<ElementsModel> getElementsList() {
@@ -70,11 +84,17 @@ public class MainActivity extends AppCompatActivity {
         mainRelativeLayout.setOnDragListener(new MyDragListener());
     }
 
-    public void showDialog(View view) {
-        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.btn_cancel_add_dialog:
 /*
-        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            case R.id.rl_main:
 */
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                break;
+        }
     }
 
 
@@ -106,13 +126,27 @@ public class MainActivity extends AppCompatActivity {
                         TextViewWidget customLayout = new TextViewWidget(getApplicationContext());
                         addNewElementsOfType(v,customLayout,event);
                     }
-                    if (((TextView) view).getText().equals("Image")) {
+                    else if (((TextView) view).getText().equals("Image")) {
                         ImageViewWidget customLayout = new ImageViewWidget(getApplicationContext());
                         addNewElementsOfType(v,customLayout,event);
                     }
-                    if (((TextView) view).getText().equals("Title")) {
+                    else if (((TextView) view).getText().equals("Title")) {
                         TitleViewWidget customLayout = new TitleViewWidget(getApplicationContext());
                         addNewElementsOfType(v,customLayout,event);
+                    }
+                    else if (((TextView) view).getText().equals("Button")) {
+                        ButtonViewWidget customLayout = new ButtonViewWidget(getApplicationContext());
+                        addNewElementsOfType(v,customLayout,event);
+                    }
+                    else if (((TextView) view).getText().equals("Gallery")) {
+                        final GalleryViewWidget customLayout = new GalleryViewWidget(getApplicationContext());
+                        addNewElementsOfType(v,customLayout,event);
+                        customLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                showNoticeDialog(customLayout);
+                            }
+                        });
                     }
 /*
                     Log.d("Up Goes the mountain", "Working drag dropped " + v);
@@ -223,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void clearBottomLayoutColor(View v) {
         if (v instanceof BaseLinearLayout) {
-            ((BaseLinearLayout) v).setBottomViewColor(android.R.color.white);
+            ((BaseLinearLayout) v).setBottomViewColor(android.R.color.transparent);
         }
     }
 
@@ -235,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(idToBeWhited!=0) {
             BaseLinearLayout baseLinearLayout1 = (BaseLinearLayout) findViewById(idToBeWhited);
-            baseLinearLayout1.setBottomViewColor(android.R.color.white);
+            baseLinearLayout1.setBottomViewColor(android.R.color.transparent);
         }
     }
 
@@ -254,4 +288,24 @@ public class MainActivity extends AppCompatActivity {
         customLayout.addContents();
     }
 
+    private void showNoticeDialog(BaseLinearLayout child) {
+
+        if(editOptionsDialog!=null)
+        {
+            deleteNoticeDialog();
+        }
+        editOptionsDialog=new EditOptionsDialog(this);
+        ViewCompat.setElevation(editOptionsDialog, 20);
+        mainRelativeLayout.addView(editOptionsDialog);
+        editOptionsDialog.addContents();
+        RelativeLayout.LayoutParams params =(RelativeLayout.LayoutParams) editOptionsDialog.getLayoutParams();
+        params.addRule(RelativeLayout.ABOVE, child.getId());
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        editOptionsDialog.setLayoutParams(params);
+    }
+
+    private void deleteNoticeDialog()
+    {
+        mainRelativeLayout.removeView(editOptionsDialog);
+    }
 }

@@ -21,7 +21,7 @@ public abstract class BaseLinearLayout extends LinearLayout {
     public void addBottomVIew(Context context)
     {
         bottomView=new View(context);
-        bottomView.setBackgroundColor(getResources().getColor(android.R.color.white));
+        bottomView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         super.addView(bottomView, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 20));
     }

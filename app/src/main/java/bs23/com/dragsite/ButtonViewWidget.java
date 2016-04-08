@@ -20,5 +20,7 @@ public class ButtonViewWidget extends BaseLinearLayout {
         super.addView(LayoutInflater.from(context).inflate(R.layout.button_view,null),new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        addBottomVIew(context);
     }
 }

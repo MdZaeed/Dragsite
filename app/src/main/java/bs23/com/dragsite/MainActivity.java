@@ -38,7 +38,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_main_alt);
 
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.rl_main);
-        mainScrollView=(ScrollView) findViewById(R.id.sv_main);
+        mainScrollView = (ScrollView) findViewById(R.id.sv_main);
 
         setUpSlidingPane();
         chotokoro();
@@ -46,7 +46,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void setUpSlidingPane() {
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
-        Button hideButton=(Button) findViewById(R.id.btn_cancel_add_dialog);
+        Button hideButton = (Button) findViewById(R.id.btn_cancel_add_dialog);
         hideButton.setOnClickListener(this);
         mainRelativeLayout.setOnClickListener(this);
 
@@ -64,19 +64,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         temp.add(new ElementsModel("Text", R.drawable.ic_format_align_left_black_48dp));
         temp.add(new ElementsModel("Image", R.drawable.ic_image_black_48dp));
         temp.add(new ElementsModel("Gallery", R.drawable.ic_view_module_black_48dp));
-        temp.add(new ElementsModel("Slide show",R.drawable.ic_view_module_black_48dp));
-        temp.add(new ElementsModel("Map",R.drawable.ic_place_black_48dp));
-        temp.add(new ElementsModel("Divider",R.drawable.ic_view_module_black_48dp));
-        temp.add(new ElementsModel("Spacer",R.drawable.ic_view_module_black_48dp));
-        temp.add(new ElementsModel("Button",R.drawable.ic_view_module_black_48dp));
-        temp.add(new ElementsModel("Search Box",R.drawable.ic_search_black_48dp));
-        temp.add(new ElementsModel("HD Video",R.drawable.ic_switch_video_black_48dp));
-        temp.add(new ElementsModel("Audio",R.drawable.ic_view_module_black_48dp));
-        temp.add(new ElementsModel("Youtube",R.drawable.ic_view_module_black_48dp));
-        temp.add(new ElementsModel("File",R.drawable.ic_insert_drive_file_black_48dp));
-        temp.add(new ElementsModel("Block Quote",R.drawable.ic_view_module_black_48dp));
-        temp.add(new ElementsModel("Social Icons",R.drawable.ic_share_black_48dp));
-        temp.add(new ElementsModel("Products",R.drawable.ic_label_outline_black_48dp));
+        temp.add(new ElementsModel("Slide show", R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Map", R.drawable.ic_place_black_48dp));
+        temp.add(new ElementsModel("Divider", R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Spacer", R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Button", R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Search Box", R.drawable.ic_search_black_48dp));
+        temp.add(new ElementsModel("HD Video", R.drawable.ic_switch_video_black_48dp));
+        temp.add(new ElementsModel("Audio", R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Youtube", R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("File", R.drawable.ic_insert_drive_file_black_48dp));
+        temp.add(new ElementsModel("Block Quote", R.drawable.ic_view_module_black_48dp));
+        temp.add(new ElementsModel("Social Icons", R.drawable.ic_share_black_48dp));
+        temp.add(new ElementsModel("Products", R.drawable.ic_label_outline_black_48dp));
         return temp;
     }
 
@@ -86,8 +86,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.btn_cancel_add_dialog:
 /*
             case R.id.rl_main:
@@ -122,32 +121,33 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     break;
                 case DragEvent.ACTION_DROP:
                     View view = (View) event.getLocalState();
+                    final BaseLinearLayout customLayout;
                     if (((TextView) view).getText().equals("Text")) {
-                        TextViewWidget customLayout = new TextViewWidget(getApplicationContext());
-                        addNewElementsOfType(v,customLayout,event);
+                        customLayout = new TextViewWidget(getApplicationContext());
+                        addNewElementsOfType(v, customLayout, event);
+                    } else if (((TextView) view).getText().equals("Image")) {
+                        customLayout = new ImageViewWidget(getApplicationContext());
+                        addNewElementsOfType(v, customLayout, event);
+                    } else if (((TextView) view).getText().equals("Title")) {
+                        customLayout = new TitleViewWidget(getApplicationContext());
+                        addNewElementsOfType(v, customLayout, event);
+                    } else if (((TextView) view).getText().equals("Button")) {
+                        customLayout = new ButtonViewWidget(getApplicationContext());
+                        addNewElementsOfType(v, customLayout, event);
+                    } else if (((TextView) view).getText().equals("Gallery")) {
+                        customLayout = new GalleryViewWidget(getApplicationContext());
+                        addNewElementsOfType(v, customLayout, event);
+                    }else
+                    {
+                        customLayout=null;
                     }
-                    else if (((TextView) view).getText().equals("Image")) {
-                        ImageViewWidget customLayout = new ImageViewWidget(getApplicationContext());
-                        addNewElementsOfType(v,customLayout,event);
-                    }
-                    else if (((TextView) view).getText().equals("Title")) {
-                        TitleViewWidget customLayout = new TitleViewWidget(getApplicationContext());
-                        addNewElementsOfType(v,customLayout,event);
-                    }
-                    else if (((TextView) view).getText().equals("Button")) {
-                        ButtonViewWidget customLayout = new ButtonViewWidget(getApplicationContext());
-                        addNewElementsOfType(v,customLayout,event);
-                    }
-                    else if (((TextView) view).getText().equals("Gallery")) {
-                        final GalleryViewWidget customLayout = new GalleryViewWidget(getApplicationContext());
-                        addNewElementsOfType(v,customLayout,event);
-                        customLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                showNoticeDialog(customLayout);
-                            }
-                        });
-                    }
+
+                    customLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showNoticeDialog(customLayout);
+                        }
+                    });
 /*
                     Log.d("Up Goes the mountain", "Working drag dropped " + v);
 */
@@ -262,27 +262,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void changeTopAndBottomlayoutColor(int idToBeBlacked, int idToBeWhited) {
-        if(idToBeBlacked!=0) {
+        if (idToBeBlacked != 0) {
             BaseLinearLayout baseLinearLayout = (BaseLinearLayout) findViewById(idToBeBlacked);
             baseLinearLayout.setBottomViewColor(android.R.color.black);
         }
 
-        if(idToBeWhited!=0) {
+        if (idToBeWhited != 0) {
             BaseLinearLayout baseLinearLayout1 = (BaseLinearLayout) findViewById(idToBeWhited);
             baseLinearLayout1.setBottomViewColor(android.R.color.transparent);
         }
     }
 
-    private void setLayoutParameters(BaseLinearLayout customLayout)
-    {
+    private void setLayoutParameters(BaseLinearLayout customLayout) {
         ViewGroup.LayoutParams params = customLayout.getLayoutParams();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         customLayout.setLayoutParams(params);
     }
 
-    private void addNewElementsOfType(View v,BaseLinearLayout customLayout,DragEvent event)
-    {
+    private void addNewElementsOfType(View v, BaseLinearLayout customLayout, DragEvent event) {
         addElementsInRelativeLayout((ViewGroup) v, customLayout, event);
         setLayoutParameters(customLayout);
         customLayout.addContents();
@@ -290,22 +288,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void showNoticeDialog(BaseLinearLayout child) {
 
-        if(editOptionsDialog!=null)
-        {
+        if (editOptionsDialog != null) {
             deleteNoticeDialog();
         }
-        editOptionsDialog=new EditOptionsDialog(this);
+        editOptionsDialog = new EditOptionsDialog(this);
         ViewCompat.setElevation(editOptionsDialog, 20);
         mainRelativeLayout.addView(editOptionsDialog);
         editOptionsDialog.addContents();
-        RelativeLayout.LayoutParams params =(RelativeLayout.LayoutParams) editOptionsDialog.getLayoutParams();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) editOptionsDialog.getLayoutParams();
         params.addRule(RelativeLayout.ABOVE, child.getId());
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         editOptionsDialog.setLayoutParams(params);
+
+        child.setBackgroundResource(R.drawable.gray_border_transparent_background);
     }
 
-    private void deleteNoticeDialog()
-    {
+    private void deleteNoticeDialog() {
         mainRelativeLayout.removeView(editOptionsDialog);
     }
 }

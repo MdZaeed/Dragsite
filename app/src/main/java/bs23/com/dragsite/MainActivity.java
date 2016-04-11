@@ -3,11 +3,11 @@ package bs23.com.dragsite;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,7 +29,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     LinearLayoutManager linearLayoutManager;
     RecommendedStoreAdapter recommendedStoreAdapter;
     BaseLinearLayout lastBaseLinearLayout;
+    LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
+
     private int id = 99;
 
     @Override
@@ -39,18 +41,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.rl_main);
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
+        bottomPaneLinearLayout=(LinearLayout) findViewById(R.id.ll_pane_layour);
 
-        setUpSlidingPane();
         chotokoro();
     }
 
     private void setUpSlidingPane() {
-        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
-        Button hideButton = (Button) findViewById(R.id.btn_cancel_add_dialog);
+        Button hideButton = (Button)bottomPaneLinearLayout.findViewById(R.id.btn_cancel_add_dialog);
         hideButton.setOnClickListener(this);
+/*
         mainRelativeLayout.setOnClickListener(this);
+*/
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_elements_list_add_dialog);
+        recyclerView = (RecyclerView) bottomPaneLinearLayout.findViewById(R.id.rv_elements_list_add_dialog);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -91,12 +95,41 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 /*
             case R.id.rl_main:
 */
-                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                hideBottomOptionMenu();
                 break;
         }
     }
 
     public void showDialog(View view) {
+/*
+        slidingUpPanelLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
+*/
+        if(bottomPaneLinearLayout.getChildCount()!=0)
+        {
+            bottomPaneLinearLayout.removeAllViews();
+        }
+/*        slidingUpPanelLayout.invalidate();
+        bottomPaneLinearLayout.invalidate();*/
+        bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
+        setUpSlidingPane();
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+    }
+
+    private void hideBottomOptionMenu()
+    {
+        bottomPaneLinearLayout.removeAllViews();
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+    }
+
+    public void showDialog2(View view) {
+        if(bottomPaneLinearLayout.getChildCount()!=0)
+        {
+            bottomPaneLinearLayout.removeAllViews();
+        }
+/*        slidingUpPanelLayout.invalidate();
+        bottomPaneLinearLayout.invalidate();*/
+        bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements_copy, null));
+        setUpSlidingPane();
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
     }
 
@@ -107,10 +140,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         public boolean onDrag(View v, DragEvent event) {
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
+                    hideBottomOptionMenu();
 /*
                     Log.d("Action Drag started  ", " " + v);
 */
-                    slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
 /*
@@ -146,12 +179,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         customLayout=null;
                     }
 
-                    customLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            showNoticeDialog(customLayout);
-                        }
-                    });
+                    if (customLayout != null) {
+                        customLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                showNoticeDialog(customLayout);
+                            }
+                        });
+                    }
 /*
                     Log.d("Up Goes the mountain", "Working drag dropped " + v);
 */
@@ -295,6 +330,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (editOptionsDialog != null) {
             deleteNoticeDialog();
         }
+
         editOptionsDialog = new EditOptionsDialog(this);
         ViewCompat.setElevation(editOptionsDialog, 20);
         mainRelativeLayout.addView(editOptionsDialog);

@@ -20,7 +20,7 @@ public class EditOptionsDialog extends LinearLayout {
     public void addContents()
     {
         super.addView(LayoutInflater.from(context).inflate(R.layout.dialog_on_click, null), new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 }

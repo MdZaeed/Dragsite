@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:gravity="bottom"
     sothree:umanoFadeColor="@android:color/transparent"
-    sothree:umanoPanelHeight="10dp"
+    sothree:umanoPanelHeight="0dp"
     sothree:umanoShadowHeight="4dp"
     tools:context="bs23.com.slidingpanetest.MainActivity">
 
@@ -25,14 +25,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/to_be_deleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showDialog"
+            android:text="Show Dialog" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="showDialog"
-                android:text="Show Dialog" />
+                android:onClick="showDialog2"
+                android:text="Show Dialog"
+                android:layout_below="@id/to_be_deleted"/>
+
         </RelativeLayout>
 
     </ScrollView>
 
-    <include layout="@layout/dialog_add_elements" />
+<!-- <include
+        android:id="@+id/sliding_up_panel_bottom" />-->
+
+    <LinearLayout
+        android:id="@+id/ll_pane_layour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"/>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

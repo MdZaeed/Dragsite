@@ -96,6 +96,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
+    public void showDialog(View view) {
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+    }
+
 
     class MyDragListener implements View.OnDragListener {
 

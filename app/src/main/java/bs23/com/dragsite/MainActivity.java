@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
         bottomPaneLinearLayout=(LinearLayout) findViewById(R.id.ll_pane_layour);
+        mainRelativeLayout.setOnClickListener(this);
 
         chotokoro();
     }
@@ -104,6 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.rl_main:
 */
                 hideBottomOptionMenu();
+                break;
+
+            case R.id.rl_main:
+                if(editOptionsDialog!=null)
+                {
+                    deleteNoticeDialog();
+
+                }
                 break;
         }
     }

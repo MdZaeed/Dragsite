@@ -1,10 +1,11 @@
 package bs23.com.dragsite;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -20,7 +21,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ScrollView mainScrollView;
     RelativeLayout mainRelativeLayout;
@@ -37,7 +38,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_alt);
+        setContentView(R.layout.activity_main);
+
+        //setting action bar
+
+        Toolbar actionToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(actionToolbar);
+
+        //setting action bar ends
 
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.rl_main);
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);

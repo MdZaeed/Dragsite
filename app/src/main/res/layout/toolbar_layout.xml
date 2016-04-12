@@ -13,7 +13,7 @@
 
 
     <Button
-        android:id="@+id/build_button"
+        android:id="@+id/btn_preview"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -30,6 +30,7 @@
         android:textStyle="bold"/>
 
     <Button
+        android:id="@+id/btn_theme"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -45,6 +46,7 @@
         android:textSize="10sp"
         android:textStyle="bold"/>
     <Button
+        android:id="@+id/btn_pages"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -61,6 +63,7 @@
         android:textStyle="bold"/>
 
     <Button
+        android:id="@+id/btn_build"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -75,7 +78,8 @@
         android:text="BUILD"
         android:textColor="#9E9E9E"
         android:textSize="10sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:onClick="showDialog"/>
 
 </android.support.v7.widget.Toolbar>
 

@@ -112,7 +112,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         bottomPaneLinearLayout.invalidate();*/
         bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
         setUpSlidingPane();
-        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        bottomPaneLinearLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        }
+        });
     }
 
     private void hideBottomOptionMenu()
@@ -131,6 +136,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements_copy, null));
         setUpSlidingPane();
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        bottomPaneLinearLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
     }
 
 

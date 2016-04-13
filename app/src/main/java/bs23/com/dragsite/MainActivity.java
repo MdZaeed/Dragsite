@@ -1,5 +1,6 @@
 package bs23.com.dragsite;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +18,22 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
     ScrollView mainScrollView;
     RelativeLayout mainRelativeLayout;
@@ -32,12 +44,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BaseLinearLayout lastBaseLinearLayout;
     LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
-
+    LatLng dhaka;
+    MapView mapView;
     private int id = 99;
+    Bundle savedInstanceState;
+    private GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState=savedInstanceState;
         setContentView(R.layout.activity_main);
 
         //setting action bar
@@ -50,13 +66,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.rl_main);
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
-        bottomPaneLinearLayout=(LinearLayout) findViewById(R.id.ll_pane_layour);
+        bottomPaneLinearLayout = (LinearLayout) findViewById(R.id.ll_pane_layour);
+
+        mainRelativeLayout.setOnClickListener(this);
+
+        com.google.android.gms.maps.SupportMapFragment f;
 
         chotokoro();
     }
 
     private void setUpSlidingPane() {
-        Button hideButton = (Button)bottomPaneLinearLayout.findViewById(R.id.btn_cancel_add_dialog);
+        Button hideButton = (Button) bottomPaneLinearLayout.findViewById(R.id.btn_cancel_add_dialog);
         hideButton.setOnClickListener(this);
 /*
         mainRelativeLayout.setOnClickListener(this);
@@ -100,58 +120,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_cancel_add_dialog:
-/*
-            case R.id.rl_main:
-*/
                 hideBottomOptionMenu();
+                break;
+
+            case R.id.rl_main:
+                hideBottomOptionMenu();
+                deleteNoticeDialog();
                 break;
         }
     }
 
-    public void showDialog(View view) {
-/*
-        slidingUpPanelLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
-*/
-        if(bottomPaneLinearLayout.getChildCount()!=0)
-        {
+    public void showElementsAddDialog(View view) {
+        if (bottomPaneLinearLayout.getChildCount() != 0) {
             bottomPaneLinearLayout.removeAllViews();
         }
-/*        slidingUpPanelLayout.invalidate();
-        bottomPaneLinearLayout.invalidate();*/
         bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
         setUpSlidingPane();
         bottomPaneLinearLayout.post(new Runnable() {
             @Override
             public void run() {
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-        }
-        });
-    }
-
-    private void hideBottomOptionMenu()
-    {
-        bottomPaneLinearLayout.removeAllViews();
-        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-    }
-
-    public void showDialog2(View view) {
-        if(bottomPaneLinearLayout.getChildCount()!=0)
-        {
-            bottomPaneLinearLayout.removeAllViews();
-        }
-/*        slidingUpPanelLayout.invalidate();
-        bottomPaneLinearLayout.invalidate();*/
-        bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements_copy, null));
-        setUpSlidingPane();
-        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-        bottomPaneLinearLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
         });
+
+        deleteNoticeDialog();
     }
 
+    private void hideBottomOptionMenu() {
+        if (bottomPaneLinearLayout.getChildCount() != 0) {
+            bottomPaneLinearLayout.removeAllViews();
+        }
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+
+        CameraPosition cameraPosition=new CameraPosition.Builder()
+                .zoom(10)
+                .target(dhaka)
+                .build();
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+/*        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setScrollGesturesEnabled(false);*/
+        MarkerOptions endMarkerOption = new MarkerOptions().position(dhaka)
+                .title("Finishing Point")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        Marker endMarker = googleMap.addMarker(endMarkerOption);
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        mapView.onResume();
+    }
+
+    public void openMaps(View view) {
+        startActivity(new Intent(MainActivity.this, DummyActivity.class));
+    }
 
     class MyDragListener implements View.OnDragListener {
 
@@ -193,15 +216,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else if (((TextView) view).getText().equals("Gallery")) {
                         customLayout = new GalleryViewWidget(getApplicationContext());
                         addNewElementsOfType(v, customLayout, event);
-                    }else
-                    {
-                        customLayout=null;
+                    } else if (((TextView) view).getText().equals("Map")) {
+                        customLayout = new MapsWidget(getApplicationContext());
+                        addNewElementsOfType(v, customLayout, event);
+                        handleMapCreation((MapsWidget)customLayout);
+                    } else {
+                        customLayout = null;
                     }
 
                     if (customLayout != null) {
                         customLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                hideBottomOptionMenu();
                                 showNoticeDialog(customLayout);
                             }
                         });
@@ -230,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             return true;
         }
+
     }
 
     private void addElementsInRelativeLayout(ViewGroup droppedOnLayout, BaseLinearLayout childToBeAdded, DragEvent dragEvent) {
@@ -359,10 +387,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         editOptionsDialog.setLayoutParams(params);
 
-        child.setBackgroundResource(R.drawable.gray_border_transparent_background);
+        child.setBackgroundResource(R.drawable.dark_blue_border_transparent_background);
     }
 
     private void deleteNoticeDialog() {
-        mainRelativeLayout.removeView(editOptionsDialog);
+
+        if (editOptionsDialog != null) {
+            mainRelativeLayout.removeView(editOptionsDialog);
+            editOptionsDialog=null;
+        }
+    }
+
+    private void handleMapCreation(MapsWidget mapsWidget)
+    {
+        dhaka=new LatLng(23.7000,90.3667);
+/*
+        MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.main_map_view);
+        mapFragment.getMapAsync(this);*/
+        mapView=(MapView) mapsWidget.findViewById(R.id.main_map_view);
+        mapView.onCreate(savedInstanceState);
+        if (mapView != null) {
+            mapView.getMapAsync(this);
+        }
+    }
+
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (mapView != null) {
+            mapView.onResume();
+        }
+    }
+
+    @Override
+    public final void onDestroy()
+    {
+        if (mapView != null) {
+            mapView.onDestroy();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public final void onLowMemory()
+    {
+        mapView.onLowMemory();
+        super.onLowMemory();
+    }
+
+    @Override
+    public final void onPause()
+    {
+        mapView.onPause();
+        super.onPause();
     }
 }

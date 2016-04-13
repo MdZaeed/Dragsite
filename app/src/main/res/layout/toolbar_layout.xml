@@ -60,7 +60,8 @@
         android:text="PAGES"
         android:textColor="#9E9E9E"
         android:textSize="10sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:onClick="openMaps"/>
 
     <Button
         android:id="@+id/btn_build"
@@ -79,7 +80,7 @@
         android:textColor="#9E9E9E"
         android:textSize="10sp"
         android:textStyle="bold"
-        android:onClick="showDialog"/>
+        android:onClick="showElementsAddDialog"/>
 
 </android.support.v7.widget.Toolbar>
 

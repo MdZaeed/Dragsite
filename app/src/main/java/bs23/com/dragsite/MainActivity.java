@@ -1,5 +1,7 @@
 package bs23.com.dragsite;
 
+import android.app.FragmentManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +26,9 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback,ImageEditFragment.OnViewReady {
+    public final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+    public final android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
 
     ScrollView mainScrollView;
     RelativeLayout mainRelativeLayout;
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BaseLinearLayout lastBaseLinearLayout;
     LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
-/*
+    /*
     LatLng dhaka;
 */
     MapView mapView;
@@ -146,6 +150,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 
+    @Override
+    public void onReady(View view) {
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
+    }
+
     class MyDragListener implements View.OnDragListener {
 
         @Override
@@ -201,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void onClick(View v) {
                                 hideBottomOptionMenu();
                                 showNoticeDialog(customLayout);
+
                             }
                         });
                     }
@@ -288,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BaseLinearLayout belowLinearLayout = null;
         RelativeLayout.LayoutParams relaLayoutParamsOfBelow = null;
         if (layoutId != 0) {
-            belowLinearLayout = (BaseLinearLayout) this.findViewById(layoutId);
+            belowLinearLayout =(BaseLinearLayout) this.findViewById(layoutId);
             relaLayoutParamsOfBelow = (RelativeLayout.LayoutParams) belowLinearLayout.getLayoutParams();
             relaLayoutParamsOfBelow.addRule(RelativeLayout.BELOW, child.getId());
             mainRelativeLayout.updateViewLayout(belowLinearLayout, relaLayoutParamsOfBelow);
@@ -343,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         customLayout.addContents();
     }
 
-    private void showNoticeDialog(BaseLinearLayout child) {
+    private void showNoticeDialog(final BaseLinearLayout child) {
 
         if (editOptionsDialog != null) {
             deleteNoticeDialog();
@@ -359,6 +374,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editOptionsDialog.setLayoutParams(params);
 
         child.setBackgroundResource(R.drawable.dark_blue_border_transparent_background);
+        editOptionsDialog.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (child instanceof TextViewWidget) {
+                    Log.d("ajaira", "textview eita");
+
+                    if (bottomPaneLinearLayout.getChildCount() != 0) {
+                        bottomPaneLinearLayout.removeAllViews();
+                    }
+
+                    ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
+                    transaction.add(bottomPaneLinearLayout.getId(), imageEditFragment).commit();
+
+                } else if (child instanceof TitleViewWidget)
+                    Log.d("hudai", "Title view eita");
+
+            }
+        });
     }
 
     private void deleteNoticeDialog() {
@@ -490,4 +523,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         super.onPause();
     }
+
 }

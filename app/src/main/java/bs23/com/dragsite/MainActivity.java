@@ -26,7 +26,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback,ImageEditFragment.OnViewReady {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, BaseEditFragment.OnViewReady {
     public final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
     public final android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
 
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BaseLinearLayout lastBaseLinearLayout;
     LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
+    BaseLinearLayout lastChild;
     /*
     LatLng dhaka;
 */
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.savedInstanceState=savedInstanceState;
+        this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
 
         //setting action bar
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.rl_main);
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
-        bottomPaneLinearLayout=(LinearLayout) findViewById(R.id.ll_pane_layour);
+        bottomPaneLinearLayout = (LinearLayout) findViewById(R.id.ll_pane_layour);
         mainRelativeLayout.setOnClickListener(this);
 
         chotokoro();
@@ -203,8 +204,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else if (((TextView) view).getText().equals("Map")) {
                         customLayout = new MapsWidget(getApplicationContext());
                         addNewElementsOfType(v, customLayout, event);
-                        currentMapsWidget=(MapsWidget) customLayout;
-                        handleMapCreation((MapsWidget)customLayout);
+                        currentMapsWidget = (MapsWidget) customLayout;
+                        handleMapCreation((MapsWidget) customLayout);
                     } else {
                         customLayout = null;
                     }
@@ -215,7 +216,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void onClick(View v) {
                                 hideBottomOptionMenu();
                                 showNoticeDialog(customLayout);
-
                             }
                         });
                     }
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BaseLinearLayout belowLinearLayout = null;
         RelativeLayout.LayoutParams relaLayoutParamsOfBelow = null;
         if (layoutId != 0) {
-            belowLinearLayout =(BaseLinearLayout) this.findViewById(layoutId);
+            belowLinearLayout = (BaseLinearLayout) this.findViewById(layoutId);
             relaLayoutParamsOfBelow = (RelativeLayout.LayoutParams) belowLinearLayout.getLayoutParams();
             relaLayoutParamsOfBelow.addRule(RelativeLayout.BELOW, child.getId());
             mainRelativeLayout.updateViewLayout(belowLinearLayout, relaLayoutParamsOfBelow);
@@ -387,8 +387,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
                     transaction.add(bottomPaneLinearLayout.getId(), imageEditFragment).commit();
 
-                } else if (child instanceof TitleViewWidget)
+                } else if (child instanceof TitleViewWidget) {
                     Log.d("hudai", "Title view eita");
+                } else if (child instanceof MapsWidget) {
+                    if (bottomPaneLinearLayout.getChildCount() != 0) {
+                        bottomPaneLinearLayout.removeAllViews();
+                    }
+
+                    MapEditFragment mapEditFragment = MapEditFragment.newInstance();
+                    mapEditFragment.setMapsWidget((MapsWidget) child);
+                    transaction.add(bottomPaneLinearLayout.getId(), mapEditFragment).commit();
+                    lastChild = child;
+                }
 
             }
         });
@@ -398,17 +408,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (editOptionsDialog != null) {
             mainRelativeLayout.removeView(editOptionsDialog);
-            editOptionsDialog=null;
+            editOptionsDialog = null;
         }
     }
 
-    private void handleMapCreation(MapsWidget mapsWidget)
-    {
+    private void handleMapCreation(MapsWidget mapsWidget) {
     /*
         MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.main_map_view);
         mapFragment.getMapAsync(this);*/
-        mapView=(MapView) mapsWidget.findViewById(R.id.main_map_view);
+        mapView = (MapView) mapsWidget.findViewById(R.id.main_map_view);
         mapView.onCreate(savedInstanceState);
         if (mapView != null) {
             mapView.getMapAsync(this);
@@ -491,8 +500,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         if (mapView != null) {
             mapView.onResume();
@@ -500,8 +508,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public final void onDestroy()
-    {
+    public final void onDestroy() {
         if (mapView != null) {
             mapView.onDestroy();
         }
@@ -509,15 +516,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public final void onLowMemory()
-    {
+    public final void onLowMemory() {
         mapView.onLowMemory();
         super.onLowMemory();
     }
 
     @Override
-    public final void onPause()
-    {
+    public final void onPause() {
         if (mapView != null) {
             mapView.onPause();
         }

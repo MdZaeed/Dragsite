@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">DragSite</string>
     <string name="google_maps_key" />
+
+    <string-array name="zoom_numbers">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
 </resources>

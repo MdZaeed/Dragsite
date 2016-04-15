@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,6 +33,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MapView mapView;
     private int id = 99;
     Bundle savedInstanceState;
-    private GoogleMap googleMap;
+    private List<GoogleMap> maps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,29 +154,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             bottomPaneLinearLayout.removeAllViews();
         }
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-
-        CameraPosition cameraPosition=new CameraPosition.Builder()
-                .zoom(10)
-                .target(dhaka)
-                .build();
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-/*        googleMap.getUiSettings().setZoomControlsEnabled(true);
-        googleMap.getUiSettings().setScrollGesturesEnabled(false);*/
-        MarkerOptions endMarkerOption = new MarkerOptions().position(dhaka)
-                .title("Finishing Point")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        Marker endMarker = googleMap.addMarker(endMarkerOption);
-        googleMap.getUiSettings().setAllGesturesEnabled(false);
-        mapView.onResume();
-    }
-
-    public void openMaps(View view) {
-        startActivity(new Intent(MainActivity.this, DummyActivity.class));
     }
 
     class MyDragListener implements View.OnDragListener {
@@ -410,6 +390,93 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mapView != null) {
             mapView.getMapAsync(this);
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        if(maps==null)
+        {
+            maps=new ArrayList<>();
+        }
+        maps.add(googleMap);
+
+        CameraPosition cameraPosition=new CameraPosition.Builder()
+                .zoom(10)
+                .target(dhaka)
+                .build();
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+/*        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setScrollGesturesEnabled(false);*/
+        MarkerOptions endMarkerOption = new MarkerOptions().position(dhaka)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        googleMap.addMarker(endMarkerOption);
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Log.d("Map Clicked" , "True");
+            }
+        });
+        googleMap.setOnMarkerClickListener(null);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        mapView.onResume();
+    }
+
+    public void openMaps(View view) {
+/*        changeZoom(0, (float) 5.0);
+
+        Log.d("Lati and Long: ", getLatitude(0) + " and " + getLongitude(0));
+        setLatitude(0, 25.0);
+*//*
+        setLongitude(0,95.0);
+*/
+        setPositionByAddress(0,"Jhenaidah");
+    }
+
+    private void setPositionByAddress(int positionOfTheMap,String address)
+    {
+        MapsWidget.setAddress(maps.get(positionOfTheMap), address);
+    }
+
+    private float getZoom(int positionOfTheMap)
+    {
+        return MapsWidget.getZoom(maps.get(positionOfTheMap));
+    }
+
+    private void setMarkerShowing(int positionOfTheMap,boolean show)
+    {
+        MapsWidget.setMarkerShowing(maps.get(positionOfTheMap),show);
+
+    }
+
+    private void setZoomControlEnabled(int positionOfTheMap,boolean enabled)
+    {
+        MapsWidget.setZoomControlEnabled(maps.get(positionOfTheMap),enabled);
+    }
+
+    private void changeZoom(int positionOfTheMap, float zoom)
+    {
+        MapsWidget.changeZoom(maps.get(positionOfTheMap),zoom);
+    }
+
+    public Double getLatitude(int positionOfTheMap)
+    {
+        return MapsWidget.getLatitude(maps.get(positionOfTheMap));
+    }
+
+    public Double getLongitude(int positionOfTheMap)
+    {
+        return MapsWidget.getLongitude(maps.get(positionOfTheMap));
+    }
+
+    public void setLatitude(int positionOfTheMap,Double newLatitude)
+    {
+        MapsWidget.setLatitude(maps.get(positionOfTheMap),newLatitude);
+    }
+
+    public void setLongitude(int positionOfTheMap,Double newLongitude)
+    {
+        MapsWidget.setLongitude(maps.get(positionOfTheMap),newLongitude);
     }
 
 

@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dark_blue_border_transparent_background"
-    android:clickable="true">
+    android:background="@drawable/dark_blue_border_transparent_background">
 
     <!--<fragment
         android:id="@+id/main_map"
@@ -15,7 +14,7 @@
         android:id="@+id/main_map_view"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:clickable="false"
-        android:focusable="false"/>
+        android:clickable="true"
+        android:focusable="true" />
 
 </LinearLayout>

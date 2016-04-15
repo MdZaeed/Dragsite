@@ -17,18 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
@@ -41,11 +35,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BaseLinearLayout lastBaseLinearLayout;
     LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
+/*
     LatLng dhaka;
+*/
     MapView mapView;
     private int id = 99;
     Bundle savedInstanceState;
+    MapsWidget currentMapsWidget;
+/*
     private List<GoogleMap> maps;
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else if (((TextView) view).getText().equals("Map")) {
                         customLayout = new MapsWidget(getApplicationContext());
                         addNewElementsOfType(v, customLayout, event);
+                        currentMapsWidget=(MapsWidget) customLayout;
                         handleMapCreation((MapsWidget)customLayout);
                     } else {
                         customLayout = null;
@@ -371,8 +371,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void handleMapCreation(MapsWidget mapsWidget)
     {
-        dhaka=new LatLng(23.7000,90.3667);
-/*
+    /*
         MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.main_map_view);
         mapFragment.getMapAsync(this);*/
@@ -385,31 +384,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if(maps==null)
+        currentMapsWidget.setGoogleMap(googleMap);
+/*        if(maps==null)
         {
             maps=new ArrayList<>();
-        }
+        }*/
+/*
         maps.add(googleMap);
-
-        CameraPosition cameraPosition=new CameraPosition.Builder()
-                .zoom(10)
-                .target(dhaka)
-                .build();
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-/*        googleMap.getUiSettings().setZoomControlsEnabled(true);
-        googleMap.getUiSettings().setScrollGesturesEnabled(false);*/
-        MarkerOptions endMarkerOption = new MarkerOptions().position(dhaka)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        googleMap.addMarker(endMarkerOption);
-        googleMap.getUiSettings().setAllGesturesEnabled(false);
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                Log.d("Map Clicked" , "True");
-            }
-        });
-        googleMap.setOnMarkerClickListener(null);
-        googleMap.getUiSettings().setZoomControlsEnabled(true);
+*/
+        currentMapsWidget.initialSetup();
         mapView.onResume();
     }
 
@@ -421,10 +404,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 *//*
         setLongitude(0,95.0);
 */
+/*
         setPositionByAddress(0,"Jhenaidah");
+*/
+        currentMapsWidget.setPositionByAddress("Jhenaidah");
     }
 
-    private void setPositionByAddress(int positionOfTheMap,String address)
+/*    private void setPositionByAddress(int positionOfTheMap,String address)
     {
         MapsWidget.setAddress(maps.get(positionOfTheMap), address);
     }
@@ -468,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setLongitude(int positionOfTheMap,Double newLongitude)
     {
         MapsWidget.setLongitude(maps.get(positionOfTheMap),newLongitude);
-    }
+    }*/
 
 
     @Override
@@ -499,7 +485,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public final void onPause()
     {
-        mapView.onPause();
+        if (mapView != null) {
+            mapView.onPause();
+        }
         super.onPause();
     }
 }

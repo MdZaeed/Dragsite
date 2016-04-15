@@ -129,7 +129,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottomPaneLinearLayout.invalidate();*/
         bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
         setUpSlidingPane();
-        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        bottomPaneLinearLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        }
+        });
     }
 
     private void hideBottomOptionMenu()
@@ -148,6 +153,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements_copy, null));
         setUpSlidingPane();
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        bottomPaneLinearLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
     }
 
 

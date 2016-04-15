@@ -69,11 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.rl_main);
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
-        bottomPaneLinearLayout = (LinearLayout) findViewById(R.id.ll_pane_layour);
-
+        bottomPaneLinearLayout=(LinearLayout) findViewById(R.id.ll_pane_layour);
         mainRelativeLayout.setOnClickListener(this);
-
-        com.google.android.gms.maps.SupportMapFragment f;
 
         chotokoro();
     }

@@ -18,9 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Longitude"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="Dhaka, Bangladesh" />
+            android:text="Dhaka, Bangladesh"
+            style="@style/HoveringTextBoxStyle"/>
     </android.support.design.widget.TextInputLayout>
 
 
@@ -35,9 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Latitude"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="Dhaka, Bangladesh" />
+            android:text="Dhaka, Bangladesh"
+            style="@style/HoveringTextBoxStyle"/>
     </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

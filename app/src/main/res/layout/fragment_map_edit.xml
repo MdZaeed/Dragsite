@@ -36,9 +36,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -49,91 +47,55 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Address"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Dhaka, Bangladesh" />
+                    android:text="Dhaka, Bangladesh"
+                    style="@style/HoveringTextBoxStyle"/>
             </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_mock_click"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@android:drawable/ic_media_play"
-                android:elevation="0dp"
-                android:gravity="left|center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Spacing" />
+                android:text="Spacing"
+                style="@style/LinkButtonStyle"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@android:drawable/ic_media_play"
-                android:elevation="0dp"
-                android:gravity="left|center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Height and Width" />
+                android:text="Height and Width"
+                style="@style/LinkButtonStyle" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@android:drawable/ic_media_play"
-                android:elevation="0dp"
-                android:gravity="left|center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Postiion" />
+                android:text="Postiion"
+                style="@style/LinkButtonStyle"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@android:drawable/ic_media_play"
-                android:elevation="0dp"
-                android:gravity="left|center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Advanced Location" />
+                android:text="Advanced Location"
+                style="@style/LinkButtonStyle"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@android:drawable/ic_media_play"
-                android:elevation="0dp"
-                android:gravity="left|center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Advanced Display" />
+                android:text="Advanced Display"
+                style="@style/LinkButtonStyle"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
         </LinearLayout>
     </ScrollView>

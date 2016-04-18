@@ -36,9 +36,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,9 +57,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,9 +78,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,9 +99,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
         </LinearLayout>
     </ScrollView>

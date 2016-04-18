@@ -20,18 +20,11 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@android:drawable/ic_media_play"
-                android:elevation="0dp"
-                android:gravity="left|center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Border" />
+                android:text="Border"
+                style="@style/LinkButtonStyle"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -42,27 +35,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="All Text"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Picture" />
+                    android:text="Picture"
+                    style="@style/HoveringTextBoxStyle"/>
             </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_mock_click"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@android:drawable/ic_media_play"
-                android:elevation="0dp"
-                android:gravity="left|center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Border Color" />
+                android:text="Border Color"
+                style="@style/LinkButtonStyle"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
         </LinearLayout>
     </ScrollView>

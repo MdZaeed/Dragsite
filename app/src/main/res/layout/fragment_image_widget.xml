@@ -20,18 +20,11 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:elevation="0dp"
-                android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
                 android:text="ADD IMAGE"
-                android:textColor="@android:color/holo_blue_dark"/>
+                style="@style/SpecialButtonStyle"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
             <include
                 layout="@layout/fragment_image_widget_footer"/>

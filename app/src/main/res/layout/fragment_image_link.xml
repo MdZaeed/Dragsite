@@ -20,13 +20,8 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:elevation="0dp"
-                android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
                 android:text="REMOVE LINK"
-                android:textColor="@android:color/holo_blue_dark"/>
+                style="@style/SpecialButtonStyle"/>
 
             <View
                 android:layout_width="match_parent"
@@ -36,36 +31,22 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@android:drawable/ic_media_play"
-                android:elevation="0dp"
-                android:gravity="left|center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Set URL" />
+                android:text="Set URL"
+                style="@style/LinkButtonStyle"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
 
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@android:drawable/ic_media_play"
-                android:elevation="0dp"
-                android:gravity="left|center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Link Page" />
+                android:text="Link Page"
+                style="@style/LinkButtonStyle"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
+                style="@style/DividerStyle"/>
 
         </LinearLayout>
     </ScrollView>

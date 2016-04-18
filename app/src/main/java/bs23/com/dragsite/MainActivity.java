@@ -32,14 +32,11 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ImageEditFragment.OnViewReady {
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ImageEditFragment.OnViewReady,OnMapReadyCallback {
 
     public final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
     public final android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
-=======
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
->>>>>>> 6de01aa959c73b902826421ee72102b21591f137
 
     ScrollView mainScrollView;
     RelativeLayout mainRelativeLayout;
@@ -50,13 +47,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BaseLinearLayout lastBaseLinearLayout;
     LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
-<<<<<<< HEAD
 
 
-=======
+
     LatLng dhaka;
     MapView mapView;
->>>>>>> 6de01aa959c73b902826421ee72102b21591f137
+
     private int id = 99;
     Bundle savedInstanceState;
     private List<GoogleMap> maps;
@@ -161,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 
-<<<<<<< HEAD
+
     @Override
     public void onReady(View view) {
         view.post(new Runnable() {
@@ -173,8 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-=======
->>>>>>> 6de01aa959c73b902826421ee72102b21591f137
     class MyDragListener implements View.OnDragListener {
 
         @Override
@@ -387,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         editOptionsDialog.setLayoutParams(params);
 
-<<<<<<< HEAD
+
         editOptionsDialog.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -409,10 +403,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        child.setBackgroundResource(R.drawable.gray_border_transparent_background);
-=======
+
+
         child.setBackgroundResource(R.drawable.dark_blue_border_transparent_background);
->>>>>>> 6de01aa959c73b902826421ee72102b21591f137
+
     }
 
     private void deleteNoticeDialog() {

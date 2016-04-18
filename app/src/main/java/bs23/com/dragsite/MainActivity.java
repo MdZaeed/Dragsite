@@ -19,14 +19,27 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
+<<<<<<< HEAD
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ImageEditFragment.OnViewReady {
 
     public final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
     public final android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+=======
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
+>>>>>>> 6de01aa959c73b902826421ee72102b21591f137
 
     ScrollView mainScrollView;
     RelativeLayout mainRelativeLayout;
@@ -37,13 +50,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BaseLinearLayout lastBaseLinearLayout;
     LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
+<<<<<<< HEAD
 
 
+=======
+    LatLng dhaka;
+    MapView mapView;
+>>>>>>> 6de01aa959c73b902826421ee72102b21591f137
     private int id = 99;
+    Bundle savedInstanceState;
+    private List<GoogleMap> maps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState=savedInstanceState;
         setContentView(R.layout.activity_main);
 
         //setting action bar
@@ -57,12 +78,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
         bottomPaneLinearLayout=(LinearLayout) findViewById(R.id.ll_pane_layour);
+        mainRelativeLayout.setOnClickListener(this);
 
         chotokoro();
     }
 
     private void setUpSlidingPane() {
-        Button hideButton = (Button)bottomPaneLinearLayout.findViewById(R.id.btn_cancel_add_dialog);
+        Button hideButton = (Button) bottomPaneLinearLayout.findViewById(R.id.btn_cancel_add_dialog);
         hideButton.setOnClickListener(this);
 /*
         mainRelativeLayout.setOnClickListener(this);
@@ -106,24 +128,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_cancel_add_dialog:
-/*
-            case R.id.rl_main:
-*/
                 hideBottomOptionMenu();
+                break;
+
+            case R.id.rl_main:
+                hideBottomOptionMenu();
+                deleteNoticeDialog();
                 break;
         }
     }
 
-    public void showDialog(View view) {
-/*
-        slidingUpPanelLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
-*/
-        if(bottomPaneLinearLayout.getChildCount()!=0)
-        {
+    public void showElementsAddDialog(View view) {
+        if (bottomPaneLinearLayout.getChildCount() != 0) {
             bottomPaneLinearLayout.removeAllViews();
         }
-/*        slidingUpPanelLayout.invalidate();
-        bottomPaneLinearLayout.invalidate();*/
         bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
         setUpSlidingPane();
         bottomPaneLinearLayout.post(new Runnable() {
@@ -132,32 +150,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
         });
+
+        deleteNoticeDialog();
     }
 
-    private void hideBottomOptionMenu()
-    {
-        bottomPaneLinearLayout.removeAllViews();
-        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-    }
-
-    public void showDialog2(View view) {
-        if(bottomPaneLinearLayout.getChildCount()!=0)
-        {
+    private void hideBottomOptionMenu() {
+        if (bottomPaneLinearLayout.getChildCount() != 0) {
             bottomPaneLinearLayout.removeAllViews();
         }
-/*        slidingUpPanelLayout.invalidate();
-        bottomPaneLinearLayout.invalidate();*/
-        bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements_copy, null));
-        setUpSlidingPane();
-        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-        bottomPaneLinearLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-            }
-        });
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 
+<<<<<<< HEAD
     @Override
     public void onReady(View view) {
         view.post(new Runnable() {
@@ -169,6 +173,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+=======
+>>>>>>> 6de01aa959c73b902826421ee72102b21591f137
     class MyDragListener implements View.OnDragListener {
 
         @Override
@@ -209,15 +215,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else if (((TextView) view).getText().equals("Gallery")) {
                         customLayout = new GalleryViewWidget(getApplicationContext());
                         addNewElementsOfType(v, customLayout, event);
-                    }else
-                    {
-                        customLayout=null;
+                    } else if (((TextView) view).getText().equals("Map")) {
+                        customLayout = new MapsWidget(getApplicationContext());
+                        addNewElementsOfType(v, customLayout, event);
+                        handleMapCreation((MapsWidget)customLayout);
+                    } else {
+                        customLayout = null;
                     }
 
                     if (customLayout != null) {
                         customLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                hideBottomOptionMenu();
                                 showNoticeDialog(customLayout);
 
                             }
@@ -247,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             return true;
         }
+
     }
 
     private void addElementsInRelativeLayout(ViewGroup droppedOnLayout, BaseLinearLayout childToBeAdded, DragEvent dragEvent) {
@@ -376,6 +387,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         editOptionsDialog.setLayoutParams(params);
 
+<<<<<<< HEAD
         editOptionsDialog.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -398,10 +410,151 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         child.setBackgroundResource(R.drawable.gray_border_transparent_background);
+=======
+        child.setBackgroundResource(R.drawable.dark_blue_border_transparent_background);
+>>>>>>> 6de01aa959c73b902826421ee72102b21591f137
     }
 
     private void deleteNoticeDialog() {
-        mainRelativeLayout.removeView(editOptionsDialog);
+
+        if (editOptionsDialog != null) {
+            mainRelativeLayout.removeView(editOptionsDialog);
+            editOptionsDialog=null;
+        }
+    }
+
+    private void handleMapCreation(MapsWidget mapsWidget)
+    {
+        dhaka=new LatLng(23.7000,90.3667);
+/*
+        MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.main_map_view);
+        mapFragment.getMapAsync(this);*/
+        mapView=(MapView) mapsWidget.findViewById(R.id.main_map_view);
+        mapView.onCreate(savedInstanceState);
+        if (mapView != null) {
+            mapView.getMapAsync(this);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        if(maps==null)
+        {
+            maps=new ArrayList<>();
+        }
+        maps.add(googleMap);
+
+        CameraPosition cameraPosition=new CameraPosition.Builder()
+                .zoom(10)
+                .target(dhaka)
+                .build();
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+/*        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setScrollGesturesEnabled(false);*/
+        MarkerOptions endMarkerOption = new MarkerOptions().position(dhaka)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        googleMap.addMarker(endMarkerOption);
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Log.d("Map Clicked" , "True");
+            }
+        });
+        googleMap.setOnMarkerClickListener(null);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        mapView.onResume();
+    }
+
+    public void openMaps(View view) {
+/*        changeZoom(0, (float) 5.0);
+
+        Log.d("Lati and Long: ", getLatitude(0) + " and " + getLongitude(0));
+        setLatitude(0, 25.0);
+*//*
+        setLongitude(0,95.0);
+*/
+        setPositionByAddress(0,"Jhenaidah");
+    }
+
+    private void setPositionByAddress(int positionOfTheMap,String address)
+    {
+        MapsWidget.setAddress(maps.get(positionOfTheMap), address);
+    }
+
+    private float getZoom(int positionOfTheMap)
+    {
+        return MapsWidget.getZoom(maps.get(positionOfTheMap));
+    }
+
+    private void setMarkerShowing(int positionOfTheMap,boolean show)
+    {
+        MapsWidget.setMarkerShowing(maps.get(positionOfTheMap),show);
+
+    }
+
+    private void setZoomControlEnabled(int positionOfTheMap,boolean enabled)
+    {
+        MapsWidget.setZoomControlEnabled(maps.get(positionOfTheMap),enabled);
+    }
+
+    private void changeZoom(int positionOfTheMap, float zoom)
+    {
+        MapsWidget.changeZoom(maps.get(positionOfTheMap),zoom);
+    }
+
+    public Double getLatitude(int positionOfTheMap)
+    {
+        return MapsWidget.getLatitude(maps.get(positionOfTheMap));
+    }
+
+    public Double getLongitude(int positionOfTheMap)
+    {
+        return MapsWidget.getLongitude(maps.get(positionOfTheMap));
+    }
+
+    public void setLatitude(int positionOfTheMap,Double newLatitude)
+    {
+        MapsWidget.setLatitude(maps.get(positionOfTheMap),newLatitude);
+    }
+
+    public void setLongitude(int positionOfTheMap,Double newLongitude)
+    {
+        MapsWidget.setLongitude(maps.get(positionOfTheMap),newLongitude);
+    }
+
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (mapView != null) {
+            mapView.onResume();
+        }
+    }
+
+    @Override
+    public final void onDestroy()
+    {
+        if (mapView != null) {
+            mapView.onDestroy();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public final void onLowMemory()
+    {
+        mapView.onLowMemory();
+        super.onLowMemory();
+    }
+
+    @Override
+    public final void onPause()
+    {
+        mapView.onPause();
+        super.onPause();
     }
 
 }

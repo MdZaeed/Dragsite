@@ -19,21 +19,17 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ImageEditFragment.OnViewReady,OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, BaseEditFragment.OnViewReady,OnMapReadyCallback {
 
     public final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
     public final android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -47,20 +43,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BaseLinearLayout lastBaseLinearLayout;
     LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
-
-
-
+    BaseLinearLayout lastChild;
+    /*
+>>>>>>> d21aa2c0b6709683fe541a4bba0869a6254e11a5
     LatLng dhaka;
+*/
     MapView mapView;
-
     private int id = 99;
     Bundle savedInstanceState;
+    MapsWidget currentMapsWidget;
+/*
     private List<GoogleMap> maps;
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.savedInstanceState=savedInstanceState;
+        this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
 
         //setting action bar
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.rl_main);
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
-        bottomPaneLinearLayout=(LinearLayout) findViewById(R.id.ll_pane_layour);
+        bottomPaneLinearLayout = (LinearLayout) findViewById(R.id.ll_pane_layour);
         mainRelativeLayout.setOnClickListener(this);
 
         chotokoro();
@@ -168,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-
     class MyDragListener implements View.OnDragListener {
 
         @Override
@@ -212,7 +210,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else if (((TextView) view).getText().equals("Map")) {
                         customLayout = new MapsWidget(getApplicationContext());
                         addNewElementsOfType(v, customLayout, event);
-                        handleMapCreation((MapsWidget)customLayout);
+                        currentMapsWidget = (MapsWidget) customLayout;
+                        handleMapCreation((MapsWidget) customLayout);
                     } else {
                         customLayout = null;
                     }
@@ -223,7 +222,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void onClick(View v) {
                                 hideBottomOptionMenu();
                                 showNoticeDialog(customLayout);
-
                             }
                         });
                     }
@@ -311,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BaseLinearLayout belowLinearLayout = null;
         RelativeLayout.LayoutParams relaLayoutParamsOfBelow = null;
         if (layoutId != 0) {
-            belowLinearLayout =(BaseLinearLayout) this.findViewById(layoutId);
+            belowLinearLayout = (BaseLinearLayout) this.findViewById(layoutId);
             relaLayoutParamsOfBelow = (RelativeLayout.LayoutParams) belowLinearLayout.getLayoutParams();
             relaLayoutParamsOfBelow.addRule(RelativeLayout.BELOW, child.getId());
             mainRelativeLayout.updateViewLayout(belowLinearLayout, relaLayoutParamsOfBelow);
@@ -382,28 +380,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editOptionsDialog.setLayoutParams(params);
 
 
+        child.setBackgroundResource(R.drawable.dark_blue_border_transparent_background);
         editOptionsDialog.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (child instanceof TextViewWidget) {
                     Log.d("ajaira", "textview eita");
 
-                    if(bottomPaneLinearLayout.getChildCount()!=0)
-                    {
+                    if (bottomPaneLinearLayout.getChildCount() != 0) {
                         bottomPaneLinearLayout.removeAllViews();
                     }
 
-                    ImageEditFragment imageEditFragment= ImageEditFragment.newInstance();
+                    ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
                     transaction.add(bottomPaneLinearLayout.getId(), imageEditFragment).commit();
 
-                }
-                else if (child instanceof TitleViewWidget)
+                } else if (child instanceof TitleViewWidget) {
                     Log.d("hudai", "Title view eita");
+                } else if (child instanceof MapsWidget) {
+                    if (bottomPaneLinearLayout.getChildCount() != 0) {
+                        bottomPaneLinearLayout.removeAllViews();
+                    }
+
+                    MapEditFragment mapEditFragment = MapEditFragment.newInstance();
+                    mapEditFragment.setMapsWidget((MapsWidget) child);
+                    transaction.add(bottomPaneLinearLayout.getId(), mapEditFragment).commit();
+                    lastChild = child;
+                }
 
             }
         });
-
-
 
         child.setBackgroundResource(R.drawable.dark_blue_border_transparent_background);
 
@@ -413,18 +418,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (editOptionsDialog != null) {
             mainRelativeLayout.removeView(editOptionsDialog);
-            editOptionsDialog=null;
+            editOptionsDialog = null;
         }
     }
 
-    private void handleMapCreation(MapsWidget mapsWidget)
-    {
-        dhaka=new LatLng(23.7000,90.3667);
-/*
+    private void handleMapCreation(MapsWidget mapsWidget) {
+    /*
         MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.main_map_view);
         mapFragment.getMapAsync(this);*/
-        mapView=(MapView) mapsWidget.findViewById(R.id.main_map_view);
+        mapView = (MapView) mapsWidget.findViewById(R.id.main_map_view);
         mapView.onCreate(savedInstanceState);
         if (mapView != null) {
             mapView.getMapAsync(this);
@@ -433,31 +436,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if(maps==null)
+        currentMapsWidget.setGoogleMap(googleMap);
+/*        if(maps==null)
         {
             maps=new ArrayList<>();
-        }
+        }*/
+/*
         maps.add(googleMap);
-
-        CameraPosition cameraPosition=new CameraPosition.Builder()
-                .zoom(10)
-                .target(dhaka)
-                .build();
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-/*        googleMap.getUiSettings().setZoomControlsEnabled(true);
-        googleMap.getUiSettings().setScrollGesturesEnabled(false);*/
-        MarkerOptions endMarkerOption = new MarkerOptions().position(dhaka)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        googleMap.addMarker(endMarkerOption);
-        googleMap.getUiSettings().setAllGesturesEnabled(false);
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                Log.d("Map Clicked" , "True");
-            }
-        });
-        googleMap.setOnMarkerClickListener(null);
-        googleMap.getUiSettings().setZoomControlsEnabled(true);
+*/
+        currentMapsWidget.initialSetup();
         mapView.onResume();
     }
 
@@ -469,10 +456,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 *//*
         setLongitude(0,95.0);
 */
+/*
         setPositionByAddress(0,"Jhenaidah");
+*/
+        currentMapsWidget.setPositionByAddress("Jhenaidah");
     }
 
-    private void setPositionByAddress(int positionOfTheMap,String address)
+/*    private void setPositionByAddress(int positionOfTheMap,String address)
     {
         MapsWidget.setAddress(maps.get(positionOfTheMap), address);
     }
@@ -516,12 +506,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setLongitude(int positionOfTheMap,Double newLongitude)
     {
         MapsWidget.setLongitude(maps.get(positionOfTheMap),newLongitude);
-    }
+    }*/
 
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         if (mapView != null) {
             mapView.onResume();
@@ -529,8 +518,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public final void onDestroy()
-    {
+    public final void onDestroy() {
         if (mapView != null) {
             mapView.onDestroy();
         }
@@ -538,16 +526,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public final void onLowMemory()
-    {
+    public final void onLowMemory() {
         mapView.onLowMemory();
         super.onLowMemory();
     }
 
     @Override
-    public final void onPause()
-    {
-        mapView.onPause();
+    public final void onPause() {
+        if (mapView != null) {
+            mapView.onPause();
+        }
         super.onPause();
     }
 

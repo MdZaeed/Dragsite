@@ -1,6 +1,7 @@
 package bs23.com.dragsite;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import retrofit.Retrofit;
  */
 public class MapsWidget extends BaseLinearLayout {
     static Context context;
+    private GoogleMap googleMap;
 
     public MapsWidget(Context context) {
         super(context);
@@ -39,12 +41,35 @@ public class MapsWidget extends BaseLinearLayout {
         addBottomVIew(context);
     }
 
-    public static float getZoom(GoogleMap googleMap)
+    public void initialSetup()
+    {
+        LatLng Dhaka=new LatLng(23.7000,90.3667);
+        CameraPosition cameraPosition=new CameraPosition.Builder()
+                .zoom(10)
+                .target(Dhaka)
+                .build();
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        MarkerOptions endMarkerOption = new MarkerOptions().position(Dhaka)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        googleMap.addMarker(endMarkerOption);
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+/*        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Log.d("Map Clicked", "True");
+            }
+        });*/
+        googleMap.setOnMarkerClickListener(null);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+    }
+
+    public float getZoom()
     {
         return googleMap.getCameraPosition().zoom;
     }
 
-    public static void setMarkerShowing(GoogleMap googleMap,boolean show)
+    public void setMarkerShowing(boolean show)
     {
         if(show==true)
         {
@@ -59,12 +84,12 @@ public class MapsWidget extends BaseLinearLayout {
         }
     }
 
-    public static void setZoomControlEnabled(GoogleMap googleMap,boolean enabled)
+    public void setZoomControlEnabled(boolean enabled)
     {
         googleMap.getUiSettings().setZoomControlsEnabled(enabled);
     }
 
-    public static void changeZoom(GoogleMap googleMap, float zoom)
+    public void changeZoom(float zoom)
     {
 /*        CameraPosition cameraPosition=googleMap.getCameraPosition();
         cameraPosition.zoom(zoom);
@@ -72,17 +97,17 @@ public class MapsWidget extends BaseLinearLayout {
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(zoom));
     }
 
-    public static Double getLatitude(GoogleMap googleMap)
+    public Double getLatitude()
     {
         return googleMap.getCameraPosition().target.latitude;
     }
 
-    public static Double getLongitude(GoogleMap googleMap)
+    public Double getLongitude()
     {
         return googleMap.getCameraPosition().target.longitude;
     }
 
-    public static void setLatitude(GoogleMap googleMap,Double newLatitude)
+    public void setLatitude(Double newLatitude)
     {
         LatLng latlng=new LatLng(newLatitude,googleMap.getCameraPosition().target.longitude);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
@@ -93,7 +118,7 @@ public class MapsWidget extends BaseLinearLayout {
         googleMap.addMarker(endMarkerOption);
     }
 
-    public static void setLongitude(GoogleMap googleMap,Double newLongitude)
+    public void setLongitude(Double newLongitude)
     {
         LatLng latlng=new LatLng(googleMap.getCameraPosition().target.latitude,newLongitude);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
@@ -104,7 +129,7 @@ public class MapsWidget extends BaseLinearLayout {
         googleMap.addMarker(endMarkerOption);
     }
 
-    public static void setLatitudeAndLongitude(GoogleMap googleMap,Float newLatitude,Float newLongitude)
+    public void setLatitudeAndLongitude(Float newLatitude,Float newLongitude)
     {
         LatLng latlng=new LatLng(newLatitude,newLongitude);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
@@ -115,7 +140,7 @@ public class MapsWidget extends BaseLinearLayout {
         googleMap.addMarker(endMarkerOption);
     }
 
-    public static void setAddress(final GoogleMap googleMap,String setAddress)
+    public void setPositionByAddress(String setAddress)
     {
         GeoCodingRestAdapter geoCodingRestAdapter=new GeoCodingRestAdapter();
         Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getLatAndLng(setAddress, context.getResources().getString(R.string.google_maps_key));
@@ -123,7 +148,7 @@ public class MapsWidget extends BaseLinearLayout {
             @Override
             public void onResponse(Response<LocationResponse> response, Retrofit retrofit) {
                 if(!response.body().getStatus().equals("ZERO_RESULTS")) {
-                    setLatitudeAndLongitude(googleMap, response.body().getResults().get(0).getGeometry().getLocation().getLat(), response.body().getResults().get(0).getGeometry().getLocation().getLng());
+                    setLatitudeAndLongitude(response.body().getResults().get(0).getGeometry().getLocation().getLat(), response.body().getResults().get(0).getGeometry().getLocation().getLng());
                 }
                 return;
             }
@@ -133,5 +158,13 @@ public class MapsWidget extends BaseLinearLayout {
 
             }
         });
+    }
+
+    public GoogleMap getGoogleMap() {
+        return googleMap;
+    }
+
+    public void setGoogleMap(GoogleMap googleMap) {
+        this.googleMap = googleMap;
     }
 }

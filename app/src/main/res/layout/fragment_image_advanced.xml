@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/fragment_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableRight="@android:drawable/ic_media_play"
+                android:elevation="0dp"
+                android:gravity="left|center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Border" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@android:color/black" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_adress_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="All Text"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Picture" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_mock_click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableRight="@android:drawable/ic_media_play"
+                android:elevation="0dp"
+                android:gravity="left|center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Border Color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@android:color/black" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

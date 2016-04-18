@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -418,6 +419,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .findFragmentById(R.id.main_map_view);
         mapFragment.getMapAsync(this);*/
         mapView = (MapView) mapsWidget.findViewById(R.id.main_map_view);
+/*        mapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.d("Touched","Yes");
+                return false;
+            }
+        });*/
         mapView.onCreate(savedInstanceState);
         if (mapView != null) {
             mapView.getMapAsync(this);

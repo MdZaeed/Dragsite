@@ -53,11 +53,6 @@
                     android:paddingTop="10dp"
                     android:text="Dhaka, Bangladesh" />
             </android.support.design.widget.TextInputLayout>
-            
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/black" />
 
             <Button
                 android:id="@+id/btn_mock_click"
@@ -66,7 +61,7 @@
                 android:background="@null"
                 android:drawableRight="@android:drawable/ic_media_play"
                 android:elevation="0dp"
-                android:gravity="left"
+                android:gravity="left|center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="Spacing" />
@@ -82,7 +77,7 @@
                 android:background="@null"
                 android:drawableRight="@android:drawable/ic_media_play"
                 android:elevation="0dp"
-                android:gravity="left"
+                android:gravity="left|center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="Height and Width" />
@@ -98,7 +93,7 @@
                 android:background="@null"
                 android:drawableRight="@android:drawable/ic_media_play"
                 android:elevation="0dp"
-                android:gravity="left"
+                android:gravity="left|center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="Postiion" />
@@ -114,7 +109,7 @@
                 android:background="@null"
                 android:drawableRight="@android:drawable/ic_media_play"
                 android:elevation="0dp"
-                android:gravity="left"
+                android:gravity="left|center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="Advanced Location" />
@@ -130,7 +125,7 @@
                 android:background="@null"
                 android:drawableRight="@android:drawable/ic_media_play"
                 android:elevation="0dp"
-                android:gravity="left"
+                android:gravity="left|center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="Advanced Display" />

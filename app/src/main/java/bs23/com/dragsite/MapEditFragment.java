@@ -55,7 +55,9 @@ public class MapEditFragment extends BaseEditFragment {
         positionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager1.beginTransaction().setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0).replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), ImageEditFragment.newInstance()).addToBackStack(null).commit();
+                ImageEditFragment imageEditFragment=ImageEditFragment.newInstance();
+                imageEditFragment.setFragmentManager1(fragmentManager1);
+                fragmentManager1.beginTransaction().setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0).replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), imageEditFragment).addToBackStack("null").commit();
             }
         });
 

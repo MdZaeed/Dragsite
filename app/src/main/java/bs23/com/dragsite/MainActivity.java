@@ -389,6 +389,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void editLayoutAddition(BaseLinearLayout child)
     {
+        int count = fragmentManager.getBackStackEntryCount();
+        for(int i = 0; i < count; i++) {
+            fragmentManager.popBackStack();
+        }
+
         if (child instanceof TextViewWidget) {
             Log.d("ajaira", "textview eita");
 

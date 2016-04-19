@@ -17,6 +17,14 @@
             android:orientation="vertical"
             android:padding="10dp">
 
+            <Button
+                style="@style/SpecialButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MANAGEIMAGES" />
+
+            <View style="@style/DividerStyle" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,67 +43,32 @@
                     android:entries="@array/zoom_numbers" />
             </LinearLayout>
 
-            <View
-                style="@style/DividerStyle"/>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/et_adress_map"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Address"
-                    android:text="Dhaka, Bangladesh"
-                    style="@style/HoveringTextBoxStyle"/>
-            </android.support.design.widget.TextInputLayout>
+            <View style="@style/DividerStyle" />
 
             <Button
                 android:id="@+id/btn_mock_click"
+                style="@style/LinkButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Spacing"
-                style="@style/LinkButtonStyle"/>
+                android:text="Captions" />
 
-            <View
-                style="@style/DividerStyle"/>
+            <View style="@style/DividerStyle" />
 
             <Button
+                style="@style/LinkButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Height and Width"
-                style="@style/LinkButtonStyle" />
+                android:text="Spacing" />
 
-            <View
-                style="@style/DividerStyle" />
+            <View style="@style/DividerStyle" />
 
             <Button
+                style="@style/LinkButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Postiion"
-                style="@style/LinkButtonStyle"/>
+                android:text="Advanced" />
 
-            <View
-                style="@style/DividerStyle"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Advanced Location"
-                style="@style/LinkButtonStyle"/>
-
-            <View
-                style="@style/DividerStyle"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Advanced Display"
-                style="@style/LinkButtonStyle"/>
-
-            <View
-                style="@style/DividerStyle"/>
+            <View style="@style/DividerStyle" />
 
         </LinearLayout>
     </ScrollView>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/fragment_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Border"
+                style="@style/LinkButtonStyle"/>
+
+            <View
+                style="@style/DividerStyle"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_adress_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="All Text"
+                    android:text="Picture"
+                    style="@style/HoveringTextBoxStyle"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_mock_click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Border Color"
+                style="@style/LinkButtonStyle"/>
+
+            <View
+                style="@style/DividerStyle"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

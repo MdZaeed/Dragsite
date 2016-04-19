@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Zoom" />
+                    android:text="Left Margin" />
 
                 <Spinner
                     android:layout_width="wrap_content"
@@ -38,61 +38,65 @@
             <View
                 style="@style/DividerStyle"/>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
 
-                <EditText
-                    android:id="@+id/et_adress_map"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Address"
-                    android:text="Dhaka, Bangladesh"
-                    style="@style/HoveringTextBoxStyle"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_weight="1"
+                    android:text="Top Margin" />
 
-            <Button
-                android:id="@+id/btn_mock_click"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Spacing"
-                style="@style/LinkButtonStyle"/>
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/zoom_numbers" />
+            </LinearLayout>
 
             <View
                 style="@style/DividerStyle"/>
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Height and Width"
-                style="@style/LinkButtonStyle" />
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
 
-            <View
-                style="@style/DividerStyle" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Right Margin" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Postiion"
-                style="@style/LinkButtonStyle"/>
-
-            <View
-                style="@style/DividerStyle"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Advanced Location"
-                style="@style/LinkButtonStyle"/>
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/zoom_numbers" />
+            </LinearLayout>
 
             <View
                 style="@style/DividerStyle"/>
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Advanced Display"
-                style="@style/LinkButtonStyle"/>
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Bottom Margin" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/zoom_numbers" />
+            </LinearLayout>
 
             <View
                 style="@style/DividerStyle"/>

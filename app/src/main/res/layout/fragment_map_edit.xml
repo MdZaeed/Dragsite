@@ -72,6 +72,7 @@
                 style="@style/DividerStyle" />
 
             <Button
+                android:id="@+id/btn_map_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Postiion"

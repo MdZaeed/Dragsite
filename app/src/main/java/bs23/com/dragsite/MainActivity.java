@@ -28,8 +28,8 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, BaseEditFragment.OnViewReady {
-    public final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-    public final android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+    public android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+    public android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
 
     ScrollView mainScrollView;
     RelativeLayout mainRelativeLayout;
@@ -378,31 +378,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editOptionsDialog.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (child instanceof TextViewWidget) {
-                    Log.d("ajaira", "textview eita");
-
-                    if (bottomPaneLinearLayout.getChildCount() != 0) {
-                        bottomPaneLinearLayout.removeAllViews();
-                    }
-
-                    ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
-                    transaction.add(bottomPaneLinearLayout.getId(), imageEditFragment).commit();
-
-                } else if (child instanceof TitleViewWidget) {
-                    Log.d("hudai", "Title view eita");
-                } else if (child instanceof MapsWidget) {
-                    if (bottomPaneLinearLayout.getChildCount() != 0) {
-                        bottomPaneLinearLayout.removeAllViews();
-                    }
-
-                    MapEditFragment mapEditFragment = MapEditFragment.newInstance();
-                    mapEditFragment.setMapsWidget((MapsWidget) child);
-                    transaction.add(bottomPaneLinearLayout.getId(), mapEditFragment).commit();
-                    lastChild = child;
-                }
-
+                editLayoutAddition(child);
             }
         });
+    }
+
+    private void editLayoutAddition(BaseLinearLayout child)
+    {
+        if (child instanceof TextViewWidget) {
+            Log.d("ajaira", "textview eita");
+
+            if (bottomPaneLinearLayout.getChildCount() != 0) {
+                bottomPaneLinearLayout.removeAllViews();
+            }
+
+            ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
+            fragmentManager.beginTransaction().add(bottomPaneLinearLayout.getId(), imageEditFragment).commit();
+
+        } else if (child instanceof TitleViewWidget) {
+            Log.d("hudai", "Title view eita");
+        } else if (child instanceof MapsWidget) {
+            if (bottomPaneLinearLayout.getChildCount() != 0) {
+                bottomPaneLinearLayout.removeAllViews();
+            }
+
+            MapEditFragment mapEditFragment = MapEditFragment.newInstance();
+            mapEditFragment.setFragmentManager1(fragmentManager,bottomPaneLinearLayout);
+            mapEditFragment.setMapsWidget((MapsWidget) child);
+            fragmentManager.beginTransaction().add(bottomPaneLinearLayout.getId(), mapEditFragment).commit();
+            lastChild = child;
+        }
     }
 
     private void deleteNoticeDialog() {

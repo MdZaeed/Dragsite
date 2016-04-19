@@ -1,7 +1,5 @@
 package bs23.com.dragsite;
 
-import android.app.FragmentManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,7 +26,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, BaseEditFragment.OnViewReady {
     public android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-    public android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
 
     ScrollView mainScrollView;
     RelativeLayout mainRelativeLayout;
@@ -38,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayoutManager linearLayoutManager;
     RecommendedStoreAdapter recommendedStoreAdapter;
     BaseLinearLayout lastBaseLinearLayout;
-    LinearLayout bottomPaneLinearLayout;
+    private LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
     BaseLinearLayout lastChild;
     /*
@@ -68,20 +64,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.rl_main);
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
-        bottomPaneLinearLayout = (LinearLayout) findViewById(R.id.ll_pane_layour);
+        setBottomPaneLinearLayout((LinearLayout) findViewById(R.id.ll_pane_layour));
         mainRelativeLayout.setOnClickListener(this);
 
         chotokoro();
     }
 
     private void setUpSlidingPane() {
-        Button hideButton = (Button) bottomPaneLinearLayout.findViewById(R.id.btn_cancel_add_dialog);
+        Button hideButton = (Button) getBottomPaneLinearLayout().findViewById(R.id.btn_cancel_add_dialog);
         hideButton.setOnClickListener(this);
 /*
         mainRelativeLayout.setOnClickListener(this);
 */
 
-        recyclerView = (RecyclerView) bottomPaneLinearLayout.findViewById(R.id.rv_elements_list_add_dialog);
+        recyclerView = (RecyclerView) getBottomPaneLinearLayout().findViewById(R.id.rv_elements_list_add_dialog);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -130,12 +126,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void showElementsAddDialog(View view) {
-        if (bottomPaneLinearLayout.getChildCount() != 0) {
-            bottomPaneLinearLayout.removeAllViews();
+        if (getBottomPaneLinearLayout().getChildCount() != 0) {
+            getBottomPaneLinearLayout().removeAllViews();
         }
-        bottomPaneLinearLayout.addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
+        getBottomPaneLinearLayout().addView(LayoutInflater.from(this).inflate(R.layout.dialog_add_elements, null));
         setUpSlidingPane();
-        bottomPaneLinearLayout.post(new Runnable() {
+        getBottomPaneLinearLayout().post(new Runnable() {
             @Override
             public void run() {
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
@@ -146,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void hideBottomOptionMenu() {
-        if (bottomPaneLinearLayout.getChildCount() != 0) {
-            bottomPaneLinearLayout.removeAllViews();
+        if (getBottomPaneLinearLayout().getChildCount() != 0) {
+            getBottomPaneLinearLayout().removeAllViews();
         }
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
@@ -160,6 +156,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
         });
+    }
+
+    public LinearLayout getBottomPaneLinearLayout() {
+        return bottomPaneLinearLayout;
+    }
+
+    public void setBottomPaneLinearLayout(LinearLayout bottomPaneLinearLayout) {
+        this.bottomPaneLinearLayout = bottomPaneLinearLayout;
     }
 
     class MyDragListener implements View.OnDragListener {
@@ -388,24 +392,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (child instanceof TextViewWidget) {
             Log.d("ajaira", "textview eita");
 
-            if (bottomPaneLinearLayout.getChildCount() != 0) {
-                bottomPaneLinearLayout.removeAllViews();
+            if (getBottomPaneLinearLayout().getChildCount() != 0) {
+                getBottomPaneLinearLayout().removeAllViews();
             }
 
             ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
-            fragmentManager.beginTransaction().add(bottomPaneLinearLayout.getId(), imageEditFragment).commit();
+            fragmentManager.beginTransaction().add(getBottomPaneLinearLayout().getId(), imageEditFragment).commit();
 
         } else if (child instanceof TitleViewWidget) {
             Log.d("hudai", "Title view eita");
         } else if (child instanceof MapsWidget) {
-            if (bottomPaneLinearLayout.getChildCount() != 0) {
-                bottomPaneLinearLayout.removeAllViews();
+            if (getBottomPaneLinearLayout().getChildCount() != 0) {
+                getBottomPaneLinearLayout().removeAllViews();
             }
 
             MapEditFragment mapEditFragment = MapEditFragment.newInstance();
-            mapEditFragment.setFragmentManager1(fragmentManager,bottomPaneLinearLayout);
+            mapEditFragment.setFragmentManager1(fragmentManager);
             mapEditFragment.setMapsWidget((MapsWidget) child);
-            fragmentManager.beginTransaction().add(bottomPaneLinearLayout.getId(), mapEditFragment).commit();
+            fragmentManager.beginTransaction().add(getBottomPaneLinearLayout().getId(), mapEditFragment).commit();
             lastChild = child;
         }
     }

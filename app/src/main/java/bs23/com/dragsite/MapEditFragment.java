@@ -25,7 +25,6 @@ public class MapEditFragment extends BaseEditFragment {
     private MapsWidget mapsWidget;
     private Spinner zoomSpinner;
     private Button positionButton;
-    LinearLayout linearLayout;
 
     public static MapEditFragment newInstance() {
         return new MapEditFragment();
@@ -56,7 +55,7 @@ public class MapEditFragment extends BaseEditFragment {
         positionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager1.beginTransaction().setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0).replace(linearLayout.getId(), ImageEditFragment.newInstance()).addToBackStack(null).commit();
+                fragmentManager1.beginTransaction().setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0).replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), ImageEditFragment.newInstance()).addToBackStack(null).commit();
             }
         });
 
@@ -106,8 +105,7 @@ public class MapEditFragment extends BaseEditFragment {
         return fragmentManager1;
     }
 
-    public void setFragmentManager1(android.support.v4.app.FragmentManager fragmentManager,LinearLayout linearLayout) {
+    public void setFragmentManager1(android.support.v4.app.FragmentManager fragmentManager) {
         this.fragmentManager1 = fragmentManager;
-        this.linearLayout=linearLayout;
     }
 }

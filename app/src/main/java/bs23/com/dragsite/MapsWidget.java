@@ -89,7 +89,7 @@ public class MapsWidget extends BaseLinearLayout {
         googleMap.getUiSettings().setZoomControlsEnabled(enabled);
     }
 
-    public void changeZoom(float zoom)
+    public void setZoom(float zoom)
     {
 /*        CameraPosition cameraPosition=googleMap.getCameraPosition();
         cameraPosition.zoom(zoom);

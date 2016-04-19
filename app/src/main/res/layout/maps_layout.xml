@@ -13,7 +13,7 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/main_map_view"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="250dp"
         android:clickable="true"
         android:focusable="true" />
 

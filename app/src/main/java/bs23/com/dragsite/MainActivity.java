@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deleteNoticeDialog();
     }
 
-    private void hideBottomOptionMenu() {
+    public void hideBottomOptionMenu() {
         if (bottomPaneLinearLayout.getChildCount() != 0) {
             bottomPaneLinearLayout.removeAllViews();
         }

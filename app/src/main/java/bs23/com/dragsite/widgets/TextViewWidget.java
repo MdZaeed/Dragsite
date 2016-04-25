@@ -16,7 +16,7 @@ public class TextViewWidget extends BaseLinearLayout {
 
     public void addContents()
     {
-        super.addView(LayoutInflater.from(context).inflate(R.layout.text_view,null),new ViewGroup.LayoutParams(
+        super.addView(LayoutInflater.from(context).inflate(R.layout.widget_text_view,null),new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 

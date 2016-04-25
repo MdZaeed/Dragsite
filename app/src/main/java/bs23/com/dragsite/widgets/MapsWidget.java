@@ -33,7 +33,7 @@ public class MapsWidget extends BaseLinearLayout {
 
     public void addContents()
     {
-        addView(LayoutInflater.from(context).inflate(R.layout.maps_layout, null), new ViewGroup.LayoutParams(
+        addView(LayoutInflater.from(context).inflate(R.layout.widget_map, null), new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 

@@ -394,7 +394,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         editOptionsDialog.setLayoutParams(params);
 
+/*
         child.setBackgroundResource(R.drawable.dark_blue_border_transparent_background);
+*/
         editOptionsDialog.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

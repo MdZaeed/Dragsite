@@ -17,7 +17,7 @@ public class TitleViewWidget extends BaseLinearLayout {
     }
     public void addContents()
     {
-        super.addView(LayoutInflater.from(context).inflate(R.layout.title_view,null),new ViewGroup.LayoutParams(
+        super.addView(LayoutInflater.from(context).inflate(R.layout.widget_title_view,null),new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 

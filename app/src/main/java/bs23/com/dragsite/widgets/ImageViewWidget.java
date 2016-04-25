@@ -20,7 +20,7 @@ public class ImageViewWidget extends BaseLinearLayout {
 
     public void addContents()
     {
-        super.addView(LayoutInflater.from(context).inflate(R.layout.image_view, null), new ViewGroup.LayoutParams(
+        super.addView(LayoutInflater.from(context).inflate(R.layout.widget_image_view, null), new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 

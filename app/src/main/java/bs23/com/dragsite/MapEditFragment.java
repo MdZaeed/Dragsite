@@ -25,6 +25,7 @@ public class MapEditFragment extends BaseEditFragment {
     private MapsWidget mapsWidget;
     private Spinner zoomSpinner;
     private Button positionButton;
+    private Button hideDialogButton;
 
     public static MapEditFragment newInstance() {
         return new MapEditFragment();
@@ -51,13 +52,14 @@ public class MapEditFragment extends BaseEditFragment {
         adressEditText=(EditText) view.findViewById(R.id.et_adress_map);
         mockButton=(Button) view.findViewById(R.id.btn_mock_click);
         positionButton=(Button) view.findViewById(R.id.btn_map_position);
+        hideDialogButton=(Button) view.findViewById(R.id.btn_cancel_add_dialog);
 
         positionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageEditFragment imageEditFragment=ImageEditFragment.newInstance();
-                imageEditFragment.setFragmentManager1(fragmentManager1);
-                fragmentManager1.beginTransaction().setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0).replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), imageEditFragment).addToBackStack("null").commit();
+                MapEditPositionFragment mapEditPositionFragment=MapEditPositionFragment.newInstance();
+                mapEditPositionFragment.setFragmentManager1(fragmentManager1);
+                fragmentManager1.beginTransaction().setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0).replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), mapEditPositionFragment).addToBackStack("null").commit();
             }
         });
 
@@ -75,6 +77,14 @@ public class MapEditFragment extends BaseEditFragment {
                 mapsWidget.setPositionByAddress(adressEditText.getText().toString());
             }
         });
+
+/*        hideDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).hideBottomOptionMenu();
+
+            }
+        });*/
 
         setUpZoomListener();
     }

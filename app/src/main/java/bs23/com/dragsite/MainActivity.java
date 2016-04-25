@@ -1,6 +1,7 @@
 package bs23.com.dragsite;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, BaseEditFragment.OnViewReady {
     public android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
     BaseLinearLayout lastChild;
+    List<Fragment> fragmentList;
     /*
     LatLng dhaka;
 */
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_up_panel);
         setBottomPaneLinearLayout((LinearLayout) findViewById(R.id.ll_pane_layour));
         mainRelativeLayout.setOnClickListener(this);
+        fragmentList=new ArrayList<>();
 
         chotokoro();
     }
@@ -383,6 +387,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 editLayoutAddition(child);
+                deleteNoticeDialog();
             }
         });
     }
@@ -392,6 +397,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int count = fragmentManager.getBackStackEntryCount();
         for(int i = 0; i < count; i++) {
             fragmentManager.popBackStack();
+        }
+
+        for (Fragment frag: fragmentList) {
+            fragmentManager.beginTransaction().remove(frag).commit();
         }
 
         if (child instanceof TextViewWidget) {
@@ -412,10 +421,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             MapEditFragment mapEditFragment = MapEditFragment.newInstance();
+            fragmentManager.beginTransaction().add(getBottomPaneLinearLayout().getId(), mapEditFragment).commit();
             mapEditFragment.setFragmentManager1(fragmentManager);
             mapEditFragment.setMapsWidget((MapsWidget) child);
-            fragmentManager.beginTransaction().add(getBottomPaneLinearLayout().getId(), mapEditFragment).commit();
             lastChild = child;
+            fragmentList.add(mapEditFragment);
         }
     }
 

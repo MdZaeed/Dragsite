@@ -1,22 +1,22 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.widgets;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+
+import bs23.com.dragsite.R;
 
 
-public class TitleViewWidget extends BaseLinearLayout {
-
+public class TextViewWidget extends BaseLinearLayout {
     Context context;
-
-    public TitleViewWidget(Context context) {
+    public TextViewWidget(Context context) {
         super(context);
         this.context = context;
     }
+
     public void addContents()
     {
-        super.addView(LayoutInflater.from(context).inflate(R.layout.title_view,null),new ViewGroup.LayoutParams(
+        super.addView(LayoutInflater.from(context).inflate(R.layout.text_view,null),new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 

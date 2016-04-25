@@ -1,24 +1,24 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.widgets;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+
+import bs23.com.dragsite.R;
 
 /**
  * Created by BrainStation on 4/4/16.
  */
-public class GalleryViewWidget extends BaseLinearLayout {
+public class ButtonViewWidget extends BaseLinearLayout {
 
     Context context;
-    public GalleryViewWidget(Context context) {
+    public ButtonViewWidget(Context context) {
         super(context);
-        this.context = context;
+        this.context=context;
     }
-
     public void addContents()
     {
-        super.addView(LayoutInflater.from(context).inflate(R.layout.gallery_layout,null),new ViewGroup.LayoutParams(
+        super.addView(LayoutInflater.from(context).inflate(R.layout.button_view,null),new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 

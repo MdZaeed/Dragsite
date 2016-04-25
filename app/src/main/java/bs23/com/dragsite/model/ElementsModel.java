@@ -1,4 +1,4 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.model;
 
 /**
  * Created by BS-86 on 4/1/2016.

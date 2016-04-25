@@ -1,4 +1,4 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.fragments;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.widgets;
 
 import android.content.Context;
 import android.view.LayoutInflater;

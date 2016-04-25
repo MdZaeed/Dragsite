@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import bs23.com.dragsite.model.ElementsModel;
+
 /**
  * Created by Ashraful on 3/3/2016.
  */

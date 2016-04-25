@@ -1,4 +1,4 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.api;
 
 import bs23.com.dragsite.model.LocationResponse;
 import retrofit.Call;

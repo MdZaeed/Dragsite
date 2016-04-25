@@ -1,10 +1,8 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.widgets;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,7 +11,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import bs23.com.dragsite.model.Location;
+import bs23.com.dragsite.api.GeoCodingRestAdapter;
+import bs23.com.dragsite.R;
 import bs23.com.dragsite.model.LocationResponse;
 import retrofit.Call;
 import retrofit.Callback;

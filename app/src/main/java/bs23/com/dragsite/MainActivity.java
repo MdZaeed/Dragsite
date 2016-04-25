@@ -26,6 +26,18 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import bs23.com.dragsite.fragments.BaseEditFragment;
+import bs23.com.dragsite.fragments.ImageEditFragment;
+import bs23.com.dragsite.fragments.MapEditFragment;
+import bs23.com.dragsite.model.ElementsModel;
+import bs23.com.dragsite.widgets.BaseLinearLayout;
+import bs23.com.dragsite.widgets.ButtonViewWidget;
+import bs23.com.dragsite.widgets.GalleryViewWidget;
+import bs23.com.dragsite.widgets.ImageViewWidget;
+import bs23.com.dragsite.widgets.MapsWidget;
+import bs23.com.dragsite.widgets.TextViewWidget;
+import bs23.com.dragsite.widgets.TitleViewWidget;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, BaseEditFragment.OnViewReady {
     public android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 

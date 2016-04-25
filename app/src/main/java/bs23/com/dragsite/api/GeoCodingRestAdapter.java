@@ -1,4 +1,4 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.api;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;

@@ -1,10 +1,10 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.widgets;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+
+import bs23.com.dragsite.R;
 
 /**
  * Created by BS-86 on 4/1/2016.

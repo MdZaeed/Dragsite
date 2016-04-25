@@ -1,9 +1,11 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
+
+import bs23.com.dragsite.R;
 
 /**
  * Created by BrainStation on 4/15/16.

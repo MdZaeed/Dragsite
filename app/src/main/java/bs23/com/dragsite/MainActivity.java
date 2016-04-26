@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditOptionsDialog editOptionsDialog;
     BaseLinearLayout lastChild;
     List<Fragment> fragmentList;
+    BaseLinearLayout foregroundDrawn;
     /*
     LatLng dhaka;
 */
@@ -130,13 +131,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_cancel_add_dialog:
-                hideBottomOptionMenu();
-                break;
-
             case R.id.rl_main:
                 hideBottomOptionMenu();
-                deleteNoticeDialog();
+                deleteNoticeDialog(foregroundDrawn);
                 break;
         }
     }
@@ -154,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        deleteNoticeDialog();
+        deleteNoticeDialog(foregroundDrawn);
     }
 
     public void hideBottomOptionMenu() {
@@ -382,9 +379,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void showNoticeDialog(final BaseLinearLayout child) {
 
         if (editOptionsDialog != null) {
-            deleteNoticeDialog();
+            deleteNoticeDialog(foregroundDrawn);
         }
 
+        foregroundDrawn=child;
         editOptionsDialog = new EditOptionsDialog(this);
         ViewCompat.setElevation(editOptionsDialog, 20);
         mainRelativeLayout.addView(editOptionsDialog);
@@ -393,6 +391,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.addRule(RelativeLayout.ABOVE, child.getId());
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         editOptionsDialog.setLayoutParams(params);
+        child.drawForegroundRectangle();
 
 /*
         child.setBackgroundResource(R.drawable.dark_blue_border_transparent_background);
@@ -401,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 editLayoutAddition(child);
-                deleteNoticeDialog();
+                deleteNoticeDialog(child);
             }
         });
     }
@@ -425,7 +424,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
-            fragmentManager.beginTransaction().add(getBottomPaneLinearLayout().getId(), imageEditFragment).commit();
+            fragmentManager.beginTransaction()
+                    .add(getBottomPaneLinearLayout().getId(), imageEditFragment, "imageEdit")
+                    .commit();
 
         } else if (child instanceof TitleViewWidget) {
             Log.d("hudai", "Title view eita");
@@ -435,7 +436,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             MapEditFragment mapEditFragment = MapEditFragment.newInstance();
-            fragmentManager.beginTransaction().add(getBottomPaneLinearLayout().getId(), mapEditFragment).commit();
+            fragmentManager.beginTransaction()
+                    .add(getBottomPaneLinearLayout().getId(), mapEditFragment, "mapEdit")
+                    .commit();
             mapEditFragment.setFragmentManager1(fragmentManager);
             mapEditFragment.setMapsWidget((MapsWidget) child);
             lastChild = child;
@@ -443,12 +446,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void deleteNoticeDialog() {
+    private void deleteNoticeDialog(BaseLinearLayout child) {
+
+        if (child!=null) {
+            child.drawForegroundRectangle();
+        }
 
         if (editOptionsDialog != null) {
             mainRelativeLayout.removeView(editOptionsDialog);
             editOptionsDialog = null;
         }
+
+        foregroundDrawn=null;
     }
 
     private void handleMapCreation(MapsWidget mapsWidget) {

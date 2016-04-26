@@ -13,4 +13,9 @@ public interface MapApi {
     @GET("/maps/api/geocode/json")
     Call<LocationResponse> getLatAndLng(@Query("address") String address,
                                       @Query("key") String key);
+
+
+    @GET("/maps/api/geocode/json")
+    Call<LocationResponse> getAddress(@Query("latlng") String address,
+                                        @Query("key") String key);
 }

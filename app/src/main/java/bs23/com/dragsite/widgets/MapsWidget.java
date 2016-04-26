@@ -25,6 +25,7 @@ import retrofit.Retrofit;
 public class MapsWidget extends BaseLinearLayout {
     static Context context;
     private GoogleMap googleMap;
+    private String address;
 
     public MapsWidget(Context context) {
         super(context);
@@ -159,11 +160,41 @@ public class MapsWidget extends BaseLinearLayout {
         });
     }
 
+    public String getAddressByPosition(LatLng latLng)
+    {
+        GeoCodingRestAdapter geoCodingRestAdapter=new GeoCodingRestAdapter();
+        Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getAddress(latLng.latitude+","+latLng.longitude, context.getResources().getString(R.string.google_maps_key));
+        call.enqueue(new Callback<LocationResponse>() {
+            @Override
+            public void onResponse(Response<LocationResponse> response, Retrofit retrofit) {
+                if(!response.body().getStatus().equals("ZERO_RESULTS")) {
+                    address=response.body().getResults().get(0).getFormatted_address();
+                }
+                return;
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
+        return address;
+    }
+
     public GoogleMap getGoogleMap() {
         return googleMap;
     }
 
     public void setGoogleMap(GoogleMap googleMap) {
         this.googleMap = googleMap;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

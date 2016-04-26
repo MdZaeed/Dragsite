@@ -26,7 +26,7 @@ public class MapEditFragment extends BaseEditFragment {
     private MapsWidget mapsWidget;
     private Spinner zoomSpinner;
     private Button positionButton;
-    private Button hideDialogButton;
+    private Button advancedPositionButton;
 
     public static MapEditFragment newInstance() {
         return new MapEditFragment();
@@ -53,14 +53,23 @@ public class MapEditFragment extends BaseEditFragment {
         adressEditText=(EditText) view.findViewById(R.id.et_adress_map);
         mockButton=(Button) view.findViewById(R.id.btn_mock_click);
         positionButton=(Button) view.findViewById(R.id.btn_map_position);
-        hideDialogButton=(Button) view.findViewById(R.id.btn_cancel_add_dialog);
+        advancedPositionButton=(Button) view.findViewById(R.id.btn_map_advanced_location);
+
+
+/*
+        adressEditText.setText(mapsWidget.getAddressByPosition(mapsWidget.getGoogleMap().getCameraPosition().target));
+*/
 
         positionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MapEditPositionFragment mapEditPositionFragment=MapEditPositionFragment.newInstance();
                 mapEditPositionFragment.setFragmentManager1(fragmentManager1);
-                fragmentManager1.beginTransaction().setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0).replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), mapEditPositionFragment).addToBackStack("null").commit();
+                fragmentManager1.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
+                        .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), mapEditPositionFragment)
+                        .addToBackStack("null")
+                        .commit();
             }
         });
 
@@ -75,7 +84,20 @@ public class MapEditFragment extends BaseEditFragment {
         adressEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                mapsWidget.setPositionByAddress(adressEditText.getText().toString());
+                getMapsWidget().setPositionByAddress(adressEditText.getText().toString());
+            }
+        });
+
+        advancedPositionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapEditAdvancedLocationFragment mapEditAdvancedPossitionFragment= MapEditAdvancedLocationFragment.newInstance();
+                mapEditAdvancedPossitionFragment.setFragmentManager1(fragmentManager1);
+                fragmentManager1.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
+                        .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), mapEditAdvancedPossitionFragment)
+                        .addToBackStack("null")
+                        .commit();
             }
         });
 
@@ -92,11 +114,11 @@ public class MapEditFragment extends BaseEditFragment {
 
     private void setUpZoomListener()
     {
-        zoomSpinner.setSelection((int) mapsWidget.getZoom(),true);
+        zoomSpinner.setSelection((int) getMapsWidget().getZoom(),true);
         zoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mapsWidget.setZoom(position);
+                getMapsWidget().setZoom(position);
             }
 
             @Override

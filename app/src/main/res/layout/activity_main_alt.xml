@@ -15,7 +15,7 @@
         android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_green_light"
+        android:background="@android:color/white"
         android:fillViewport="true"
         android:orientation="vertical">
 
@@ -23,7 +23,9 @@
         <RelativeLayout
             android:id="@+id/rl_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
         </RelativeLayout>
 

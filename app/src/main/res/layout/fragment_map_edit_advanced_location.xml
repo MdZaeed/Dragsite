@@ -15,6 +15,7 @@
         android:paddingRight="10dp">
 
         <EditText
+            android:id="@+id/et_map_longitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Longitude"
@@ -31,6 +32,7 @@
         android:paddingRight="10dp">
 
         <EditText
+            android:id="@+id/et_map_latitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Latitude"

@@ -23,12 +23,14 @@ public abstract class BaseSecondLevelEditFragment extends BaseEditFragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
-                fragmentManager1.beginTransaction().setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0).replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), ).addToBackStack(null).commit();
-*/
-                getFragmentManager1().popBackStack();
+                backButtonClick();
             }
         });
+    }
+
+    protected void backButtonClick()
+    {
+        getFragmentManager1().popBackStack();
     }
 
     public android.support.v4.app.FragmentManager getFragmentManager1() {

@@ -217,86 +217,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case DragEvent.ACTION_DROP:
                     View view = (View) event.getLocalState();
-                    final BaseLinearLayout customLayout;
+                    if (view instanceof TextView) {                   final BaseLinearLayout customLayout;
 
-                    if (((TextView) view).getText().equals("Title")) {
-                        customLayout = new TitleViewWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Text")) {
-                        customLayout = new TextViewWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Image")) {
-                        customLayout = new ImageViewWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Gallery")) {
-                        customLayout = new GalleryViewWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Slideshow")) {
-                        customLayout = null;
-                        //Not yet created
-                    } else if (((TextView) view).getText().equals("Map")) {
-                        customLayout = new MapsWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                        currentMapsWidget = (MapsWidget) customLayout;
-                        handleMapCreation((MapsWidget) customLayout);
-                    } else if (((TextView) view).getText().equals("Divider")) {
-                        customLayout = new DividerWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Spacer")) {
-                        customLayout = new SpacerWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Button")) {
-                        customLayout = new ButtonWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Search Box")) {
-                        customLayout = new SearchBoxWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("HD Video")) {
-                        customLayout = new HdVideoWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Audio")) {
-                        customLayout = new AudioWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Youtube")) {
-                        customLayout = new YoutubeWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("File")) {
-                        customLayout = new FileWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Blockquote")) {
-                        customLayout = new BlockquoteWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Social Icons")) {
-                        customLayout = new SocialIconsWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else if (((TextView) view).getText().equals("Products")) {
-                        customLayout = new ProductsWidget(getApplicationContext());
-                        addNewElementsOfType(v, customLayout, event);
-                    } else {
-                        customLayout = null;
-                    }
-                    if (view instanceof TextView) {
-                        final BaseLinearLayout customLayout;
-                        if (((TextView) view).getText().equals("Text")) {
+                        if (((TextView) view).getText().equals("Title")) {
+                            customLayout = new TitleViewWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Text")) {
                             customLayout = new TextViewWidget(getApplicationContext());
                             addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Image")) {
                             customLayout = new ImageViewWidget(getApplicationContext());
                             addNewElementsOfType(v, customLayout, event);
-                        } else if (((TextView) view).getText().equals("Title")) {
-                            customLayout = new TitleViewWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
-                        } else if (((TextView) view).getText().equals("Button")) {
-                            customLayout = new ButtonViewWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Gallery")) {
                             customLayout = new GalleryViewWidget(getApplicationContext());
                             addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Slideshow")) {
+                            customLayout = null;
+                            //Not yet created
                         } else if (((TextView) view).getText().equals("Map")) {
                             customLayout = new MapsWidget(getApplicationContext());
                             addNewElementsOfType(v, customLayout, event);
                             currentMapsWidget = (MapsWidget) customLayout;
                             handleMapCreation((MapsWidget) customLayout);
+                        } else if (((TextView) view).getText().equals("Divider")) {
+                            customLayout = new DividerWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Spacer")) {
+                            customLayout = new SpacerWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Button")) {
+                            customLayout = new ButtonWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Search Box")) {
+                            customLayout = new SearchBoxWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("HD Video")) {
+                            customLayout = new HdVideoWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Audio")) {
+                            customLayout = new AudioWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Youtube")) {
+                            customLayout = new YoutubeWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("File")) {
+                            customLayout = new FileWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Blockquote")) {
+                            customLayout = new BlockquoteWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Social Icons")) {
+                            customLayout = new SocialIconsWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Products")) {
+                            customLayout = new ProductsWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
                         } else {
                             customLayout = null;
                         }

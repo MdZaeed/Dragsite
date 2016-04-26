@@ -1,5 +1,6 @@
 package bs23.com.dragsite.widgets;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,7 +14,7 @@ import android.widget.LinearLayout;
 /**
  * Created by BS-86 on 4/4/2016.
  */
-public abstract class BaseLinearLayout extends LinearLayout {
+public abstract class BaseLinearLayout extends LinearLayout implements View.OnLongClickListener {
 
     private int aboveId = 0;
     View bottomView;
@@ -30,6 +31,8 @@ public abstract class BaseLinearLayout extends LinearLayout {
         bottomView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         super.addView(bottomView, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 20));
+
+        this.setOnLongClickListener(this);
     }
 
     public int getAboveId() {
@@ -110,5 +113,13 @@ public abstract class BaseLinearLayout extends LinearLayout {
         myPaint.setStrokeWidth(10);
         canvas.drawRect(this.getX(),this.getY(), this.getX()+this.getWidth(), this.getY()+this.getHeight(), myPaint);
     }*/
+
+    @Override
+    public boolean onLongClick(View v) {
+        ClipData data = ClipData.newPlainText("", "");
+        View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
+        v.startDrag(data, shadowBuilder, v, 0);
+        return true;
+    }
 
 }

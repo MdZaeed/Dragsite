@@ -24,7 +24,7 @@ import retrofit.Retrofit;
 /**
  * Created by BS-86 on 4/12/2016.
  */
-public class MapsWidget extends BaseLinearLayout implements View.OnLongClickListener {
+public class MapsWidget extends BaseLinearLayout {
     static Context context;
     private GoogleMap googleMap;
     private String address;
@@ -41,7 +41,6 @@ public class MapsWidget extends BaseLinearLayout implements View.OnLongClickList
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
-        this.setOnLongClickListener(this);
     }
 
     public void initialSetup()
@@ -191,14 +190,6 @@ public class MapsWidget extends BaseLinearLayout implements View.OnLongClickList
 
     public void setGoogleMap(GoogleMap googleMap) {
         this.googleMap = googleMap;
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        ClipData data = ClipData.newPlainText("", "");
-        View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
-        v.startDrag(data, shadowBuilder, v, 0);
-        return true;
     }
 
     public String getAddress() {

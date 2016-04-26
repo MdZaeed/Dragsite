@@ -16,9 +16,9 @@ public class SpacerWidget extends BaseLinearLayout {
 
     public void addContents()
     {
-        super.addView(LayoutInflater.from(context).inflate(R.layout.widget_divider,null),new ViewGroup.LayoutParams(
+        super.addView(LayoutInflater.from(context).inflate(R.layout.widget_spacer,null),new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+                40));
 
         addBottomVIew(context);
     }

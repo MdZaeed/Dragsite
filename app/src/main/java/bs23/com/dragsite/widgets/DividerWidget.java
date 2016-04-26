@@ -18,7 +18,7 @@ public class DividerWidget extends BaseLinearLayout {
     {
         super.addView(LayoutInflater.from(context).inflate(R.layout.widget_divider,null),new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+                40));
 
         addBottomVIew(context);
     }

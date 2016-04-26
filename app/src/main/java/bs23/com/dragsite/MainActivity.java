@@ -31,7 +31,7 @@ import bs23.com.dragsite.fragments.ImageEditFragment;
 import bs23.com.dragsite.fragments.MapEditFragment;
 import bs23.com.dragsite.model.ElementsModel;
 import bs23.com.dragsite.widgets.BaseLinearLayout;
-import bs23.com.dragsite.widgets.ButtonViewWidget;
+import bs23.com.dragsite.widgets.ButtonWidget;
 import bs23.com.dragsite.widgets.GalleryViewWidget;
 import bs23.com.dragsite.widgets.ImageViewWidget;
 import bs23.com.dragsite.widgets.MapsWidget;
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         customLayout = new TitleViewWidget(getApplicationContext());
                         addNewElementsOfType(v, customLayout, event);
                     } else if (((TextView) view).getText().equals("Button")) {
-                        customLayout = new ButtonViewWidget(getApplicationContext());
+                        customLayout = new ButtonWidget(getApplicationContext());
                         addNewElementsOfType(v, customLayout, event);
                     } else if (((TextView) view).getText().equals("Gallery")) {
                         customLayout = new GalleryViewWidget(getApplicationContext());

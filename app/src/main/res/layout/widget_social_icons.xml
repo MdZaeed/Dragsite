@@ -10,15 +10,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableTop="@drawable/ic_view_module_black_48dp"
-        android:paddingBottom="50dp"
-        android:paddingTop="50dp"
-        android:text="Add Image"
-        android:textColor="@android:color/holo_blue_dark" />
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:drawableLeft="@drawable/ic_share_black_48dp"
+        android:paddingBottom="25dp"
+        android:paddingTop="25dp"
+        android:text="Add Social Icons"
+        android:textColor="@android:color/holo_blue_dark"
+        android:gravity="center"/>
 
 </LinearLayout>

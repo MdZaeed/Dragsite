@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BaseLinearLayout lastBaseLinearLayout;
     private LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
-    BaseLinearLayout lastChild;
     List<Fragment> fragmentList;
     BaseLinearLayout foregroundDrawn;
     /*
@@ -276,15 +275,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else {
                         customLayout = null;
                     }
+                    if (view instanceof TextView) {
+                        final BaseLinearLayout customLayout;
+                        if (((TextView) view).getText().equals("Text")) {
+                            customLayout = new TextViewWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Image")) {
+                            customLayout = new ImageViewWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Title")) {
+                            customLayout = new TitleViewWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Button")) {
+                            customLayout = new ButtonViewWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Gallery")) {
+                            customLayout = new GalleryViewWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                        } else if (((TextView) view).getText().equals("Map")) {
+                            customLayout = new MapsWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
+                            currentMapsWidget = (MapsWidget) customLayout;
+                            handleMapCreation((MapsWidget) customLayout);
+                        } else {
+                            customLayout = null;
+                        }
 
-                    if (customLayout != null) {
-                        customLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                hideBottomOptionMenu();
-                                showNoticeDialog(customLayout);
-                            }
-                        });
+                        if (customLayout != null) {
+                            customLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    hideBottomOptionMenu();
+                                    showNoticeDialog(customLayout);
+                                }
+                            });
+                        }
+                    } else {
+                        replaceNewElementsOfType(v, (BaseLinearLayout) view, event);
                     }
 /*
                     Log.d("Up Goes the mountain", "Working drag dropped " + v);
@@ -311,6 +338,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
 
+    }
+
+    private void replaceNewElementsOfType(View v, BaseLinearLayout view, DragEvent event) {
+        setUpDragStartedViews(view);
+        mainRelativeLayout.removeView(view);
+        addElementsInRelativeLayout((ViewGroup) v, view, event);
+        setLayoutParameters(view);
+    }
+
+    private void setUpDragStartedViews(BaseLinearLayout view) {
+
+        BaseLinearLayout baseLinearLayout = null;
+        int belowId = ((RelativeLayout.LayoutParams) view.getLayoutParams()).getRules()[RelativeLayout.BELOW];
+        if(belowId!=0) {
+            baseLinearLayout = (BaseLinearLayout) findViewById(belowId);
+            baseLinearLayout.setAboveId(view.getAboveId());
+        }
+
+        if (view.getAboveId() == 0) {
+            lastBaseLinearLayout = baseLinearLayout;
+        }else {
+            BaseLinearLayout baseLinearLayout1 = (BaseLinearLayout) findViewById(view.getAboveId());
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) baseLinearLayout1.getLayoutParams();
+            layoutParams.addRule(RelativeLayout.BELOW, belowId);
+            baseLinearLayout1.setLayoutParams(layoutParams);
+        }
     }
 
     private void addElementsInRelativeLayout(ViewGroup droppedOnLayout, BaseLinearLayout childToBeAdded, DragEvent dragEvent) {
@@ -348,6 +401,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (aboveId == 0) {
                 lastBaseLinearLayout = childToBeAdded;
+                childToBeAdded.setAboveId(0);
             }
 
             return;
@@ -367,8 +421,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setUpBelowLayoutParameters(int layoutId, BaseLinearLayout child) {
-        BaseLinearLayout belowLinearLayout = null;
-        RelativeLayout.LayoutParams relaLayoutParamsOfBelow = null;
+        BaseLinearLayout belowLinearLayout;
+        RelativeLayout.LayoutParams relaLayoutParamsOfBelow;
         if (layoutId != 0) {
             belowLinearLayout = (BaseLinearLayout) this.findViewById(layoutId);
             relaLayoutParamsOfBelow = (RelativeLayout.LayoutParams) belowLinearLayout.getLayoutParams();
@@ -489,7 +543,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .commit();
             mapEditFragment.setFragmentManager1(fragmentManager);
             mapEditFragment.setMapsWidget((MapsWidget) child);
-            lastChild = child;
             fragmentList.add(mapEditFragment);
         }
     }

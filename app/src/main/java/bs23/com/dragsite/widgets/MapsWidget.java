@@ -1,7 +1,9 @@
 package bs23.com.dragsite.widgets;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,7 +24,7 @@ import retrofit.Retrofit;
 /**
  * Created by BS-86 on 4/12/2016.
  */
-public class MapsWidget extends BaseLinearLayout {
+public class MapsWidget extends BaseLinearLayout implements View.OnLongClickListener {
     static Context context;
     private GoogleMap googleMap;
     private String address;
@@ -39,6 +41,7 @@ public class MapsWidget extends BaseLinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
+        this.setOnLongClickListener(this);
     }
 
     public void initialSetup()
@@ -188,6 +191,14 @@ public class MapsWidget extends BaseLinearLayout {
 
     public void setGoogleMap(GoogleMap googleMap) {
         this.googleMap = googleMap;
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        ClipData data = ClipData.newPlainText("", "");
+        View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
+        v.startDrag(data, shadowBuilder, v, 0);
+        return true;
     }
 
     public String getAddress() {

@@ -16,6 +16,7 @@ public class MapEditAdvancedLocationFragment extends BaseSecondLevelEditFragment
 
     EditText longitudeEditText;
     EditText latitudeEditText;
+    MapEditFragment mapEditFragment;
 
     public static MapEditAdvancedLocationFragment newInstance() {
         return new MapEditAdvancedLocationFragment();
@@ -31,18 +32,20 @@ public class MapEditAdvancedLocationFragment extends BaseSecondLevelEditFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mapEditFragment=(MapEditFragment)getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
+
         longitudeEditText=(EditText) view.findViewById(R.id.et_map_longitude);
         latitudeEditText=(EditText) view.findViewById(R.id.et_map_latitude);
 
-        longitudeEditText.setText(((MapEditFragment)getFragmentManager1().findFragmentByTag("mapEdit")).getMapsWidget().getLongitude()+"");
-        latitudeEditText.setText(((MapEditFragment)getFragmentManager1().findFragmentByTag("mapEdit")).getMapsWidget().getLatitude()+"");
+        longitudeEditText.setText(mapEditFragment.getMapsWidget().getLongitude()+"");
+        latitudeEditText.setText(mapEditFragment.getMapsWidget().getLatitude()+"");
     }
 
     @Override
     protected void backButtonClick() {
         super.backButtonClick();
 
-        ((MapEditFragment)getFragmentManager1().findFragmentByTag("mapEdit")).getMapsWidget().setLongitude(Double.parseDouble(longitudeEditText.getText().toString()));
-        ((MapEditFragment)getFragmentManager1().findFragmentByTag("mapEdit")).getMapsWidget().setLatitude(Double.parseDouble(latitudeEditText.getText().toString()));
+        mapEditFragment.getMapsWidget().setLongitude(Double.parseDouble(longitudeEditText.getText().toString()));
+        mapEditFragment.getMapsWidget().setLatitude(Double.parseDouble(latitudeEditText.getText().toString()));
     }
 }

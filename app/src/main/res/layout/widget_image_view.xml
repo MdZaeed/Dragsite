@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_view_module_black_48dp"
-        android:paddingBottom="100dp"
-        android:paddingTop="100dp"
+        android:paddingBottom="50dp"
+        android:paddingTop="50dp"
         android:text="Add Image"
         android:textColor="@android:color/holo_blue_dark" />
 

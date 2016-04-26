@@ -17,6 +17,8 @@ import bs23.com.dragsite.R;
  */
 public abstract class BaseEditFragment extends Fragment {
 
+    public static String FRAGMENT_NAME="common_name";
+
     protected OnViewReady mCallback;
     Button backButton;
 

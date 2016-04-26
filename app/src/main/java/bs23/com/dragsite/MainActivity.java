@@ -89,7 +89,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setUpSlidingPane() {
         Button hideButton = (Button) getBottomPaneLinearLayout().findViewById(R.id.btn_cancel_add_dialog);
-        hideButton.setOnClickListener(this);
+        hideButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideBottomOptionMenu();
+            }
+        });
 /*
         mainRelativeLayout.setOnClickListener(this);
 */
@@ -425,7 +430,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
             fragmentManager.beginTransaction()
-                    .add(getBottomPaneLinearLayout().getId(), imageEditFragment, "imageEdit")
+                    .add(getBottomPaneLinearLayout().getId(), imageEditFragment, BaseEditFragment.FRAGMENT_NAME)
                     .commit();
 
         } else if (child instanceof TitleViewWidget) {
@@ -437,7 +442,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             MapEditFragment mapEditFragment = MapEditFragment.newInstance();
             fragmentManager.beginTransaction()
-                    .add(getBottomPaneLinearLayout().getId(), mapEditFragment, "mapEdit")
+                    .add(getBottomPaneLinearLayout().getId(), mapEditFragment, BaseEditFragment.FRAGMENT_NAME)
                     .commit();
             mapEditFragment.setFragmentManager1(fragmentManager);
             mapEditFragment.setMapsWidget((MapsWidget) child);

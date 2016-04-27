@@ -50,7 +50,9 @@
                     android:layout_height="wrap_content"
                     android:hint="Address"
                     tools:text="Dhaka, Bangladesh"
-                    style="@style/HoveringTextBoxStyle"/>
+                    style="@style/HoveringTextBoxStyle"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <Button

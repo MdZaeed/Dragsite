@@ -2,6 +2,8 @@ package bs23.com.dragsite.widgets;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 
 import bs23.com.dragsite.R;
@@ -22,5 +24,26 @@ public class TitleViewWidget extends BaseLinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent (MotionEvent ev) {
+        // Do your calcluations
+
+
+
+/*
+        return super.dispatchTouchEvent(ev);
+*/
+
+
+        switch (ev.getAction())
+        {
+            case MotionEvent.ACTION_UP:
+                this.performClick();
+                break;
+        }
+
+        return true;
     }
 }

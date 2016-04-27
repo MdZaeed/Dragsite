@@ -1,5 +1,6 @@
 package bs23.com.dragsite;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
@@ -12,7 +13,10 @@ import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setBottomPaneLinearLayout((LinearLayout) findViewById(R.id.ll_pane_layour));
         mainRelativeLayout.setOnClickListener(this);
         fragmentList = new ArrayList<>();
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         chotokoro();
     }
@@ -217,66 +222,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case DragEvent.ACTION_DROP:
                     View view = (View) event.getLocalState();
-                    if (view instanceof TextView) {                   final BaseLinearLayout customLayout;
+                    if (view instanceof TextView) {
+                        final BaseLinearLayout customLayout;
 
                         if (((TextView) view).getText().equals("Title")) {
                             customLayout = new TitleViewWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Text")) {
                             customLayout = new TextViewWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Image")) {
                             customLayout = new ImageViewWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Gallery")) {
                             customLayout = new GalleryViewWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Slideshow")) {
                             customLayout = null;
                             //Not yet created
                         } else if (((TextView) view).getText().equals("Map")) {
                             customLayout = new MapsWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                             currentMapsWidget = (MapsWidget) customLayout;
                             handleMapCreation((MapsWidget) customLayout);
                         } else if (((TextView) view).getText().equals("Divider")) {
                             customLayout = new DividerWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Spacer")) {
                             customLayout = new SpacerWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Button")) {
                             customLayout = new ButtonWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Search Box")) {
                             customLayout = new SearchBoxWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("HD Video")) {
                             customLayout = new HdVideoWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Audio")) {
                             customLayout = new AudioWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Youtube")) {
                             customLayout = new YoutubeWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("File")) {
                             customLayout = new FileWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Blockquote")) {
                             customLayout = new BlockquoteWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Social Icons")) {
                             customLayout = new SocialIconsWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else if (((TextView) view).getText().equals("Products")) {
                             customLayout = new ProductsWidget(getApplicationContext());
-                            addNewElementsOfType(v, customLayout, event);
                         } else {
                             customLayout = null;
                         }
 
                         if (customLayout != null) {
+                            addNewElementsOfType(v, customLayout, event);
                             customLayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -493,25 +484,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fragmentManager.beginTransaction().remove(frag).commit();
         }
 
-        if (child instanceof TextViewWidget) {
-            Log.d("ajaira", "textview eita");
+        if (getBottomPaneLinearLayout().getChildCount() != 0) {
+            getBottomPaneLinearLayout().removeAllViews();
+        }
 
-            if (getBottomPaneLinearLayout().getChildCount() != 0) {
-                getBottomPaneLinearLayout().removeAllViews();
-            }
-
-            ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
-            fragmentManager.beginTransaction()
-                    .add(getBottomPaneLinearLayout().getId(), imageEditFragment, BaseEditFragment.FRAGMENT_NAME)
-                    .commit();
-
-        } else if (child instanceof TitleViewWidget) {
+        if (child instanceof TitleViewWidget) {
+            EditText editText= (EditText) child.findViewById(R.id.et_title);
+            setEditTextEdit(editText);
+        } else if (child instanceof TextViewWidget) {
             Log.d("hudai", "Title view eita");
         } else if (child instanceof MapsWidget) {
-            if (getBottomPaneLinearLayout().getChildCount() != 0) {
-                getBottomPaneLinearLayout().removeAllViews();
-            }
-
             MapEditFragment mapEditFragment = MapEditFragment.newInstance();
             fragmentManager.beginTransaction()
                     .add(getBottomPaneLinearLayout().getId(), mapEditFragment, BaseEditFragment.FRAGMENT_NAME)
@@ -520,6 +502,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mapEditFragment.setMapsWidget((MapsWidget) child);
             fragmentList.add(mapEditFragment);
         }
+    }
+
+    private void setEditTextEdit(EditText editText)
+    {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.setCursorVisible(true);
+        editText.requestFocus();
+        InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
     }
 
     private void deleteNoticeDialog(BaseLinearLayout child) {
@@ -537,18 +529,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void handleMapCreation(MapsWidget mapsWidget) {
-    /*
-        MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.main_map_view);
-        mapFragment.getMapAsync(this);*/
+
         mapView = (MapView) mapsWidget.findViewById(R.id.main_map_view);
-/*        mapView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d("Touched","Yes");
-                return false;
-            }
-        });*/
+
         mapView.onCreate(savedInstanceState);
         if (mapView != null) {
             mapView.getMapAsync(this);
@@ -558,76 +541,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         currentMapsWidget.setGoogleMap(googleMap);
-/*        if(maps==null)
-        {
-            maps=new ArrayList<>();
-        }*/
-/*
-        maps.add(googleMap);
-*/
+
         mapView.onResume();
     }
-
-    public void openMaps(View view) {
-/*        changeZoom(0, (float) 5.0);
-
-        Log.d("Lati and Long: ", getLatitude(0) + " and " + getLongitude(0));
-        setLatitude(0, 25.0);
-*//*
-        setLongitude(0,95.0);
-*/
-/*
-        setPositionByAddress(0,"Jhenaidah");
-*/
-        currentMapsWidget.setPositionByAddress("Jhenaidah");
-    }
-
-/*    private void setPositionByAddress(int positionOfTheMap,String address)
-    {
-        MapsWidget.setAddress(maps.get(positionOfTheMap), address);
-    }
-
-    private float getZoom(int positionOfTheMap)
-    {
-        return MapsWidget.getZoom(maps.get(positionOfTheMap));
-    }
-
-    private void setMarkerShowing(int positionOfTheMap,boolean show)
-    {
-        MapsWidget.setMarkerShowing(maps.get(positionOfTheMap),show);
-
-    }
-
-    private void setZoomControlEnabled(int positionOfTheMap,boolean enabled)
-    {
-        MapsWidget.setZoomControlEnabled(maps.get(positionOfTheMap),enabled);
-    }
-
-    private void changeZoom(int positionOfTheMap, float zoom)
-    {
-        MapsWidget.changeZoom(maps.get(positionOfTheMap),zoom);
-    }
-
-    public Double getLatitude(int positionOfTheMap)
-    {
-        return MapsWidget.getLatitude(maps.get(positionOfTheMap));
-    }
-
-    public Double getLongitude(int positionOfTheMap)
-    {
-        return MapsWidget.getLongitude(maps.get(positionOfTheMap));
-    }
-
-    public void setLatitude(int positionOfTheMap,Double newLatitude)
-    {
-        MapsWidget.setLatitude(maps.get(positionOfTheMap),newLatitude);
-    }
-
-    public void setLongitude(int positionOfTheMap,Double newLongitude)
-    {
-        MapsWidget.setLongitude(maps.get(positionOfTheMap),newLongitude);
-    }*/
-
 
     @Override
     protected void onResume() {

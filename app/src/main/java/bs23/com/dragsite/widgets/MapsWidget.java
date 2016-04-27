@@ -147,7 +147,7 @@ public class MapsWidget extends BaseLinearLayout {
         googleMap.addMarker(endMarkerOption);
     }
 
-    public void setPositionByAddress(String setAddress)
+    public void setPositionByAddress(final String setAddress)
     {
         GeoCodingRestAdapter geoCodingRestAdapter=new GeoCodingRestAdapter();
         Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getLatAndLng(setAddress, context.getResources().getString(R.string.google_maps_key));
@@ -156,6 +156,7 @@ public class MapsWidget extends BaseLinearLayout {
             public void onResponse(Response<LocationResponse> response, Retrofit retrofit) {
                 if(!response.body().getStatus().equals("ZERO_RESULTS")) {
                     setLatitudeAndLongitude(response.body().getResults().get(0).getGeometry().getLocation().getLat(), response.body().getResults().get(0).getGeometry().getLocation().getLng());
+                    address=setAddress;
                 }
                 return;
             }

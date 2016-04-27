@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,6 +59,7 @@ public class MapEditFragment extends BaseEditFragment {
         advancedPositionButton=(Button) view.findViewById(R.id.btn_map_advanced_location);
 
         adressEditText.setText(mapsWidget.getAddress());
+        adressEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         positionButton.setOnClickListener(new View.OnClickListener() {
             @Override

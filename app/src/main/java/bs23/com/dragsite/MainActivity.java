@@ -565,7 +565,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 /*
         maps.add(googleMap);
 */
-        currentMapsWidget.initialSetup();
         mapView.onResume();
     }
 

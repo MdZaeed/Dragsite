@@ -2,6 +2,7 @@ package bs23.com.dragsite.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class MapEditFragment extends BaseEditFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ((TextView)view.findViewById(R.id.tv_tittle_add_dialog)).setText("Map");
         view.findViewById(R.id.btn_cancel_add_dialog).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,10 +57,7 @@ public class MapEditFragment extends BaseEditFragment {
         positionButton=(Button) view.findViewById(R.id.btn_map_position);
         advancedPositionButton=(Button) view.findViewById(R.id.btn_map_advanced_location);
 
-
-/*
-        adressEditText.setText(mapsWidget.getAddressByPosition(mapsWidget.getGoogleMap().getCameraPosition().target));
-*/
+        adressEditText.setText(mapsWidget.getAddress());
 
         positionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +80,11 @@ public class MapEditFragment extends BaseEditFragment {
 */
             }
         });
-        adressEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        adressEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 getMapsWidget().setPositionByAddress(adressEditText.getText().toString());
+                return false;
             }
         });
 
@@ -142,5 +142,11 @@ public class MapEditFragment extends BaseEditFragment {
 
     public void setFragmentManager1(android.support.v4.app.FragmentManager fragmentManager) {
         this.fragmentManager1 = fragmentManager;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adressEditText.setText(mapsWidget.getAddress());
     }
 }

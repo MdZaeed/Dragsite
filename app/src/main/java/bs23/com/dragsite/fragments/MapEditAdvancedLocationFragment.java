@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.widgets.MapsWidget;
 
 /**
  * Created by BS-86 on 4/26/2016.
  */
-public class MapEditAdvancedLocationFragment extends BaseSecondLevelEditFragment {
+public class MapEditAdvancedLocationFragment extends BaseSecondLevelEditFragment implements MapsWidget.OnResultReceived {
 
     EditText longitudeEditText;
     EditText latitudeEditText;
@@ -20,6 +23,11 @@ public class MapEditAdvancedLocationFragment extends BaseSecondLevelEditFragment
 
     public static MapEditAdvancedLocationFragment newInstance() {
         return new MapEditAdvancedLocationFragment();
+    }
+
+    public MapEditAdvancedLocationFragment getInstance()
+    {
+        return this;
     }
 
     @Nullable
@@ -43,9 +51,18 @@ public class MapEditAdvancedLocationFragment extends BaseSecondLevelEditFragment
 
     @Override
     protected void backButtonClick() {
-        super.backButtonClick();
-
         mapEditFragment.getMapsWidget().setLongitude(Double.parseDouble(longitudeEditText.getText().toString()));
         mapEditFragment.getMapsWidget().setLatitude(Double.parseDouble(latitudeEditText.getText().toString()));
+
+        mapEditFragment.getMapsWidget().getAddressByPosition(this);
+
+/*
+        super.backButtonClick();
+*/
+    }
+
+    @Override
+    public void onLocationResponseReceived() {
+        super.backButtonClick();
     }
 }

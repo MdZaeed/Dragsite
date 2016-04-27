@@ -15,6 +15,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import bs23.com.dragsite.api.GeoCodingRestAdapter;
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.fragments.MapEditAdvancedLocationFragment;
+import bs23.com.dragsite.fragments.MapEditFragment;
 import bs23.com.dragsite.model.LocationResponse;
 import retrofit.Call;
 import retrofit.Callback;
@@ -28,6 +30,7 @@ public class MapsWidget extends BaseLinearLayout {
     static Context context;
     private GoogleMap googleMap;
     private String address;
+    protected OnResultReceived onResultReceived;
 
     public MapsWidget(Context context) {
         super(context);
@@ -64,6 +67,8 @@ public class MapsWidget extends BaseLinearLayout {
         });*/
         googleMap.setOnMarkerClickListener(null);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
+
+        getAddressByPosition(Dhaka);
     }
 
     public float getZoom()
@@ -184,12 +189,42 @@ public class MapsWidget extends BaseLinearLayout {
         return address;
     }
 
+    public String getAddressByPosition(final MapEditAdvancedLocationFragment mapEditAdvancedLocationFragment)
+    {
+        GeoCodingRestAdapter geoCodingRestAdapter=new GeoCodingRestAdapter();
+        Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getAddress(googleMap.getCameraPosition().target.latitude+","+googleMap.getCameraPosition().target.longitude, context.getResources().getString(R.string.google_maps_key));
+        call.enqueue(new Callback<LocationResponse>() {
+            @Override
+            public void onResponse(Response<LocationResponse> response, Retrofit retrofit) {
+                if(!response.body().getStatus().equals("ZERO_RESULTS")) {
+                    address=response.body().getResults().get(0).getFormatted_address();
+                    onResultReceived= mapEditAdvancedLocationFragment;
+                    onResultReceived.onLocationResponseReceived();
+                }
+                return;
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
+        return address;
+    }
+
+    public interface OnResultReceived
+    {
+        public void onLocationResponseReceived();
+    }
+
     public GoogleMap getGoogleMap() {
         return googleMap;
     }
 
     public void setGoogleMap(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        initialSetup();
     }
 
     public String getAddress() {

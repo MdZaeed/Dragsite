@@ -33,11 +33,4 @@ public abstract class BaseSecondLevelEditFragment extends BaseEditFragment {
         getFragmentManager1().popBackStack();
     }
 
-    public android.support.v4.app.FragmentManager getFragmentManager1() {
-        return fragmentManager1;
-    }
-
-    public void setFragmentManager1(android.support.v4.app.FragmentManager fragmentManager1) {
-        this.fragmentManager1 = fragmentManager1;
-    }
 }

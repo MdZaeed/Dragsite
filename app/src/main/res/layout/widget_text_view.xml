@@ -4,10 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <TextView
+    <EditText
+        android:id="@+id/et_text_widget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Double tap to edit text"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        style="@style/EditTextStyle"/>
 
 </LinearLayout>

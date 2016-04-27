@@ -28,14 +28,6 @@ public class TitleViewWidget extends BaseLinearLayout {
 
     @Override
     public boolean dispatchTouchEvent (MotionEvent ev) {
-        // Do your calcluations
-
-
-
-/*
-        return super.dispatchTouchEvent(ev);
-*/
-
 
         switch (ev.getAction())
         {

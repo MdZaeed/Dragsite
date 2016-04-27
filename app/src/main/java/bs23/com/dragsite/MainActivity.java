@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentList = new ArrayList<>();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        chotokoro();
+        mainRelativeLayout.setOnDragListener(new MyDragListener());
     }
 
     private void setUpSlidingPane() {
@@ -141,10 +141,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         temp.add(new ElementsModel("Social Icons", R.drawable.ic_share_black_48dp));
         temp.add(new ElementsModel("Products", R.drawable.ic_label_outline_black_48dp));
         return temp;
-    }
-
-    private void chotokoro() {
-        mainRelativeLayout.setOnDragListener(new MyDragListener());
     }
 
     @Override
@@ -238,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             //Not yet created
                         } else if (((TextView) view).getText().equals("Map")) {
                             customLayout = new MapsWidget(getApplicationContext());
+                            addNewElementsOfType(v, customLayout, event);
                             currentMapsWidget = (MapsWidget) customLayout;
                             handleMapCreation((MapsWidget) customLayout);
                         } else if (((TextView) view).getText().equals("Divider")) {
@@ -266,8 +263,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             customLayout = null;
                         }
 
-                        if (customLayout != null) {
-                            addNewElementsOfType(v, customLayout, event);
+                        if (customLayout != null ) {
+                            if(!(customLayout instanceof MapsWidget)) {
+                                addNewElementsOfType(v, customLayout, event);
+                            }
+
                             customLayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -289,7 +289,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 */
                     break;
                 default:
-                    Log.d("Default ", " " + v);
                     if (v instanceof BaseLinearLayout) {
                         int topLayoutId = ((RelativeLayout.LayoutParams) v.getLayoutParams()).getRules()[RelativeLayout.BELOW];
                         BaseLinearLayout baseLinearLayout = (BaseLinearLayout) v;
@@ -492,16 +491,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             EditText editText= (EditText) child.findViewById(R.id.et_title);
             setEditTextEdit(editText);
         } else if (child instanceof TextViewWidget) {
-            Log.d("hudai", "Title view eita");
-        } else if (child instanceof MapsWidget) {
+            EditText editText=(EditText) child.findViewById(R.id.et_text_widget);
+            setEditTextEdit(editText);
+        } else if (child instanceof ImageViewWidget) {
+            ImageEditFragment imageEditFragment=ImageEditFragment.newInstance();
+            beginFragmentTransaction(imageEditFragment);
+        }else if (child instanceof MapsWidget) {
             MapEditFragment mapEditFragment = MapEditFragment.newInstance();
-            fragmentManager.beginTransaction()
-                    .add(getBottomPaneLinearLayout().getId(), mapEditFragment, BaseEditFragment.FRAGMENT_NAME)
-                    .commit();
-            mapEditFragment.setFragmentManager1(fragmentManager);
+            beginFragmentTransaction(mapEditFragment);
             mapEditFragment.setMapsWidget((MapsWidget) child);
             fragmentList.add(mapEditFragment);
         }
+    }
+
+    private void beginFragmentTransaction(BaseEditFragment baseEditFragment)
+    {
+        fragmentManager.beginTransaction()
+                .add(getBottomPaneLinearLayout().getId(), baseEditFragment, BaseEditFragment.FRAGMENT_NAME)
+                .commit();
+        baseEditFragment.setFragmentManager1(fragmentManager);
     }
 
     private void setEditTextEdit(EditText editText)

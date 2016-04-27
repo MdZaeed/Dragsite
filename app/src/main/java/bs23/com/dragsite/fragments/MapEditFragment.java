@@ -22,7 +22,6 @@ import bs23.com.dragsite.R;
  */
 public class MapEditFragment extends BaseEditFragment {
 
-    private android.support.v4.app.FragmentManager fragmentManager1;
     public EditText adressEditText;
     public Button mockButton;
     private MapsWidget mapsWidget;
@@ -65,8 +64,8 @@ public class MapEditFragment extends BaseEditFragment {
             @Override
             public void onClick(View v) {
                 MapEditPositionFragment mapEditPositionFragment=MapEditPositionFragment.newInstance();
-                mapEditPositionFragment.setFragmentManager1(fragmentManager1);
-                fragmentManager1.beginTransaction()
+                mapEditPositionFragment.setFragmentManager1(getFragmentManager1());
+                getFragmentManager1().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
                         .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), mapEditPositionFragment)
                         .addToBackStack("null")
@@ -94,8 +93,8 @@ public class MapEditFragment extends BaseEditFragment {
             @Override
             public void onClick(View v) {
                 MapEditAdvancedLocationFragment mapEditAdvancedPossitionFragment= MapEditAdvancedLocationFragment.newInstance();
-                mapEditAdvancedPossitionFragment.setFragmentManager1(fragmentManager1);
-                fragmentManager1.beginTransaction()
+                mapEditAdvancedPossitionFragment.setFragmentManager1(getFragmentManager1());
+                getFragmentManager1().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
                         .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), mapEditAdvancedPossitionFragment)
                         .addToBackStack("null")
@@ -136,14 +135,6 @@ public class MapEditFragment extends BaseEditFragment {
 
     public void setMapsWidget(MapsWidget mapsWidget) {
         this.mapsWidget = mapsWidget;
-    }
-
-    public android.support.v4.app.FragmentManager getFragmentManager1() {
-        return fragmentManager1;
-    }
-
-    public void setFragmentManager1(android.support.v4.app.FragmentManager fragmentManager) {
-        this.fragmentManager1 = fragmentManager;
     }
 
     @Override

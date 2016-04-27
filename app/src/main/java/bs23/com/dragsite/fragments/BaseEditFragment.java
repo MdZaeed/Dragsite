@@ -17,6 +17,7 @@ import bs23.com.dragsite.R;
  */
 public abstract class BaseEditFragment extends Fragment {
 
+    private android.support.v4.app.FragmentManager fragmentManager1;
     public static String FRAGMENT_NAME="common_name";
 
     protected OnViewReady mCallback;
@@ -57,5 +58,13 @@ public abstract class BaseEditFragment extends Fragment {
 
     public interface OnViewReady {
         void onReady(View view);
+    }
+
+    public android.support.v4.app.FragmentManager getFragmentManager1() {
+        return fragmentManager1;
+    }
+
+    public void setFragmentManager1(android.support.v4.app.FragmentManager fragmentManager1) {
+        this.fragmentManager1 = fragmentManager1;
     }
 }

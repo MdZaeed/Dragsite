@@ -66,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditOptionsDialog editOptionsDialog;
     List<Fragment> fragmentList;
     BaseLinearLayout foregroundDrawn;
+    boolean isSoftKeyboardOpen=false;
+    TextView focusedTextView;
+    EditText focusedEditText;
+
     /*
     LatLng dhaka;
 */
@@ -489,10 +493,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (child instanceof TitleViewWidget) {
             EditText editText= (EditText) child.findViewById(R.id.et_title);
-            setEditTextEdit(editText);
+            TextView textView=(TextView) child.findViewById(R.id.tv_title);
+            focusedEditText=editText;
+            focusedTextView=textView;
+            setEditTextEdit(editText,textView);
         } else if (child instanceof TextViewWidget) {
             EditText editText=(EditText) child.findViewById(R.id.et_text_widget);
-            setEditTextEdit(editText);
+            TextView textView=(TextView) child.findViewById(R.id.tv_text_widget);
+            focusedEditText=editText;
+            focusedTextView=textView;
+            setEditTextEdit(editText,textView);
         } else if (child instanceof ImageViewWidget) {
             ImageEditFragment imageEditFragment=ImageEditFragment.newInstance();
             beginFragmentTransaction(imageEditFragment);
@@ -512,14 +522,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         baseEditFragment.setFragmentManager1(fragmentManager);
     }
 
-    private void setEditTextEdit(EditText editText)
+    private void setEditTextEdit(EditText editText,TextView textView)
     {
+        textView.setVisibility(View.GONE);
+        editText.setVisibility(View.VISIBLE);
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.setCursorVisible(true);
         editText.requestFocus();
         InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+        inputMethodManager.showSoftInput(editText, 0);
+        isSoftKeyboardOpen=true;
+    }
+
+/*    @Override
+    public void onBackPressed() {
+        if(isSoftKeyboardOpen)
+        {
+            hideSOftKeyBoard();
+            isSoftKeyboardOpen=false;
+        }else
+        {
+            super.onBackPressed();
+        }
+    }*/
+
+    private void hideSOftKeyBoard() {
+        InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInputFromWindow(focusedEditText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+
+        focusedTextView.setText(focusedEditText.getText().toString());
+        focusedTextView.setVisibility(View.VISIBLE);
+        focusedEditText.setFocusable(false);
+        focusedEditText.setFocusableInTouchMode(false);
+        focusedEditText.setCursorVisible(false);
+        mainRelativeLayout.requestFocus();
+        focusedEditText.clearFocus();
+        focusedEditText.setVisibility(View.GONE);
+
     }
 
     private void deleteNoticeDialog(BaseLinearLayout child) {
@@ -582,5 +622,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         super.onPause();
     }
-
 }

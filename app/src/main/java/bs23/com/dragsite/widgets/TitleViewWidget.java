@@ -12,6 +12,7 @@ import bs23.com.dragsite.R;
 public class TitleViewWidget extends BaseLinearLayout {
 
     Context context;
+    boolean isButtonPressedHere=false;
 
     public TitleViewWidget(Context context) {
         super(context);
@@ -24,18 +25,5 @@ public class TitleViewWidget extends BaseLinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent (MotionEvent ev) {
-
-        switch (ev.getAction())
-        {
-            case MotionEvent.ACTION_UP:
-                this.performClick();
-                break;
-        }
-
-        return true;
     }
 }

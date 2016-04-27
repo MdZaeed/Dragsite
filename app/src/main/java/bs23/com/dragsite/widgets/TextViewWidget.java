@@ -9,7 +9,10 @@ import bs23.com.dragsite.R;
 
 
 public class TextViewWidget extends BaseLinearLayout {
+
     Context context;
+    boolean isButtonPressedHere;
+
     public TextViewWidget(Context context) {
         super(context);
         this.context = context;
@@ -22,18 +25,5 @@ public class TextViewWidget extends BaseLinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent (MotionEvent ev) {
-
-        switch (ev.getAction())
-        {
-            case MotionEvent.ACTION_UP:
-                this.performClick();
-                break;
-        }
-
-        return true;
     }
 }

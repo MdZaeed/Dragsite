@@ -11,7 +11,7 @@
         android:layout_weight="1"
         android:text="Double Tap To Edit"
         android:textSize="14sp"
-        style="@style/EditTextStyle" />
+        android:textColor="@android:color/black"/>
 
     <EditText
         android:id="@+id/et_text_widget"

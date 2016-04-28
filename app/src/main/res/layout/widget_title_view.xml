@@ -13,9 +13,9 @@
         android:text="Double Tap To Edit"
         android:textSize="24sp"
         android:textStyle="bold"
-        style="@style/EditTextStyle" />
+        android:textColor="@android:color/black"/>
 
-    <bs23.com.dragsite.TweekedEditText
+    <EditText
         android:id="@+id/et_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

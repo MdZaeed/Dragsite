@@ -6,11 +6,22 @@
     android:padding="20dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tv_blockquote_text"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Double tap to edit"
+        android:layout_weight="1"
+        android:text="Double Tap To Edit"
         android:textSize="18sp"
         android:textStyle="italic"
-        android:gravity="center"/>
+        android:textColor="@android:color/black"/>
+
+    <EditText
+        android:id="@+id/et_blockquote_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        style="@style/EditTextStyle"
+        android:visibility="gone"/>
 
 </LinearLayout>

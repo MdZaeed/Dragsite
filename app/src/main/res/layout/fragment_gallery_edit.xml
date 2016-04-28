@@ -8,7 +8,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -21,7 +21,7 @@
                 style="@style/SpecialButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="MANAGEIMAGES" />
+                android:text="MANAGE IMAGES" />
 
             <View style="@style/DividerStyle" />
 
@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Zoom" />
+                    android:text="Coloumns" />
 
                 <Spinner
                     android:layout_width="wrap_content"

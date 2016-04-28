@@ -32,9 +32,18 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import bs23.com.dragsite.fragments.AudioEditFragment;
 import bs23.com.dragsite.fragments.BaseEditFragment;
+import bs23.com.dragsite.fragments.ButtonEditFragment;
+import bs23.com.dragsite.fragments.DividerEditFragment;
+import bs23.com.dragsite.fragments.FileEditFragment;
+import bs23.com.dragsite.fragments.GalleryEditFragment;
+import bs23.com.dragsite.fragments.HdVideoEditFragment;
 import bs23.com.dragsite.fragments.ImageEditFragment;
 import bs23.com.dragsite.fragments.MapEditFragment;
+import bs23.com.dragsite.fragments.SearchBoxEditFragment;
+import bs23.com.dragsite.fragments.SocialIconsEditFragment;
+import bs23.com.dragsite.fragments.YoutubeEditFragment;
 import bs23.com.dragsite.model.ElementsModel;
 import bs23.com.dragsite.widgets.AudioWidget;
 import bs23.com.dragsite.widgets.BaseLinearLayout;
@@ -68,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditOptionsDialog editOptionsDialog;
     List<Fragment> fragmentList;
     BaseLinearLayout foregroundDrawn;
-    boolean isSoftKeyboardOpen=false;
+    boolean isSoftKeyboardOpen = false;
     TextView focusedTextView;
     EditText focusedEditText;
 
@@ -270,8 +279,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             customLayout = null;
                         }
 
-                        if (customLayout != null ) {
-                            if(!(customLayout instanceof MapsWidget)) {
+                        if (customLayout != null) {
+                            if (!(customLayout instanceof MapsWidget)) {
                                 addNewElementsOfType(v, customLayout, event);
                             }
 
@@ -323,14 +332,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         BaseLinearLayout baseLinearLayout = null;
         int belowId = ((RelativeLayout.LayoutParams) view.getLayoutParams()).getRules()[RelativeLayout.BELOW];
-        if(belowId!=0) {
+        if (belowId != 0) {
             baseLinearLayout = (BaseLinearLayout) findViewById(belowId);
             baseLinearLayout.setAboveId(view.getAboveId());
         }
 
         if (view.getAboveId() == 0) {
             lastBaseLinearLayout = baseLinearLayout;
-        }else {
+        } else {
             BaseLinearLayout baseLinearLayout1 = (BaseLinearLayout) findViewById(view.getAboveId());
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) baseLinearLayout1.getLayoutParams();
             layoutParams.addRule(RelativeLayout.BELOW, belowId);
@@ -495,21 +504,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (child instanceof TitleViewWidget) {
-            EditText editText= (EditText) child.findViewById(R.id.et_title);
-            TextView textView=(TextView) child.findViewById(R.id.tv_title);
-            focusedEditText=editText;
-            focusedTextView=textView;
-            setEditTextEdit(editText,textView);
+            EditText editText = (EditText) child.findViewById(R.id.et_title);
+            TextView textView = (TextView) child.findViewById(R.id.tv_title);
+            setEditTextEdit(editText, textView);
         } else if (child instanceof TextViewWidget) {
-            EditText editText=(EditText) child.findViewById(R.id.et_text_widget);
-            TextView textView=(TextView) child.findViewById(R.id.tv_text_widget);
-            focusedEditText=editText;
-            focusedTextView=textView;
-            setEditTextEdit(editText,textView);
+            EditText editText = (EditText) child.findViewById(R.id.et_text_widget);
+            TextView textView = (TextView) child.findViewById(R.id.tv_text_widget);
+            setEditTextEdit(editText, textView);
         } else if (child instanceof ImageViewWidget) {
-            ImageEditFragment imageEditFragment=ImageEditFragment.newInstance();
+            ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
             beginFragmentTransaction(imageEditFragment);
-        }else if (child instanceof MapsWidget) {
+        } else if (child instanceof GalleryViewWidget) {
+            GalleryEditFragment galleryEditFragment = GalleryEditFragment.newInstance();
+            beginFragmentTransaction(galleryEditFragment);
+        } else if (child instanceof DividerWidget) {
+            DividerEditFragment dividerEditFragment = DividerEditFragment.newInstance();
+            beginFragmentTransaction(dividerEditFragment);
+        } else if (child instanceof ButtonWidget) {
+            ButtonEditFragment buttonEditFragment = ButtonEditFragment.newInstance();
+            beginFragmentTransaction(buttonEditFragment);
+        } else if (child instanceof SearchBoxWidget) {
+            SearchBoxEditFragment searchBoxEditFragment = SearchBoxEditFragment.newInstance();
+            beginFragmentTransaction(searchBoxEditFragment);
+        }    else if (child instanceof HdVideoWidget) {
+            HdVideoEditFragment hdVideoEditFragment=HdVideoEditFragment.newInstance();
+            beginFragmentTransaction(hdVideoEditFragment);
+        }    else if (child instanceof AudioWidget) {
+            AudioEditFragment audioEditFragment=AudioEditFragment.newInstance();
+            beginFragmentTransaction(audioEditFragment);
+        }    else if (child instanceof YoutubeWidget) {
+            YoutubeEditFragment youtubeEditFragment=YoutubeEditFragment.newInstance();
+            beginFragmentTransaction(youtubeEditFragment);
+        }    else if (child instanceof FileWidget) {
+            FileEditFragment fileEditFragment=FileEditFragment.newInstance();
+            beginFragmentTransaction(fileEditFragment);
+        } else if (child instanceof BlockquoteWidget) {
+            EditText editText = (EditText) child.findViewById(R.id.et_blockquote_text);
+            TextView textView = (TextView) child.findViewById(R.id.tv_blockquote_text);
+            setEditTextEdit(editText, textView);
+        }    else if (child instanceof SocialIconsWidget) {
+            SocialIconsEditFragment socialIconsEditFragment=SocialIconsEditFragment.newInstance();
+            beginFragmentTransaction(socialIconsEditFragment);
+        } else if (child instanceof MapsWidget) {
             MapEditFragment mapEditFragment = MapEditFragment.newInstance();
             beginFragmentTransaction(mapEditFragment);
             mapEditFragment.setMapsWidget((MapsWidget) child);
@@ -517,21 +553,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void beginFragmentTransaction(BaseEditFragment baseEditFragment)
-    {
+    private void beginFragmentTransaction(BaseEditFragment baseEditFragment) {
         fragmentManager.beginTransaction()
                 .add(getBottomPaneLinearLayout().getId(), baseEditFragment, BaseEditFragment.FRAGMENT_NAME)
                 .commit();
         baseEditFragment.setFragmentManager1(fragmentManager);
     }
 
-    private void setEditTextEdit(EditText editText,TextView textView)
-    {
+    private void setEditTextEdit(EditText editText, TextView textView) {
+
+        focusedEditText = editText;
+        focusedTextView = textView;
+
         textView.setVisibility(View.GONE);
         editText.setVisibility(View.VISIBLE);
         editText.requestFocus();
-        InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(),InputMethodManager.SHOW_FORCED,0);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
         mainRelativeLayout.addSoftKeyboardLsner(new SoftKeyboardLsnedRelativeLayout.SoftKeyboardLsner() {
 

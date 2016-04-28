@@ -14,8 +14,6 @@ import bs23.com.dragsite.R;
  */
 public class ImageEditFragment extends BaseEditFragment {
 
-    private android.support.v4.app.FragmentManager fragmentManager1;
-
 
     public static ImageEditFragment newInstance() {
         return new ImageEditFragment();
@@ -31,13 +29,5 @@ public class ImageEditFragment extends BaseEditFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-    }
-
-    public android.support.v4.app.FragmentManager getFragmentManager1() {
-        return fragmentManager1;
-    }
-
-    public void setFragmentManager1(android.support.v4.app.FragmentManager fragmentManager1) {
-        this.fragmentManager1 = fragmentManager1;
     }
 }

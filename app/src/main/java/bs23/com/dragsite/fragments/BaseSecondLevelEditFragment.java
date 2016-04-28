@@ -12,7 +12,6 @@ import bs23.com.dragsite.R;
  */
 public abstract class BaseSecondLevelEditFragment extends BaseEditFragment {
 
-    private android.support.v4.app.FragmentManager fragmentManager1;
     Button backButton;
 
     @Override

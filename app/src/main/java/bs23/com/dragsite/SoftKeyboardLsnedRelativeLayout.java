@@ -54,7 +54,6 @@ public class SoftKeyboardLsnedRelativeLayout extends RelativeLayout {
             if(lsner!=null) {
                 lsner.onSoftKeyboardHide();
             }
-            // Keyboard is hidden
         }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -70,6 +69,6 @@ public class SoftKeyboardLsnedRelativeLayout extends RelativeLayout {
 
     // Callback
     public interface SoftKeyboardLsner {
-        public void onSoftKeyboardHide();
+        void onSoftKeyboardHide();
     }
 }

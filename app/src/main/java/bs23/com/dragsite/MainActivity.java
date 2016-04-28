@@ -1,6 +1,7 @@
 package bs23.com.dragsite;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +102,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setBottomPaneLinearLayout((LinearLayout) findViewById(R.id.ll_pane_layour));
         mainRelativeLayout.setOnClickListener(this);
         fragmentList = new ArrayList<>();
+/*
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+*/
 
         mainRelativeLayout.setOnDragListener(new MyDragListener());
     }
@@ -492,17 +496,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (child instanceof TitleViewWidget) {
-            EditText editText= (EditText) child.findViewById(R.id.et_title);
+            TweekedEditText editText= (TweekedEditText) child.findViewById(R.id.et_title);
             TextView textView=(TextView) child.findViewById(R.id.tv_title);
-            focusedEditText=editText;
-            focusedTextView=textView;
+/*            focusedEditText=editText;
+            focusedTextView=textView;*/
             setEditTextEdit(editText,textView);
         } else if (child instanceof TextViewWidget) {
             EditText editText=(EditText) child.findViewById(R.id.et_text_widget);
             TextView textView=(TextView) child.findViewById(R.id.tv_text_widget);
             focusedEditText=editText;
             focusedTextView=textView;
+/*
             setEditTextEdit(editText,textView);
+*/
         } else if (child instanceof ImageViewWidget) {
             ImageEditFragment imageEditFragment=ImageEditFragment.newInstance();
             beginFragmentTransaction(imageEditFragment);
@@ -522,7 +528,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         baseEditFragment.setFragmentManager1(fragmentManager);
     }
 
-    private void setEditTextEdit(EditText editText,TextView textView)
+    private void setEditTextEdit(TweekedEditText editText,TextView textView)
     {
         textView.setVisibility(View.GONE);
         editText.setVisibility(View.VISIBLE);
@@ -531,11 +537,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText.setCursorVisible(true);
         editText.requestFocus();
         InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.showSoftInput(editText, 0);
+        inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(),InputMethodManager.SHOW_FORCED,0);
         isSoftKeyboardOpen=true;
     }
 
-/*    @Override
+    @Override
     public void onBackPressed() {
         if(isSoftKeyboardOpen)
         {
@@ -545,20 +551,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             super.onBackPressed();
         }
-    }*/
+    }
 
     private void hideSOftKeyBoard() {
         InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInputFromWindow(focusedEditText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
-        focusedTextView.setText(focusedEditText.getText().toString());
+/*        focusedTextView.setText(focusedEditText.getText().toString());
         focusedTextView.setVisibility(View.VISIBLE);
         focusedEditText.setFocusable(false);
         focusedEditText.setFocusableInTouchMode(false);
         focusedEditText.setCursorVisible(false);
         mainRelativeLayout.requestFocus();
         focusedEditText.clearFocus();
-        focusedEditText.setVisibility(View.GONE);
+        focusedEditText.setVisibility(View.GONE);*/
 
     }
 

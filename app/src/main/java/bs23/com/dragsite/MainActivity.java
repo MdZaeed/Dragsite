@@ -515,6 +515,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             beginFragmentTransaction(galleryEditFragment);
         } else if (child instanceof DividerWidget) {
             DividerEditFragment dividerEditFragment = DividerEditFragment.newInstance();
+            dividerEditFragment.setDividerWidget((DividerWidget) child);
             beginFragmentTransaction(dividerEditFragment);
         } else if (child instanceof ButtonWidget) {
             ButtonEditFragment buttonEditFragment = ButtonEditFragment.newInstance();

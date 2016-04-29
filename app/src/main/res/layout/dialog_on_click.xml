@@ -6,35 +6,35 @@
 
     <Button
         android:id="@+id/edit_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="EDIT"
         android:background="@null"
-        android:layout_gravity="center"
-        android:padding="10dp"/>
+        android:layout_gravity="center" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="COPY"
         android:background="@null"
-        android:layout_gravity="center"
-        android:padding="10dp"/>
+        android:layout_gravity="center" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="MOVE"
         android:background="@null"
-        android:layout_gravity="center"
-        android:padding="10dp"/>
+        android:layout_gravity="center" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="DELETE"
         android:background="@null"
-        android:layout_gravity="center"
-        android:padding="10dp"/>
+        android:layout_gravity="center" />
 
 </LinearLayout>

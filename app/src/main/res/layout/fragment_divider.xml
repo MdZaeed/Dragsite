@@ -8,7 +8,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -30,9 +30,10 @@
                     android:text="Spacing Above" />
 
                 <Spinner
+                    android:id="@+id/sp_space_above_divider"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/zoom_numbers" />
+                    android:entries="@array/spacing_divider" />
             </LinearLayout>
 
             <View
@@ -51,9 +52,10 @@
                     android:text="Spacing below" />
 
                 <Spinner
+                    android:id="@+id/sp_spacing_below_divider"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/zoom_numbers" />
+                    android:entries="@array/spacing_divider" />
             </LinearLayout>
 
             <View
@@ -72,9 +74,10 @@
                     android:text="Width" />
 
                 <Spinner
+                    android:id="@+id/sp_width_divider"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/zoom_numbers" />
+                    android:entries="@array/width_divider" />
             </LinearLayout>
 
             <View

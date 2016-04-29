@@ -1,7 +1,6 @@
 package bs23.com.dragsite;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
@@ -9,9 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.DragEvent;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditOptionsDialog editOptionsDialog;
     List<Fragment> fragmentList;
     BaseLinearLayout foregroundDrawn;
-    boolean isSoftKeyboardOpen = false;
     TextView focusedTextView;
     EditText focusedEditText;
 
@@ -580,21 +576,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-/*    @Override
-    public void onBackPressed() {
-        if(isSoftKeyboardOpen)
-        {
-            hideSOftKeyBoard();
-            isSoftKeyboardOpen=false;
-        }else
-        {
-            super.onBackPressed();
-        }
-    }*/
-
     private void hideSOftKeyBoard() {
-/*        InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.toggleSoftInputFromWindow(focusedEditText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);*/
+        InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInputFromWindow(focusedEditText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
         focusedTextView.setText(focusedEditText.getText().toString());
         focusedTextView.setVisibility(View.VISIBLE);

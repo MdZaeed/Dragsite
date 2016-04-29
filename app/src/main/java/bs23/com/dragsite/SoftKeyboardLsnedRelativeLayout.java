@@ -3,6 +3,8 @@ package bs23.com.dragsite;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -25,40 +27,6 @@ public class SoftKeyboardLsnedRelativeLayout extends RelativeLayout {
         super(context, attrs, defStyle);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-/*        final int newH = MeasureSpec.getSize(heightMeasureSpec);
-        if (newH > layoutMaxH) {
-            layoutMaxH = newH;
-        }
-        if (layoutMaxH != 0f) {
-            final float sizePercent = newH / layoutMaxH;
-            if (!isKeyboardShown && sizePercent <= DETECT_ON_SIZE_PERCENT) {
-                isKeyboardShown = true;
-                for (final SoftKeyboardLsner lsner : lsners) {
-                    lsner.onSoftKeyboardShow();
-                }
-            } else if (isKeyboardShown && sizePercent > DETECT_ON_SIZE_PERCENT) {
-                isKeyboardShown = false;
-                for (final SoftKeyboardLsner lsner : lsners) {
-                    lsner.onSoftKeyboardHide();
-                }
-            }
-        }*/
-
-        final int proposedheight = MeasureSpec.getSize(heightMeasureSpec);
-        final int actualHeight = getHeight();
-
-        if (actualHeight < proposedheight) {
-
-            if(lsner!=null) {
-                lsner.onSoftKeyboardHide();
-            }
-        }
-
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
     public void addSoftKeyboardLsner(SoftKeyboardLsner lsner) {
         this.lsner = lsner;
     }
@@ -67,8 +35,29 @@ public class SoftKeyboardLsnedRelativeLayout extends RelativeLayout {
         this.lsner = null;
     }
 
-    // Callback
     public interface SoftKeyboardLsner {
         void onSoftKeyboardHide();
+    }
+
+    @Override
+    public boolean dispatchKeyEventPreIme(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            KeyEvent.DispatcherState state = getKeyDispatcherState();
+            if (state != null) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN
+                        && event.getRepeatCount() == 0) {
+                    state.startTracking(event, this);
+                    return true;
+                } else if (event.getAction() == KeyEvent.ACTION_UP
+                        && !event.isCanceled() && state.isTracking(event)) {
+                    if(lsner!=null) {
+                        lsner.onSoftKeyboardHide();
+                    }
+                    return true;
+                }
+            }
+        }
+
+        return super.dispatchKeyEventPreIme(event);
     }
 }

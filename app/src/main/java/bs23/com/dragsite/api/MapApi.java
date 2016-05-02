@@ -11,11 +11,9 @@ import retrofit.http.Query;
 public interface MapApi {
 
     @GET("/maps/api/geocode/json")
-    Call<LocationResponse> getLatAndLng(@Query("address") String address,
-                                      @Query("key") String key);
+    Call<LocationResponse> getLatAndLng(@Query("address") String address);
 
 
     @GET("/maps/api/geocode/json")
-    Call<LocationResponse> getAddress(@Query("latlng") String address,
-                                        @Query("key") String key);
+    Call<LocationResponse> getAddress(@Query("latlng") String address);
 }

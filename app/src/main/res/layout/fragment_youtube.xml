@@ -23,11 +23,13 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/et_youttube_video_url"
                     style="@style/HoveringTextBoxStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="YouTube Video URL"
-                    android:text="" />
+                    android:text=""
+                    android:inputType="textUri" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -64,6 +66,7 @@
                 style="@style/DividerStyle"/>
 
             <Button
+                android:id="@+id/btn_youtube_spacing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Spacing"
@@ -74,6 +77,7 @@
 
 
             <Button
+                android:id="@+id/btn_youtube_advanced"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Advanced"

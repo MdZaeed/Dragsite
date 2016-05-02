@@ -22,9 +22,10 @@
             android:text="Spacing above" />
 
         <Spinner
+            android:id="@+id/sp_youtube_video_quality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/zoom_numbers" />
+            android:entries="@array/youtube_video_qualities" />
     </LinearLayout>
 
     <View
@@ -37,10 +38,13 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/et_youttube_video_id"
             style="@style/HoveringTextBoxStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="YouTube Video ID"
-            android:text="" />
+            android:text=""
+            android:imeOptions="actionDone"
+            android:singleLine="true"/>
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

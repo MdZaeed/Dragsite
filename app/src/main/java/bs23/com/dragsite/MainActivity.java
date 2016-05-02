@@ -182,6 +182,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void hideBottomOptionMenu() {
+
+        int count = fragmentManager.getBackStackEntryCount();
+        for (int i = 0; i < count; i++) {
+            fragmentManager.popBackStack();
+        }
+
+        for (Fragment frag : fragmentList) {
+            fragmentManager.beginTransaction().remove(frag).commit();
+        }
+
         if (getBottomPaneLinearLayout().getChildCount() != 0) {
             getBottomPaneLinearLayout().removeAllViews();
         }
@@ -517,6 +527,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             DividerEditFragment dividerEditFragment = DividerEditFragment.newInstance();
             dividerEditFragment.setDividerWidget((DividerWidget) child);
             beginFragmentTransaction(dividerEditFragment);
+            fragmentList.add(dividerEditFragment);
         } else if (child instanceof ButtonWidget) {
             ButtonEditFragment buttonEditFragment = ButtonEditFragment.newInstance();
             beginFragmentTransaction(buttonEditFragment);
@@ -531,7 +542,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             beginFragmentTransaction(audioEditFragment);
         }    else if (child instanceof YoutubeWidget) {
             YoutubeEditFragment youtubeEditFragment=YoutubeEditFragment.newInstance();
+            youtubeEditFragment.setYoutubeWidget((YoutubeWidget) child);
             beginFragmentTransaction(youtubeEditFragment);
+            fragmentList.add(youtubeEditFragment);
         }    else if (child instanceof FileWidget) {
             FileEditFragment fileEditFragment=FileEditFragment.newInstance();
             beginFragmentTransaction(fileEditFragment);

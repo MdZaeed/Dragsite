@@ -150,7 +150,7 @@ public class MapsWidget extends BaseLinearLayout {
     public void setPositionByAddress(final String setAddress)
     {
         GeoCodingRestAdapter geoCodingRestAdapter=new GeoCodingRestAdapter();
-        Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getLatAndLng(setAddress, context.getResources().getString(R.string.google_maps_key));
+        Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getLatAndLng(setAddress);
         call.enqueue(new Callback<LocationResponse>() {
             @Override
             public void onResponse(Response<LocationResponse> response, Retrofit retrofit) {
@@ -171,7 +171,7 @@ public class MapsWidget extends BaseLinearLayout {
     public String getAddressByPosition(LatLng latLng)
     {
         GeoCodingRestAdapter geoCodingRestAdapter=new GeoCodingRestAdapter();
-        Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getAddress(latLng.latitude+","+latLng.longitude, context.getResources().getString(R.string.google_maps_key));
+        Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getAddress(latLng.latitude+","+latLng.longitude);
         call.enqueue(new Callback<LocationResponse>() {
             @Override
             public void onResponse(Response<LocationResponse> response, Retrofit retrofit) {
@@ -193,7 +193,7 @@ public class MapsWidget extends BaseLinearLayout {
     public String getAddressByPosition(final MapEditAdvancedLocationFragment mapEditAdvancedLocationFragment)
     {
         GeoCodingRestAdapter geoCodingRestAdapter=new GeoCodingRestAdapter();
-        Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getAddress(googleMap.getCameraPosition().target.latitude+","+googleMap.getCameraPosition().target.longitude, context.getResources().getString(R.string.google_maps_key));
+        Call<LocationResponse> call=geoCodingRestAdapter.mapApi.getAddress(googleMap.getCameraPosition().target.latitude+","+googleMap.getCameraPosition().target.longitude);
         call.enqueue(new Callback<LocationResponse>() {
             @Override
             public void onResponse(Response<LocationResponse> response, Retrofit retrofit) {

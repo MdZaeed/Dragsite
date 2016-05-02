@@ -9,7 +9,7 @@ import bs23.com.dragsite.R;
 /**
  * Created by BrainStation on 4/4/16.
  */
-public class GalleryViewWidget extends BaseLinearLayout {
+public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds {
 
     Context context;
     public GalleryViewWidget(Context context) {
@@ -24,5 +24,10 @@ public class GalleryViewWidget extends BaseLinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
+
+        spacingAbove = dpToPx(0);
+        spacingBelow = dpToPx(0);
+        setMainView(this.findViewById(R.id.ll_gallery_widget));
     }
+
 }

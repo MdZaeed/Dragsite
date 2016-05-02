@@ -40,8 +40,8 @@ public class DividerEditFragment extends BaseEditFragment {
         spacingBelowSpinner=(Spinner) view.findViewById(R.id.sp_spacing_below_divider);
         widthPercentage=(Spinner) view.findViewById(R.id.sp_width_divider);
 
-        spacingAboveSpinner.setSelection((getDividerWidget().getSpacingAbove()/perCategoryDifference)-1);
-        spacingBelowSpinner.setSelection((getDividerWidget().getSpacingBelow()/perCategoryDifference)-1);
+        spacingAboveSpinner.setSelection((getDividerWidget().getSpacingAbove()/perCategoryDifference));
+        spacingBelowSpinner.setSelection((getDividerWidget().getSpacingBelow()/perCategoryDifference));
         if((getDividerWidget()).getWidthPercentage()<50)
         {
             widthPercentage.setSelection(0);
@@ -54,7 +54,7 @@ public class DividerEditFragment extends BaseEditFragment {
         spacingAboveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getDividerWidget().setSpacingAbove((position*perCategoryDifference)+perCategoryDifference);
+                getDividerWidget().setSpacingAbove(position*perCategoryDifference);
             }
 
             @Override
@@ -66,7 +66,7 @@ public class DividerEditFragment extends BaseEditFragment {
         spacingBelowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getDividerWidget().setSpacingBelow((position*perCategoryDifference)+perCategoryDifference);
+                getDividerWidget().setSpacingBelow(position*perCategoryDifference);
             }
 
             @Override

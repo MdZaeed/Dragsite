@@ -76,7 +76,6 @@ public class DividerWidget extends BaseLinearLayout {
         this.widthPercentage = widthPercentage;
 
         PercentRelativeLayout.LayoutParams params = (PercentRelativeLayout.LayoutParams) dividerView.getLayoutParams();
-// This will currently return null, if it was not constructed from XML.
         PercentLayoutHelper.PercentLayoutInfo info = params.getPercentLayoutInfo();
         info.widthPercent = (float) widthPercentage/100;
         dividerView.requestLayout();

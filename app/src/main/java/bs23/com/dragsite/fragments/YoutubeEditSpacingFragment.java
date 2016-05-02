@@ -16,12 +16,9 @@ import bs23.com.dragsite.R;
 /**
  * Created by BS-86 on 4/28/2016.
  */
-public class YoutubeEditSpacingFragment extends BaseSecondLevelEditFragment {
+public class YoutubeEditSpacingFragment extends BaseSpacingFragment {
 
-    Spinner spacingAboveSpinner;
-    Spinner spacingBelowSpinner;
     YoutubeEditFragment youtubeEditFragment;
-    int perCategoryDifference=5;
 
     @Nullable
     @Override
@@ -35,29 +32,26 @@ public class YoutubeEditSpacingFragment extends BaseSecondLevelEditFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        youtubeEditFragment=(YoutubeEditFragment)getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
+
+        ownWidget=youtubeEditFragment.getYoutubeWidget();
+
         super.onViewCreated(view, savedInstanceState);
 
-        spacingAboveSpinner=(Spinner) view.findViewById(R.id.sp_spacing_above);
-        spacingBelowSpinner=(Spinner) view.findViewById(R.id.sp_spacing_below);
-
-        youtubeEditFragment=(YoutubeEditFragment)getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
 /*
-        spacingAboveSpinner.setSelection((youtubeEditFragment.getYoutubeWidget().getSpacingAbove()/perCategoryDifference));
-        spacingBelowSpinner.setSelection((youtubeEditFragment.getYoutubeWidget().getSpacingBelow()/perCategoryDifference));*/
-
-        String[] some_array = getResources().getStringArray(R.array.youtube_video_margins);
+*//*        String[] some_array = getResources().getStringArray(R.array.youtube_video_margins);
         final List<String> spacingList=Arrays.asList(some_array);
 
-        spacingAboveSpinner.setSelection(spacingList.indexOf(youtubeEditFragment.getYoutubeWidget().getSpacingAbove()));
-        spacingBelowSpinner.setSelection(spacingList.indexOf(youtubeEditFragment.getYoutubeWidget().getSpacingBelow()));
+        spacingAboveSpinner.setSelection(spacingList.indexOf(ownWidget.getYoutubeWidget().getSpacingAbove()));
+        spacingBelowSpinner.setSelection(spacingList.indexOf(ownWidget.getYoutubeWidget().getSpacingBelow()));*//*
 
         spacingAboveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-/*
                 youtubeEditFragment.getYoutubeWidget().setSpacingAbove(position*perCategoryDifference);
-*/
-                youtubeEditFragment.getYoutubeWidget().setSpacingAbove(spacingList.get(position));
+*//*
+                ownWidget.getYoutubeWidget().setSpacingAbove(spacingList.get(position));
+*//*
             }
 
             @Override
@@ -69,16 +63,16 @@ public class YoutubeEditSpacingFragment extends BaseSecondLevelEditFragment {
         spacingBelowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-/*
                 youtubeEditFragment.getYoutubeWidget().setSpacingBelow(position*perCategoryDifference);
-*/
-                youtubeEditFragment.getYoutubeWidget().setSpacingBelow(spacingList.get(position));
+*//*
+                ownWidget.getYoutubeWidget().setSpacingBelow(spacingList.get(position));
+*//*
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
     }
 }

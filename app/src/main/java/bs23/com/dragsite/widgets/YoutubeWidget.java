@@ -17,7 +17,7 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 
-public class YoutubeWidget extends BaseLinearLayout {
+public class YoutubeWidget extends BaseLinearLayoutWithSpacingNeeds {
 
     Context context;
     private String videoURL="https://www.youtube.com/watch?v=S176AKQhcCk";
@@ -26,8 +26,8 @@ public class YoutubeWidget extends BaseLinearLayout {
 /*    private int spacingAbove;
     private int spacingBelow;*/
 
-    private String spacingAbove;
-    private String spacingBelow;
+ /*   private String spacingAbove;
+    private String spacingBelow;*/
 
     public YoutubeWidget(Context context) {
         super(context);
@@ -41,8 +41,10 @@ public class YoutubeWidget extends BaseLinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
-/*        spacingAbove = dpToPx(10);
-        spacingBelow = dpToPx(10);*/
+
+        spacingAbove = dpToPx(0);
+        spacingBelow = dpToPx(0);
+        setMainView(this.findViewById(R.id.ll_youtube_widget));
     }
 
     private void getYoutubeVideo() {
@@ -105,7 +107,7 @@ public class YoutubeWidget extends BaseLinearLayout {
         getYoutubeVideo();
     }
 
-    public String getSpacingAbove() {
+/*    public String getSpacingAbove() {
         return spacingAbove;
     }
 
@@ -119,7 +121,7 @@ public class YoutubeWidget extends BaseLinearLayout {
 
     public void setSpacingBelow(String spacingBelow) {
         this.spacingBelow = spacingBelow;
-    }
+    }*/
 
     public String getVideoId() {
         return videoId;

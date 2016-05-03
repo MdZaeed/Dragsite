@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:hint="Longitude"
             android:text="Dhaka, Bangladesh"
-            style="@style/HoveringTextBoxStyle"/>
+            style="@style/HoveringTextBoxStyle"
+            android:inputType="numberDecimal"/>
     </android.support.design.widget.TextInputLayout>
 
 
@@ -37,7 +38,8 @@
             android:layout_height="wrap_content"
             android:hint="Latitude"
             android:text="Dhaka, Bangladesh"
-            style="@style/HoveringTextBoxStyle"/>
+            style="@style/HoveringTextBoxStyle"
+            android:inputType="numberDecimal"/>
     </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

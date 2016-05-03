@@ -5,18 +5,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Spinner;
-
-import java.util.Arrays;
-import java.util.List;
 
 import bs23.com.dragsite.R;
 
 /**
  * Created by BS-86 on 4/28/2016.
  */
-public class YoutubeEditSpacingFragment extends BaseSpacingFragment {
+public class YoutubeEditSpacingFragment extends BaseSpacingFragmentForSecondLevel {
 
     YoutubeEditFragment youtubeEditFragment;
 

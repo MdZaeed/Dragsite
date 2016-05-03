@@ -14,7 +14,7 @@ import bs23.com.dragsite.widgets.BaseLinearLayoutWithSpacingNeeds;
 /**
  * Created by BS-86 on 5/2/2016.
  */
-public abstract class BaseSpacingFragment extends BaseSecondLevelEditFragment {
+public abstract class BaseSpacingFragmentForFirstLevel extends BaseEditFragment {
 
     Spinner spacingAboveSpinner;
     Spinner spacingBelowSpinner;

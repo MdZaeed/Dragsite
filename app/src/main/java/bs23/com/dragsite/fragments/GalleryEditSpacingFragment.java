@@ -11,7 +11,7 @@ import bs23.com.dragsite.R;
 /**
  * Created by BS-86 on 4/28/2016.
  */
-public class GalleryEditSpacingFragment extends BaseSpacingFragment {
+public class GalleryEditSpacingFragment extends BaseSpacingFragmentForSecondLevel {
 
     GalleryEditFragment galleryEditFragment;
 

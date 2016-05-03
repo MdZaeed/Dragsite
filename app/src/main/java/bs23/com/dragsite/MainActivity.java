@@ -535,7 +535,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             beginFragmentTransaction(buttonEditFragment);
         } else if (child instanceof SearchBoxWidget) {
             SearchBoxEditFragment searchBoxEditFragment = SearchBoxEditFragment.newInstance();
+            searchBoxEditFragment.setSearchBoxWidget((SearchBoxWidget)child);
             beginFragmentTransaction(searchBoxEditFragment);
+            fragmentList.add(searchBoxEditFragment);
         }    else if (child instanceof HdVideoWidget) {
             HdVideoEditFragment hdVideoEditFragment=HdVideoEditFragment.newInstance();
             beginFragmentTransaction(hdVideoEditFragment);

@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mainRelativeLayout.setOnDragListener(new MyDragListener());
 
+        slidingUpPanelLayout.setTouchEnabled(false);
     }
 
     private void setUpSlidingPane() {
@@ -519,7 +520,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setEditTextEdit(editText, textView);
         } else if (child instanceof ImageViewWidget) {
             ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
+            imageEditFragment.setImageViewWidget((ImageViewWidget) child);
             beginFragmentTransaction(imageEditFragment);
+            fragmentList.add(imageEditFragment);
         } else if (child instanceof GalleryViewWidget) {
             GalleryEditFragment galleryEditFragment = GalleryEditFragment.newInstance();
             galleryEditFragment.setGalleryViewWidget((GalleryViewWidget) child);

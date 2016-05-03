@@ -8,6 +8,7 @@
 
 
     <TextView
+        android:id="@+id/tv_image_widget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_view_module_black_48dp"
@@ -18,7 +19,11 @@
 
 
     <ImageView
+        android:id="@+id/iv_image_widget"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:maxHeight="400dp"
+        android:adjustViewBounds="true"/>
 
 </LinearLayout>

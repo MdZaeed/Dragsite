@@ -19,6 +19,7 @@ public class ImageEditFragment extends BaseEditFragment {
     Button editImageButton;
     Button addImageButton;
     private ImageViewWidget imageViewWidget;
+    private String additionMood="ADD IMAGE";
 
     public static ImageEditFragment newInstance() {
         return new ImageEditFragment();
@@ -42,10 +43,12 @@ public class ImageEditFragment extends BaseEditFragment {
         {
             editImageButton.setVisibility(View.VISIBLE);
             addImageButton.setText("REPLACE IMAGE");
+            additionMood="REPLACE IMAGE";
         }else
         {
             editImageButton.setVisibility(View.GONE);
             addImageButton.setText("ADD IMAGE");
+            additionMood="ADD IMAGE";
         }
 
 
@@ -69,5 +72,13 @@ public class ImageEditFragment extends BaseEditFragment {
 
     public void setImageViewWidget(ImageViewWidget imageViewWidget) {
         this.imageViewWidget = imageViewWidget;
+    }
+
+    public String getAdditionMood() {
+        return additionMood;
+    }
+
+    public void setAdditionMood(String additionMood) {
+        this.additionMood = additionMood;
     }
 }

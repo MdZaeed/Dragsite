@@ -1,15 +1,9 @@
 package bs23.com.dragsite.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,19 +15,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.RecommendedStoreAdapter;
 import bs23.com.dragsite.adapter.ImagesAdapter;
 import bs23.com.dragsite.model.ImageSelectModel;
 
@@ -45,6 +29,7 @@ public class ImageEditReplaceImageFragment extends ImagesFragment implements Ima
     RecyclerView recyclerView;
     private TextView textView;
     private ImageView imageView;
+    private Button replaceImageButton;
 
     public static ImageEditReplaceImageFragment newInstance() {
         return new ImageEditReplaceImageFragment();
@@ -62,13 +47,14 @@ public class ImageEditReplaceImageFragment extends ImagesFragment implements Ima
 
         ImageEditFragment imageEditFragment = (ImageEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
 
-        textView=(TextView) imageEditFragment.getImageViewWidget().findViewById(R.id.tv_image_widget);
-        imageView=(ImageView) imageEditFragment.getImageViewWidget().findViewById(R.id.iv_image_widget);
+        textView = (TextView) imageEditFragment.getImageViewWidget().findViewById(R.id.tv_image_widget);
+        imageView = (ImageView) imageEditFragment.getImageViewWidget().findViewById(R.id.iv_image_widget);
+        replaceImageButton = (Button) view.findViewById(R.id.btn_special_header_button);
 
-        imageFiles=new ArrayList<>();
+        imageFiles = new ArrayList<>();
 
-        if(isExternalStorageReadable()) {
-            imageFiles.add(new ImageSelectModel(createTheCameraImage(),false,1));
+        if (isExternalStorageReadable()) {
+            imageFiles.add(new ImageSelectModel(createTheCameraImage(), false, 1));
             listFilesForFolder(Environment.getExternalStorageDirectory());
         }
 
@@ -77,9 +63,16 @@ public class ImageEditReplaceImageFragment extends ImagesFragment implements Ima
         view.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("Width: " , view.getWidth() + "");
-
                 addRecyclerView(view.getWidth());
+            }
+        });
+
+        replaceImageButton.setText(imageEditFragment.getAdditionMood());
+        replaceImageButton.setVisibility(View.VISIBLE);
+        replaceImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveImageClick();
             }
         });
 
@@ -87,7 +80,7 @@ public class ImageEditReplaceImageFragment extends ImagesFragment implements Ima
 
     private void addRecyclerView(int width) {
         int columnCount = 3;
-        int spanPerColumn=width/ columnCount;
+        int spanPerColumn = width / columnCount;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columnCount));
         imagesAdapter = new ImagesAdapter(getContext(), imageFiles);
         imagesAdapter.setImageSize(spanPerColumn);
@@ -95,12 +88,9 @@ public class ImageEditReplaceImageFragment extends ImagesFragment implements Ima
         imagesAdapter.setCameraClick(this);
     }
 
-    @Override
-    protected void backButtonClick() {
-        for(ImageSelectModel imageSelectModel : imageFiles)
-        {
-            if(imageSelectModel.isSelected())
-            {
+    private void saveImageClick() {
+        for (ImageSelectModel imageSelectModel : imageFiles) {
+            if (imageSelectModel.isSelected()) {
                 textView.setVisibility(View.GONE);
                 Picasso.with(getContext()).load(imageSelectModel.getFile()).into(imageView);
                 imageView.setVisibility(View.VISIBLE);

@@ -1,4 +1,4 @@
-package bs23.com.dragsite;
+package bs23.com.dragsite.adapter;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -11,16 +11,17 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import bs23.com.dragsite.R;
 import bs23.com.dragsite.model.ElementsModel;
 
 /**
  * Created by Ashraful on 3/3/2016.
  */
-public class RecommendedStoreAdapter extends RecyclerView.Adapter {
+public class WebElementsAdapter extends RecyclerView.Adapter {
     List<ElementsModel> elements;
     protected Context context;
 
-    public RecommendedStoreAdapter(Context context, List<ElementsModel> elements) {
+    public WebElementsAdapter(Context context, List<ElementsModel> elements) {
         this.context = context;
         this.elements = elements;
     }
@@ -39,7 +40,7 @@ public class RecommendedStoreAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ElementsHolder elementsHolder = (ElementsHolder) holder;
-        ElementsModel element = elements.get(position);
+        ElementsModel element = getItem(position);
         elementsHolder.elementName.setText(element.getElementName());
         Drawable drawable=context.getResources().getDrawable(element.getImageId());
         elementsHolder.elementName.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
@@ -66,6 +67,7 @@ public class RecommendedStoreAdapter extends RecyclerView.Adapter {
             ClipData data = ClipData.newPlainText("", "");
             View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
             v.startDrag(data, shadowBuilder, v, 0);
-            return true;        }
+            return true;
+        }
     }
 }

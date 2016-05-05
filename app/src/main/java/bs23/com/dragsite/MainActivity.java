@@ -29,6 +29,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import bs23.com.dragsite.adapter.WebElementsAdapter;
 import bs23.com.dragsite.fragments.AudioEditFragment;
 import bs23.com.dragsite.fragments.BaseEditFragment;
 import bs23.com.dragsite.fragments.ButtonEditFragment;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SlidingUpPanelLayout slidingUpPanelLayout;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
-    RecommendedStoreAdapter recommendedStoreAdapter;
+    WebElementsAdapter recommendedStoreAdapter;
     BaseLinearLayout lastBaseLinearLayout;
     private LinearLayout bottomPaneLinearLayout;
     EditOptionsDialog editOptionsDialog;
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recommendedStoreAdapter = new RecommendedStoreAdapter(this, getElementsList());
+        recommendedStoreAdapter = new WebElementsAdapter(this, getElementsList());
         recyclerView.setAdapter(recommendedStoreAdapter);
     }
 

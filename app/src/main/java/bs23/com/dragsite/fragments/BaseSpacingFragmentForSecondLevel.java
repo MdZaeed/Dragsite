@@ -14,6 +14,19 @@ import bs23.com.dragsite.widgets.BaseLinearLayoutWithSpacingNeeds;
 /**
  * Created by BS-86 on 5/2/2016.
  */
+
+/*
+Steps to add spacing above and spacing below button to a widget
+
+Step 1: extend BaseSpacingFragmentForSecondLevel from spacingEditFreagment
+Step 2: on the SpaceEditFragment, find the corcerned widget from the first edit fragment and store it in the ownWidget variable;
+Step 3: Extend the BaseLinearLayoutWithSpacingNeeds class from your Widget class
+Step 4: set initial spacingAbove and Below and add the widget's layout in the mainView
+Step 4: give the spacing Above spinner and below spinner the ids sp_spacing_above and sp_spacing_below respectively
+Step 5: Dont forget to add the onclick action
+ */
+
+    
 public abstract class BaseSpacingFragmentForSecondLevel extends BaseSecondLevelEditFragment {
 
     Spinner spacingAboveSpinner;

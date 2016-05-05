@@ -11,7 +11,7 @@ import bs23.com.dragsite.R;
 /**
  * Created by BS-86 on 4/1/2016.
  */
-public class ImageViewWidget extends BaseLinearLayout {
+public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
 
     Context context;
 
@@ -27,5 +27,9 @@ public class ImageViewWidget extends BaseLinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
+
+        spacingAbove = dpToPx(0);
+        spacingBelow = dpToPx(0);
+        setMainView(this.findViewById(R.id.ll_image_widget));
     }
 }

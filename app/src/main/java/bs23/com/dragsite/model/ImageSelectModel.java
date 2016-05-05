@@ -8,11 +8,13 @@ import java.io.File;
 public class ImageSelectModel {
     private File file;
     private boolean isSelected;
+    public int VIEW_TYPE;
 
-    public ImageSelectModel(File file,boolean isSelected)
+    public ImageSelectModel(File file,boolean isSelected,int VIEW_TYPE)
     {
         this.file=file;
-        isSelected=isSelected;
+        this.isSelected=isSelected;
+        this.VIEW_TYPE=VIEW_TYPE;
     }
 
     public File getFile() {

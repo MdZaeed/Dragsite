@@ -1,7 +1,12 @@
 package bs23.com.dragsite.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,14 +15,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import bs23.com.dragsite.R;
 import bs23.com.dragsite.RecommendedStoreAdapter;
@@ -27,14 +40,11 @@ import bs23.com.dragsite.model.ImageSelectModel;
 /**
  * Created by BrainStation on 4/15/16.
  */
-public class ImageEditReplaceImageFragment extends BaseSecondLevelEditFragment {
+public class ImageEditReplaceImageFragment extends ImagesFragment implements ImagesAdapter.CameraClick {
 
-    List<ImageSelectModel> imageFiles;
     RecyclerView recyclerView;
-    private int coloumnCount=3;
     private TextView textView;
     private ImageView imageView;
-    private ImageEditFragment imageEditFragment;
 
     public static ImageEditReplaceImageFragment newInstance() {
         return new ImageEditReplaceImageFragment();
@@ -50,7 +60,7 @@ public class ImageEditReplaceImageFragment extends BaseSecondLevelEditFragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        imageEditFragment=(ImageEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
+        ImageEditFragment imageEditFragment = (ImageEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
 
         textView=(TextView) imageEditFragment.getImageViewWidget().findViewById(R.id.tv_image_widget);
         imageView=(ImageView) imageEditFragment.getImageViewWidget().findViewById(R.id.iv_image_widget);
@@ -58,21 +68,11 @@ public class ImageEditReplaceImageFragment extends BaseSecondLevelEditFragment {
         imageFiles=new ArrayList<>();
 
         if(isExternalStorageReadable()) {
-/*
-            File file =Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-*/
-/*            for (String filename : file.list()) {
-                Log.d("File name: ", filename);
-            }*/
-
-            listFilesForFolder(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM));
-            listFilesForFolder(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+            imageFiles.add(new ImageSelectModel(createTheCameraImage(),false,1));
+            listFilesForFolder(Environment.getExternalStorageDirectory());
         }
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_images);
-
-/*        ViewGroup.LayoutParams layoutParams=(ViewGroup.LayoutParams) view.getLayoutParams();
-        Log.d("Width: " ,layoutParams.width + "");*/
 
         view.post(new Runnable() {
             @Override
@@ -82,54 +82,17 @@ public class ImageEditReplaceImageFragment extends BaseSecondLevelEditFragment {
                 addRecyclerView(view.getWidth());
             }
         });
-/*        recyclerView = (RecyclerView) view.findViewById(R.id.rv_images);
-*//*        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);*//*
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        ImagesAdapter imagesAdapter = new ImagesAdapter(getContext(), imageFiles);
-        recyclerView.setAdapter(imagesAdapter);*/
-/*
-        view.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("Width: " , view.getWidth() + "");
-            }
-        });*/
 
     }
 
     private void addRecyclerView(int width) {
-/*        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);*/
-        int spanPerColoumn=width/coloumnCount;
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), coloumnCount));
-        ImagesAdapter imagesAdapter = new ImagesAdapter(getContext(), imageFiles);
-        imagesAdapter.setImageSize(spanPerColoumn);
+        int columnCount = 3;
+        int spanPerColumn=width/ columnCount;
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columnCount));
+        imagesAdapter = new ImagesAdapter(getContext(), imageFiles);
+        imagesAdapter.setImageSize(spanPerColumn);
         recyclerView.setAdapter(imagesAdapter);
-    }
-
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
-    }
-
-    public void listFilesForFolder(final File folder) {
-        for (final File fileEntry : folder.listFiles()) {
-            if (fileEntry.isDirectory()) {
-                if(!fileEntry.getName().startsWith(".")) {
-                    listFilesForFolder(fileEntry);
-                }
-            } else {
-                if(fileEntry.getName().endsWith(".jpg")) {
-                    imageFiles.add(new ImageSelectModel(fileEntry,false));
-                }
-                System.out.println(fileEntry.getName());
-            }
-        }
+        imagesAdapter.setCameraClick(this);
     }
 
     @Override
@@ -149,5 +112,10 @@ public class ImageEditReplaceImageFragment extends BaseSecondLevelEditFragment {
         imageView.setVisibility(View.GONE);
         textView.setVisibility(View.VISIBLE);
         super.backButtonClick();
+    }
+
+    @Override
+    public void onCameraClick() {
+        dispatchTakePictureIntent();
     }
 }

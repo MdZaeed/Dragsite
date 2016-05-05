@@ -588,7 +588,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
-        mainRelativeLayout.addSoftKeyboardLsner(new SoftKeyboardLsnedRelativeLayout.SoftKeyboardLsner() {
+        mainRelativeLayout.addSoftKeyboardLsner(new SoftKeyboardLsnedRelativeLayout.SoftKeyboardListenner() {
 
             @Override
             public void onSoftKeyboardHide() {

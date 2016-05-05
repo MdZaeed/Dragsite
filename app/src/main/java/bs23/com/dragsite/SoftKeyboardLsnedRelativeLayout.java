@@ -3,15 +3,11 @@ package bs23.com.dragsite;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SoftKeyboardLsnedRelativeLayout extends RelativeLayout {
-    private SoftKeyboardLsner lsner;
+    private SoftKeyboardListenner listener;
 
     public SoftKeyboardLsnedRelativeLayout(Context context) {
         super(context);
@@ -27,15 +23,15 @@ public class SoftKeyboardLsnedRelativeLayout extends RelativeLayout {
         super(context, attrs, defStyle);
     }
 
-    public void addSoftKeyboardLsner(SoftKeyboardLsner lsner) {
-        this.lsner = lsner;
+    public void addSoftKeyboardLsner(SoftKeyboardListenner lsner) {
+        this.listener = lsner;
     }
 
     public void removeSoftKeyboardLsner() {
-        this.lsner = null;
+        this.listener = null;
     }
 
-    public interface SoftKeyboardLsner {
+    public interface SoftKeyboardListenner {
         void onSoftKeyboardHide();
     }
 
@@ -50,8 +46,8 @@ public class SoftKeyboardLsnedRelativeLayout extends RelativeLayout {
                     return true;
                 } else if (event.getAction() == KeyEvent.ACTION_UP
                         && !event.isCanceled() && state.isTracking(event)) {
-                    if(lsner!=null) {
-                        lsner.onSoftKeyboardHide();
+                    if(listener !=null) {
+                        listener.onSoftKeyboardHide();
                     }
                     return true;
                 }

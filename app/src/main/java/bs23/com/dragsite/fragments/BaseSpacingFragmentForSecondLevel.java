@@ -26,7 +26,7 @@ Step 4: give the spacing Above spinner and below spinner the ids sp_spacing_abov
 Step 5: Dont forget to add the onclick action
  */
 
-    
+
 public abstract class BaseSpacingFragmentForSecondLevel extends BaseSecondLevelEditFragment {
 
     Spinner spacingAboveSpinner;

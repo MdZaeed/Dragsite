@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import bs23.com.dragsite.R;
 
@@ -18,6 +19,7 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
     private int borderSize;
     private int borderColor;
     private String alternateText="Picture";
+    private String captionString;
 
     public ImageViewWidget(Context context) {
         super(context);
@@ -39,6 +41,8 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
         setBorderSize(dpToPx(0));
         setBorderColor(0);
         setMainView(this.findViewById(R.id.ll_image_widget));
+
+        captionString="";
     }
 
     @Override
@@ -140,5 +144,24 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
 
     public void setAlternateText(String alternateText) {
         this.alternateText = alternateText;
+    }
+
+    public String getCaptionString() {
+        return captionString;
+    }
+
+    public void setCaptionString(String captionString) {
+        this.captionString = captionString;
+
+        if (captionString.equals(""))
+        {
+            findViewById(R.id.tv_image_caption).setVisibility(GONE);
+        }else
+        {
+            findViewById(R.id.tv_image_caption).setVisibility(VISIBLE);
+        }
+
+        ((TextView)findViewById(R.id.tv_image_caption)).setText(captionString);
+
     }
 }

@@ -2,10 +2,13 @@ package bs23.com.dragsite.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
@@ -20,8 +23,7 @@ public class ImageEditFragment extends BaseEditFragment {
     Button addImageButton;
     private ImageViewWidget imageViewWidget;
     private String additionMood="ADD IMAGE";
-    private Button spacingButton;
-    private Button advancedOptionButton;
+    private EditText captionEditText;
 
     public static ImageEditFragment newInstance() {
         return new ImageEditFragment();
@@ -67,7 +69,7 @@ public class ImageEditFragment extends BaseEditFragment {
             }
         });
 
-        spacingButton=(Button) view.findViewById(R.id.btn_spacing_image);
+        Button spacingButton = (Button) view.findViewById(R.id.btn_spacing_image);
 
         spacingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +84,7 @@ public class ImageEditFragment extends BaseEditFragment {
             }
         });
 
-        advancedOptionButton=(Button) view.findViewById(R.id.btn_image_edit_advanced);
+        Button advancedOptionButton = (Button) view.findViewById(R.id.btn_image_edit_advanced);
 
         advancedOptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +96,16 @@ public class ImageEditFragment extends BaseEditFragment {
                         .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), imageEditAdvancedFragment)
                         .addToBackStack("null")
                         .commit();
+            }
+        });
+
+        captionEditText=(EditText) view.findViewById(R.id.et_image_caption);
+        captionEditText.setText(getImageViewWidget().getCaptionString());
+        captionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                getImageViewWidget().setCaptionString(captionEditText.getText().toString());
+                return false;
             }
         });
     }

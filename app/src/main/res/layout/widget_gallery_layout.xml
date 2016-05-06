@@ -3,7 +3,7 @@
     android:id="@+id/ll_gallery_widget" xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dark_grey_border_transparent_background"
+    android:background="@drawable/dark_gray_border_transparent_background"
     android:gravity="center"
     android:orientation="vertical">
 

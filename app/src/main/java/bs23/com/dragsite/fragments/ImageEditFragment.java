@@ -21,6 +21,7 @@ public class ImageEditFragment extends BaseEditFragment {
     private ImageViewWidget imageViewWidget;
     private String additionMood="ADD IMAGE";
     private Button spacingButton;
+    private Button advancedOptionButton;
 
     public static ImageEditFragment newInstance() {
         return new ImageEditFragment();
@@ -76,6 +77,21 @@ public class ImageEditFragment extends BaseEditFragment {
                 getFragmentManager1().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
                         .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), imageEditSpacingFragment)
+                        .addToBackStack("null")
+                        .commit();
+            }
+        });
+
+        advancedOptionButton=(Button) view.findViewById(R.id.btn_image_edit_advanced);
+
+        advancedOptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageEditAdvancedFragment imageEditAdvancedFragment=ImageEditAdvancedFragment.newInstance();
+                imageEditAdvancedFragment.setFragmentManager1(getFragmentManager1());
+                getFragmentManager1().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
+                        .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), imageEditAdvancedFragment)
                         .addToBackStack("null")
                         .commit();
             }

@@ -28,7 +28,7 @@ import bs23.com.dragsite.model.ImageSelectModel;
 /**
  * Created by BS-86 on 5/5/2016.
  */
-public abstract class ImagesFragment extends BaseSecondLevelEditFragment {
+public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment {
 
     List<ImageSelectModel> imageFiles;
     ImagesAdapter imagesAdapter;

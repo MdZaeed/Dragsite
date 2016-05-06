@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/fragment_header" />
@@ -17,11 +18,24 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Border"
-                style="@style/LinkButtonStyle"/>
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Border" />
+
+                <Spinner
+                    android:id="@+id/sp_image_border_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/border_options" />
+            </LinearLayout>
 
             <View
                 style="@style/DividerStyle"/>
@@ -31,20 +45,33 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/et_adress_map"
+                    android:id="@+id/et_alt_image_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="All Text"
-                    android:text="Picture"
+                    android:hint="Alt Text"
+                    tools:text="Picture"
+                    android:singleLine="true"
                     style="@style/HoveringTextBoxStyle"/>
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/btn_mock_click"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Border Color"
-                style="@style/LinkButtonStyle"/>
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Border Color" />
+
+                <Spinner
+                    android:id="@+id/sp_image_border_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/border_color" />
+            </LinearLayout>
 
             <View
                 style="@style/DividerStyle"/>

@@ -3,20 +3,21 @@
     android:id="@+id/ll_image_widget" xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dark_grey_border_transparent_background"
     android:gravity="center"
     android:orientation="vertical">
 
 
     <TextView
         android:id="@+id/tv_image_widget"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_view_module_black_48dp"
         android:paddingBottom="50dp"
         android:paddingTop="50dp"
         android:text="Add Image"
-        android:textColor="@android:color/holo_blue_dark" />
+        android:gravity="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:background="@drawable/dark_gray_border_transparent_background"/>
 
 
     <ImageView
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:maxHeight="400dp"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true"
+        android:background="@drawable/dark_gray_border_transparent_background"/>
 
 </LinearLayout>

@@ -62,4 +62,17 @@
         <item>90%</item>
         <item>100%</item>
     </string-array>
+
+    <string-array name="border_options">
+        <item>None</item>
+        <item>Hairline</item>
+        <item>Thin</item>
+        <item>Medium</item>
+        <item>Thick</item>
+    </string-array>
+
+    <string-array name="border_color">
+        <item>Grey</item>
+        <item>Black</item>
+    </string-array>
 </resources>

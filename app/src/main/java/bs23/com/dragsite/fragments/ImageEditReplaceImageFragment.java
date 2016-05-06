@@ -5,7 +5,6 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ import bs23.com.dragsite.model.ImageSelectModel;
 /**
  * Created by BrainStation on 4/15/16.
  */
-public class ImageEditReplaceImageFragment extends ImagesFragment implements ImagesAdapter.CameraClick {
+public class ImageEditReplaceImageFragment extends ImagesListingFragment implements ImagesAdapter.CameraClick {
 
     RecyclerView recyclerView;
     private TextView textView;

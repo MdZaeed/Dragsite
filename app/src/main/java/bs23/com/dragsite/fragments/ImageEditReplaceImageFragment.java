@@ -1,5 +1,7 @@
 package bs23.com.dragsite.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -28,6 +30,7 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment {
     private TextView textView;
     private ImageView imageView;
     private Button replaceImageButton;
+    private ImagesAdapter imagesAdapter;
 
     public static ImageEditReplaceImageFragment newInstance() {
         return new ImageEditReplaceImageFragment();
@@ -60,6 +63,7 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment {
 
     }
 
+    @Override
     protected void addRecyclerView(int width) {
         int columnCount = 3;
         int spanPerColumn = width / columnCount;
@@ -84,5 +88,15 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment {
         imageView.setVisibility(View.GONE);
         textView.setVisibility(View.VISIBLE);
         super.backButtonClick();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1  && resultCode== Activity.RESULT_OK) {
+            clearImageFilesSelection();
+            imageFiles.add(1,imagesAdapter.setLastElement(new ImageSelectModel(photoFile,true,2)));
+            imagesAdapter.setImageFiles(imageFiles);
+            imagesAdapter.notifyDataSetChanged();
+        }
     }
 }

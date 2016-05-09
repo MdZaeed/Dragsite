@@ -1,13 +1,11 @@
 package bs23.com.dragsite.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +24,6 @@ import java.util.Locale;
 
 import bs23.com.dragsite.R;
 import bs23.com.dragsite.adapter.BaseGalleryAdapter;
-import bs23.com.dragsite.adapter.ImagesAdapter;
 import bs23.com.dragsite.model.ImageSelectModel;
 
 /**
@@ -35,7 +32,6 @@ import bs23.com.dragsite.model.ImageSelectModel;
 public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment implements BaseGalleryAdapter.CameraClick {
 
     protected List<ImageSelectModel> imageFiles;
-    protected ImagesAdapter imagesAdapter;
     protected File photoFile;
     protected RecyclerView recyclerView;
 
@@ -93,16 +89,9 @@ public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment 
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1  && resultCode== Activity.RESULT_OK) {
-            clearImageFilesSelection();
-            imageFiles.add(1,imagesAdapter.setLastElement(new ImageSelectModel(photoFile,true,2)));
-            imagesAdapter.setImageFiles(imageFiles);
-            imagesAdapter.notifyDataSetChanged();
-        }
-    }
+    public abstract void onActivityResult(int requestCode, int resultCode, Intent data);
 
-    private void clearImageFilesSelection()
+    protected void clearImageFilesSelection()
     {
         for(ImageSelectModel imageSelectModel: imageFiles)
         {
@@ -156,12 +145,7 @@ public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment 
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        imageFiles = new ArrayList<>();
-
-        if (isExternalStorageReadable()) {
-            imageFiles.add(new ImageSelectModel(createTheCameraImage(), false, 1));
-            listFilesForFolder(Environment.getExternalStorageDirectory());
-        }
+        createTheGalleryFiles();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_images);
 
@@ -171,8 +155,15 @@ public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment 
                 addRecyclerView(view.getWidth());
             }
         });
+    }
 
-
+    protected void createTheGalleryFiles()
+    {
+        imageFiles = new ArrayList<>();
+        if (isExternalStorageReadable()) {
+            imageFiles.add(new ImageSelectModel(createTheCameraImage(), false, 1));
+            listFilesForFolder(Environment.getExternalStorageDirectory());
+        }
     }
 
     public void onCameraClick() {

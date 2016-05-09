@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,22 +19,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.adapter.BaseGalleryAdapter;
 import bs23.com.dragsite.adapter.ImagesAdapter;
 import bs23.com.dragsite.model.ImageSelectModel;
 
 /**
  * Created by BS-86 on 5/5/2016.
  */
-public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment {
+public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment implements BaseGalleryAdapter.CameraClick {
 
-    List<ImageSelectModel> imageFiles;
-    ImagesAdapter imagesAdapter;
-    File photoFile;
+    protected List<ImageSelectModel> imageFiles;
+    protected ImagesAdapter imagesAdapter;
+    protected File photoFile;
+    protected RecyclerView recyclerView;
+
 
     @Nullable
     @Override
@@ -146,5 +152,32 @@ public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment 
         return f;
     }
 
+    @Override
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        imageFiles = new ArrayList<>();
+
+        if (isExternalStorageReadable()) {
+            imageFiles.add(new ImageSelectModel(createTheCameraImage(), false, 1));
+            listFilesForFolder(Environment.getExternalStorageDirectory());
+        }
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_images);
+
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                addRecyclerView(view.getWidth());
+            }
+        });
+
+
+    }
+
+    public void onCameraClick() {
+        dispatchTakePictureIntent();
+    }
+
+    protected abstract void addRecyclerView(int width);
 }

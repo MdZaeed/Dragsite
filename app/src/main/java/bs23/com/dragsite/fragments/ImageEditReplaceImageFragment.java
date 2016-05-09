@@ -23,9 +23,8 @@ import bs23.com.dragsite.model.ImageSelectModel;
 /**
  * Created by BrainStation on 4/15/16.
  */
-public class ImageEditReplaceImageFragment extends ImagesListingFragment implements ImagesAdapter.CameraClick {
+public class ImageEditReplaceImageFragment extends ImagesListingFragment {
 
-    RecyclerView recyclerView;
     private TextView textView;
     private ImageView imageView;
     private Button replaceImageButton;
@@ -50,22 +49,6 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment impleme
         imageView = (ImageView) imageEditFragment.getImageViewWidget().findViewById(R.id.iv_image_widget);
         replaceImageButton = (Button) view.findViewById(R.id.btn_special_header_button);
 
-        imageFiles = new ArrayList<>();
-
-        if (isExternalStorageReadable()) {
-            imageFiles.add(new ImageSelectModel(createTheCameraImage(), false, 1));
-            listFilesForFolder(Environment.getExternalStorageDirectory());
-        }
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_images);
-
-        view.post(new Runnable() {
-            @Override
-            public void run() {
-                addRecyclerView(view.getWidth());
-            }
-        });
-
         replaceImageButton.setText(imageEditFragment.getAdditionMood());
         replaceImageButton.setVisibility(View.VISIBLE);
         replaceImageButton.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +60,7 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment impleme
 
     }
 
-    private void addRecyclerView(int width) {
+    protected void addRecyclerView(int width) {
         int columnCount = 3;
         int spanPerColumn = width / columnCount;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columnCount));
@@ -101,10 +84,5 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment impleme
         imageView.setVisibility(View.GONE);
         textView.setVisibility(View.VISIBLE);
         super.backButtonClick();
-    }
-
-    @Override
-    public void onCameraClick() {
-        dispatchTakePictureIntent();
     }
 }

@@ -18,6 +18,7 @@ public class GalleryEditFragment extends BaseEditFragment {
 
     Button spacingButton;
     private GalleryViewWidget galleryViewWidget;
+    private Button manageImagesButton;
 
     @Nullable
     @Override
@@ -43,6 +44,20 @@ public class GalleryEditFragment extends BaseEditFragment {
                 getFragmentManager1().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
                         .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), galleryEditSpacingFragment)
+                        .addToBackStack("null")
+                        .commit();
+            }
+        });
+
+        manageImagesButton=(Button) view.findViewById(R.id.btn_manage_images_gallery);
+        manageImagesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GalleryEditManageImagesFragment galleryEditManageImagesFragment=GalleryEditManageImagesFragment.newInstance();
+                galleryEditManageImagesFragment.setFragmentManager1(getFragmentManager1());
+                getFragmentManager1().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
+                        .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), galleryEditManageImagesFragment)
                         .addToBackStack("null")
                         .commit();
             }

@@ -19,14 +19,14 @@ import bs23.com.dragsite.model.ImageSelectModel;
 /**
  * Created by BS-86 on 5/5/2016.
  */
-public class GalleryAdapter extends RecyclerView.Adapter {
+public class BaseGalleryAdapter extends RecyclerView.Adapter {
 
     protected List<ImageSelectModel> imageFiles;
     protected Context context;
     protected int imageSize;
     protected CameraClick cameraClick;
 
-    public GalleryAdapter(Context context, List<ImageSelectModel> imageFiles) {
+    public BaseGalleryAdapter(Context context, List<ImageSelectModel> imageFiles) {
         this.context = context;
         this.setImageFiles(imageFiles);
     }
@@ -37,10 +37,10 @@ public class GalleryAdapter extends RecyclerView.Adapter {
         View itemView;
         switch (viewType) {
             case 1:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_camera, parent, false);
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_box_no_checkbox, parent, false);
                 return new CameraHolder(itemView);
             case 2:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_image, parent, false);
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_box_with_checkbox, parent, false);
                 return new ImageSelectHolder(itemView);
             default:
                 return null;

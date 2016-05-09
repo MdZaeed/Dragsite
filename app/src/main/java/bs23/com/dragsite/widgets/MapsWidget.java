@@ -3,6 +3,7 @@ package bs23.com.dragsite.widgets;
 import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -234,5 +235,14 @@ public class MapsWidget extends BaseLinearLayout {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if(ev.getAction()==MotionEvent.ACTION_DOWN)
+        {
+            this.performClick();
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

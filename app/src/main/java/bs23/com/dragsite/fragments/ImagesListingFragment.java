@@ -166,7 +166,7 @@ public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment 
         }
     }
 
-    public void onCameraClick() {
+    public void onCameraClick(View v) {
         dispatchTakePictureIntent();
     }
 

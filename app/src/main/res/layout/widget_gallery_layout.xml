@@ -3,21 +3,24 @@
     android:id="@+id/ll_gallery_widget" xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dark_gray_border_transparent_background"
     android:gravity="center"
     android:orientation="vertical">
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_gallery_dummy"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_view_module_black_48dp"
         android:paddingBottom="50dp"
         android:paddingTop="50dp"
-        android:text="Add Gallery"
-        android:textColor="@android:color/holo_blue_dark" />
+        android:text="Add Image"
+        android:gravity="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:background="@drawable/dark_gray_border_transparent_background"/>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_gallery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

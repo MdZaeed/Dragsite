@@ -1,22 +1,33 @@
 package bs23.com.dragsite.widgets;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.adapter.BaseGalleryAdapter;
+import bs23.com.dragsite.adapter.BaseGalleryAdapterCopy;
 import bs23.com.dragsite.model.ImageSelectModel;
 
 /**
  * Created by BrainStation on 4/4/16.
  */
-public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds {
+public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implements BaseGalleryAdapter.CameraClick {
 
     Context context;
     private List<ImageSelectModel> imageSelectModels;
+    private int noOfColoumns=5;
+    RecyclerView recyclerView;
+    BaseGalleryAdapterCopy baseGalleryAdapterCopy;
+    TextView textView;
 
     public GalleryViewWidget(Context context) {
         super(context);
@@ -35,6 +46,9 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds {
         spacingAbove = dpToPx(0);
         spacingBelow = dpToPx(0);
         setMainView(this.findViewById(R.id.ll_gallery_widget));
+
+        recyclerView=(RecyclerView) this.findViewById(R.id.rv_gallery);
+        textView=(TextView) this.findViewById(R.id.tv_gallery_dummy);
     }
 
     public List<ImageSelectModel> getImageSelectModels() {
@@ -43,5 +57,31 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds {
 
     public void setImageSelectModels(List<ImageSelectModel> imageSelectModels) {
         this.imageSelectModels = imageSelectModels;
+
+        addRecyclerView(recyclerView.getWidth());
+    }
+
+    protected void addRecyclerView(int width) {
+        int spanPerColumn = width / noOfColoumns;
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), noOfColoumns));
+        baseGalleryAdapterCopy = new BaseGalleryAdapterCopy(getContext(), imageSelectModels);
+        baseGalleryAdapterCopy.setImageSize(spanPerColumn);
+        recyclerView.setAdapter(baseGalleryAdapterCopy);
+
+        textView.setVisibility(GONE);
+    }
+
+    @Override
+    public void onCameraClick(View v) {
+
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if(ev.getAction()==MotionEvent.ACTION_DOWN)
+        {
+            this.performClick();
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

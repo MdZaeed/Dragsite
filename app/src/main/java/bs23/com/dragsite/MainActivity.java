@@ -474,6 +474,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             deleteNoticeDialog(foregroundDrawn);
         }
 
+/*
+        mainRelativeLayout.scrollTo(child.getLeft(),child.getTop());
+*/
+
         foregroundDrawn = child;
         editOptionsDialog = new EditOptionsDialog(this);
         ViewCompat.setElevation(editOptionsDialog, 20);

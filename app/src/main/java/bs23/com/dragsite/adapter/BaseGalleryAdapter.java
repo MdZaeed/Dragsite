@@ -137,8 +137,7 @@ public class BaseGalleryAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            Log.d("Hoiche" , "Hahahha");
-            getCameraClick().onCameraClick();
+            getCameraClick().onCameraClick(v);
         }
     }
 
@@ -165,6 +164,6 @@ public class BaseGalleryAdapter extends RecyclerView.Adapter {
 
     public interface CameraClick
     {
-        public void onCameraClick();
+        public void onCameraClick(View v);
     }
 }

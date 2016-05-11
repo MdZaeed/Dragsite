@@ -39,15 +39,16 @@
                     android:text="Coloumns" />
 
                 <Spinner
+                    android:id="@+id/sp_no_of_coloumns_gallery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/zoom_numbers" />
+                    android:entries="@array/coloumn_numbers" />
             </LinearLayout>
 
             <View style="@style/DividerStyle" />
 
             <Button
-                android:id="@+id/btn_mock_click"
+                android:id="@+id/btn_captions_gallery"
                 style="@style/LinkButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

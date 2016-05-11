@@ -39,6 +39,7 @@ public class BaseGalleryAdapterCopyExtended extends BaseGalleryAdapterCopy {
         }
 
         View singleItemMenuView=popup.getContentView();
+
         Button deleteButton=(Button) singleItemMenuView.findViewById(R.id.btn_delete_gallery_image);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,12 +48,39 @@ public class BaseGalleryAdapterCopyExtended extends BaseGalleryAdapterCopy {
                 popup.dismiss();
             }
         });
+
+        Button captionButton=(Button) singleItemMenuView.findViewById(R.id.btn_caption_single_image_gallery);
+        captionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                captionSingleItem(position);
+                popup.dismiss();
+            }
+        });
+
+        Button linkButton=(Button) singleItemMenuView.findViewById(R.id.btn_link_single_gallery_image);
+        linkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linkSingleItem(position);
+                popup.dismiss();
+            }
+        });
+    }
+
+    private void linkSingleItem(int position) {
+        getOnSingleImageClicked().onSIngleImageLinkClick(position);
     }
 
     private void deletSingleItem(int position) {
         imageFiles.remove(position);
         notifyDataSetChanged();
-        getOnSingleImageClicked().onSigleImageClick();
+        getOnSingleImageClicked().onSigleImageDeleteClick();
+    }
+
+    private void captionSingleItem(int position)
+    {
+        getOnSingleImageClicked().onSingleImageCaptionClick(position);
     }
 
     public PopupWindow createPopupWindow() {
@@ -78,6 +106,8 @@ public class BaseGalleryAdapterCopyExtended extends BaseGalleryAdapterCopy {
 
     public interface OnSingleImageClicked
     {
-        public void onSigleImageClick();
+        void onSigleImageDeleteClick();
+        void onSingleImageCaptionClick(int posiiton);
+        void onSIngleImageLinkClick(int posiiton);
     }
 }

@@ -1,26 +1,18 @@
 package bs23.com.dragsite.fragments;
 
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 
 import java.util.ArrayList;
 
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.adapter.BaseGalleryAdapter;
 import bs23.com.dragsite.adapter.BaseGalleryAdapterCopyExtended;
 
 /**
@@ -88,7 +80,31 @@ public class GalleryEditManageImagesFragment extends ImagesListingFragment imple
     }
 
     @Override
-    public void onSigleImageClick() {
+    public void onSigleImageDeleteClick() {
         galleryEditFragment.getGalleryViewWidget().setImageSelectModels(baseGalleryAdapterCopyExtended.getImageFiles());
+    }
+
+    @Override
+    public void onSingleImageCaptionClick(int posiiton) {
+        GalleryEditCaptionSingleImageFragment galleryEditCaptionSingleImageFragment = GalleryEditCaptionSingleImageFragment.newInstance();
+        galleryEditCaptionSingleImageFragment.setFragmentManager1(getFragmentManager1());
+        galleryEditCaptionSingleImageFragment.setDataPosition(posiiton);
+        getFragmentManager1().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, 0, android.R.anim.slide_in_left, 0)
+                .replace(((MainActivity) getActivity()).getBottomPaneLinearLayout().getId(), galleryEditCaptionSingleImageFragment)
+                .addToBackStack("null")
+                .commit();
+    }
+
+    @Override
+    public void onSIngleImageLinkClick(int posiiton) {
+        GalleryEditLinkSingleImageFragment galleryEditLinkSingleImageFragment = GalleryEditLinkSingleImageFragment.newInstance();
+        galleryEditLinkSingleImageFragment.setFragmentManager1(getFragmentManager1());
+        galleryEditLinkSingleImageFragment.setDataPosition(posiiton);
+        getFragmentManager1().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, 0, android.R.anim.slide_in_left, 0)
+                .replace(((MainActivity) getActivity()).getBottomPaneLinearLayout().getId(), galleryEditLinkSingleImageFragment)
+                .addToBackStack("null")
+                .commit();
     }
 }

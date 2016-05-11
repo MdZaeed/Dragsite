@@ -9,6 +9,7 @@ public class ImageSelectModel {
     private File file;
     private boolean isSelected;
     public int VIEW_TYPE;
+    private String caption="";
 
     public ImageSelectModel(File file,boolean isSelected,int VIEW_TYPE)
     {
@@ -31,5 +32,13 @@ public class ImageSelectModel {
 
     public void setSelected(boolean selected) {
         this.isSelected = selected;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
     }
 }

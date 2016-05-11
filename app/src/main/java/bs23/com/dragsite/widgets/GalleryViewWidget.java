@@ -1,7 +1,6 @@
 package bs23.com.dragsite.widgets;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,11 +26,14 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
 
     Context context;
     private List<ImageSelectModel> imageSelectModels;
-    private int noOfColoumns=5;
+    private int noOfColoumns=3;
     RecyclerView recyclerView;
     BaseGalleryAdapterCopy baseGalleryAdapterCopy;
     TextView textView;
     GestureDetector gestureDetector;
+    private boolean isThumbnailCaptionHovering=true;
+    private String thumbnailCaptionType=typeArray[0];
+    public static String[] typeArray={"none","partial","full"};
 
     public GalleryViewWidget(Context context) {
         super(context);
@@ -83,8 +85,8 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
             textView.setVisibility(VISIBLE);
         }
         else {
-            int spanPerColumn = width / noOfColoumns;
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), noOfColoumns));
+            int spanPerColumn = width / getNoOfColoumns();
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getNoOfColoumns()));
             baseGalleryAdapterCopy = new BaseGalleryAdapterCopy(getContext(), imageSelectModels);
             baseGalleryAdapterCopy.setImageSize(spanPerColumn);
             recyclerView.setAdapter(baseGalleryAdapterCopy);
@@ -102,10 +104,38 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if(!imageSelectModels.isEmpty()) {
             if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-                this.performClick();
                 gestureDetector.onTouchEvent(ev);
+            }else if (ev.getAction() == MotionEvent.ACTION_UP)
+            {
+                this.performClick();
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public int getNoOfColoumns() {
+        return noOfColoumns;
+    }
+
+    public void setNoOfColoumns(int noOfColoumns) {
+        this.noOfColoumns = noOfColoumns;
+
+        addRecyclerView(recyclerView.getWidth());
+    }
+
+    public boolean isThumbnailCaptionHovering() {
+        return isThumbnailCaptionHovering;
+    }
+
+    public void setThumbnailCaptionHovering(boolean thumbnailCaptionHovering) {
+        isThumbnailCaptionHovering = thumbnailCaptionHovering;
+    }
+
+    public String getThumbnailCaptionType() {
+        return thumbnailCaptionType;
+    }
+
+    public void setThumbnailCaptionType(String thumbnailCaptionType) {
+        this.thumbnailCaptionType = thumbnailCaptionType;
     }
 }

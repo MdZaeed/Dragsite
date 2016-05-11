@@ -1,8 +1,11 @@
 package bs23.com.dragsite.widgets;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,11 +31,23 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
     RecyclerView recyclerView;
     BaseGalleryAdapterCopy baseGalleryAdapterCopy;
     TextView textView;
+    GestureDetector gestureDetector;
 
     public GalleryViewWidget(Context context) {
         super(context);
         this.context = context;
         imageSelectModels=new ArrayList<>();
+
+        gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+            public void onLongPress(MotionEvent e) {
+                Log.e("", "Longpress detected");
+                onManualLongClick();
+            }
+        });
+    }
+
+    private void onManualLongClick() {
+        onLongClick(this);
     }
 
     public void addContents()
@@ -62,13 +77,20 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
     }
 
     protected void addRecyclerView(int width) {
-        int spanPerColumn = width / noOfColoumns;
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), noOfColoumns));
-        baseGalleryAdapterCopy = new BaseGalleryAdapterCopy(getContext(), imageSelectModels);
-        baseGalleryAdapterCopy.setImageSize(spanPerColumn);
-        recyclerView.setAdapter(baseGalleryAdapterCopy);
 
-        textView.setVisibility(GONE);
+        if(imageSelectModels.isEmpty())
+        {
+            textView.setVisibility(VISIBLE);
+        }
+        else {
+            int spanPerColumn = width / noOfColoumns;
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), noOfColoumns));
+            baseGalleryAdapterCopy = new BaseGalleryAdapterCopy(getContext(), imageSelectModels);
+            baseGalleryAdapterCopy.setImageSize(spanPerColumn);
+            recyclerView.setAdapter(baseGalleryAdapterCopy);
+
+            textView.setVisibility(GONE);
+        }
     }
 
     @Override
@@ -78,9 +100,11 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if(ev.getAction()==MotionEvent.ACTION_DOWN)
-        {
-            this.performClick();
+        if(!imageSelectModels.isEmpty()) {
+            if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+                this.performClick();
+                gestureDetector.onTouchEvent(ev);
+            }
         }
         return super.dispatchTouchEvent(ev);
     }

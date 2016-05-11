@@ -26,7 +26,7 @@ import bs23.com.dragsite.adapter.BaseGalleryAdapterCopyExtended;
 /**
  * Created by BS-86 on 5/9/2016.
  */
-public class GalleryEditManageImagesFragment extends ImagesListingFragment {
+public class GalleryEditManageImagesFragment extends ImagesListingFragment implements BaseGalleryAdapterCopyExtended.OnSingleImageClicked {
 
     BaseGalleryAdapterCopyExtended baseGalleryAdapterCopyExtended;
     private Button addImageButton;
@@ -72,11 +72,12 @@ public class GalleryEditManageImagesFragment extends ImagesListingFragment {
 
     @Override
     protected void addRecyclerView(int width) {
-        int columnCount = 2;
+        int columnCount = 3;
         int spanPerColumn = width / columnCount;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columnCount));
         baseGalleryAdapterCopyExtended = new BaseGalleryAdapterCopyExtended(getContext(), imageFiles);
         baseGalleryAdapterCopyExtended.setImageSize(spanPerColumn);
+        baseGalleryAdapterCopyExtended.setOnSingleImageClicked(this);
         recyclerView.setAdapter(baseGalleryAdapterCopyExtended);
     }
 
@@ -86,31 +87,8 @@ public class GalleryEditManageImagesFragment extends ImagesListingFragment {
         imageFiles = galleryEditFragment.getGalleryViewWidget().getImageSelectModels();
     }
 
-/*    public void onCameraClick(View v) {
-        PopupWindow popup =popupWindowsort();
-        Rect r = new Rect();
-        v.getGlobalVisibleRect(r);
-        if(v.getTop()>=0)
-        {
-            popup.showAsDropDown(v,0,-v.getHeight());
-        }
-        else
-        {
-            popup.showAsDropDown(v,0,-r.height());
-        }
+    @Override
+    public void onSigleImageClick() {
+        galleryEditFragment.getGalleryViewWidget().setImageSelectModels(baseGalleryAdapterCopyExtended.getImageFiles());
     }
-
-    public PopupWindow popupWindowsort() {
-
-        PopupWindow popupWindow = new PopupWindow(getContext());
-
-        popupWindow.setFocusable(true);
-        popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-
-        // set the list view as pop up window content
-        popupWindow.setContentView(LayoutInflater.from(getContext()).inflate(R.layout.dialog_gallery_image, null, false));
-
-        return popupWindow;
-    }*/
 }

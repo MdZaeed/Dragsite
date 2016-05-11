@@ -71,25 +71,22 @@ public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.iv_single_image);
 
-/*
             imageView.setOnClickListener(this);
-*/
-            imageView.setEnabled(false);
+/*            imageView.setEnabled(false);
             imageView.setClickable(false);
             imageView.setFocusable(false);
             itemView.setEnabled(false);
             itemView.setClickable(false);
-            itemView.setFocusable(false);
+            itemView.setFocusable(false);*/
         }
 
         @Override
         public void onClick(View v) {
-            onGalleryImageClick(v);
+            onGalleryImageClick(v,getAdapterPosition());
         }
     }
 
-    public void onGalleryImageClick(View v) {
-        v.getRootView().getRootView().performClick();
+    public void onGalleryImageClick(View v,int position) {
     }
 
 

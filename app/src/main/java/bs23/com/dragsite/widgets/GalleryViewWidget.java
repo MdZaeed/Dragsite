@@ -34,6 +34,8 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
     private boolean isThumbnailCaptionHovering=true;
     private String thumbnailCaptionType=typeArray[0];
     public static String[] typeArray={"none","partial","full"};
+    private int borderSize;
+    private int spacingOfIndividualElement;
 
     public GalleryViewWidget(Context context) {
         super(context);
@@ -86,9 +88,17 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
         }
         else {
             int spanPerColumn = width / getNoOfColoumns();
+            int borderSize=0,spacingElements=3;
+            if(baseGalleryAdapterCopy!=null)
+            {
+                borderSize=baseGalleryAdapterCopy.getBorderSize();
+                spacingElements=baseGalleryAdapterCopy.getSpacingOfElemnts();
+            }
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getNoOfColoumns()));
             baseGalleryAdapterCopy = new BaseGalleryAdapterCopy(getContext(), imageSelectModels);
             baseGalleryAdapterCopy.setImageSize(spanPerColumn);
+            baseGalleryAdapterCopy.setBorderSize(borderSize);
+            baseGalleryAdapterCopy.setSpacingOfElemnts(spacingElements);
             recyclerView.setAdapter(baseGalleryAdapterCopy);
 
             textView.setVisibility(GONE);
@@ -137,5 +147,27 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
 
     public void setThumbnailCaptionType(String thumbnailCaptionType) {
         this.thumbnailCaptionType = thumbnailCaptionType;
+    }
+
+    public int getBorderSize() {
+        return borderSize;
+    }
+
+    public void setBorderSize(int borderSize) {
+        this.borderSize = borderSize;
+
+        baseGalleryAdapterCopy.setBorderSize(borderSize);
+        baseGalleryAdapterCopy.notifyDataSetChanged();
+    }
+
+    public int getSpacingOfIndividualElement() {
+        return baseGalleryAdapterCopy.getSpacingOfElemnts();
+    }
+
+    public void setSpacingOfIndividualElement(int spacingOfIndividualElement) {
+        this.spacingOfIndividualElement = spacingOfIndividualElement;
+
+        baseGalleryAdapterCopy.setSpacingOfElemnts(spacingOfIndividualElement);
+        baseGalleryAdapterCopy.notifyDataSetChanged();
     }
 }

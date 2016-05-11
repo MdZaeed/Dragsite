@@ -19,12 +19,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Spacing" />
+            android:text="Cropping" />
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/zoom_numbers" />
+    </LinearLayout>
+
+    <View
+        style="@style/DividerStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Spacing" />
+
+        <Spinner
+            android:id="@+id/sp_spacing_gallery_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/spacing_divider" />
     </LinearLayout>
 
     <View
@@ -47,34 +73,10 @@
             android:text="Border" />
 
         <Spinner
+            android:id="@+id/sp_border_gallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/zoom_numbers" />
-    </LinearLayout>
-
-    <View
-        style="@style/DividerStyle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cropping" />
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/zoom_numbers" />
+            android:entries="@array/border_options" />
     </LinearLayout>
 
     <View

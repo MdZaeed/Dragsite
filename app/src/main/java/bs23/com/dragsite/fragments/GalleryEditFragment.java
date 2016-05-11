@@ -23,6 +23,8 @@ public class GalleryEditFragment extends BaseEditFragment {
     private Button manageImagesButton;
     private Spinner coloumnNumberSpinner;
     private Button captionButton;
+    private Button advancedButton;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +40,6 @@ public class GalleryEditFragment extends BaseEditFragment {
         super.onViewCreated(view, savedInstanceState);
 
         spacingButton=(Button) view.findViewById(R.id.btn_gallery_spacing);
-
         spacingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +90,20 @@ public class GalleryEditFragment extends BaseEditFragment {
                 getFragmentManager1().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
                         .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), galleryEditCaptionFragment)
+                        .addToBackStack("null")
+                        .commit();
+            }
+        });
+
+        advancedButton=(Button) view.findViewById(R.id.btn_advanced_gallery);
+        advancedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GalleryEditAdvancedFragment galleryEditAdvancedFragment=GalleryEditAdvancedFragment.newInstance();
+                galleryEditAdvancedFragment.setFragmentManager1(getFragmentManager1());
+                getFragmentManager1().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
+                        .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), galleryEditAdvancedFragment)
                         .addToBackStack("null")
                         .commit();
             }

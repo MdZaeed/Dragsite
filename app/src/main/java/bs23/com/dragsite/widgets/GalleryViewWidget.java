@@ -37,8 +37,8 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
     GestureDetector gestureDetector;
     private boolean isThumbnailCaptionHovering=true;
     private String thumbnailCaptionType=typeArray[0];
-    private int borderSize;
-    private int spacingOfIndividualElement;
+    private int borderSize=0;
+    private int spacingOfIndividualElement=3;
     private String cropType = cropTypeArray[1];
 
     public GalleryViewWidget(Context context) {
@@ -92,18 +92,18 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
         }
         else {
             int spanPerColumn = width / getNoOfColoumns();
-            int borderSize=0,spacingElements=3;
+/*            int borderSize=0,spacingElements=3;
             String cropType=GalleryViewWidget.cropTypeArray[1];
             if(baseGalleryAdapterCopy!=null)
             {
                 borderSize=baseGalleryAdapterCopy.getBorderSize();
                 spacingElements=baseGalleryAdapterCopy.getSpacingOfElemnts();
                 cropType=baseGalleryAdapterCopy.getCropType();
-            }
+            }*/
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getNoOfColoumns()));
             baseGalleryAdapterCopy = new BaseGalleryAdapterCopy(getContext(), imageSelectModels,spanPerColumn);
             baseGalleryAdapterCopy.setBorderSize(borderSize);
-            baseGalleryAdapterCopy.setSpacingOfElemnts(spacingElements);
+            baseGalleryAdapterCopy.setSpacingOfElemnts(spacingOfIndividualElement);
             baseGalleryAdapterCopy.setCropType(cropType);
             recyclerView.setAdapter(baseGalleryAdapterCopy);
 
@@ -162,19 +162,23 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
     public void setBorderSize(int borderSize) {
         this.borderSize = borderSize;
 
-        baseGalleryAdapterCopy.setBorderSize(borderSize);
-        baseGalleryAdapterCopy.notifyDataSetChanged();
+        if (baseGalleryAdapterCopy!=null) {
+            baseGalleryAdapterCopy.setBorderSize(borderSize);
+            baseGalleryAdapterCopy.notifyDataSetChanged();
+        }
     }
 
     public int getSpacingOfIndividualElement() {
-        return baseGalleryAdapterCopy.getSpacingOfElemnts();
+        return spacingOfIndividualElement;
     }
 
     public void setSpacingOfIndividualElement(int spacingOfIndividualElement) {
         this.spacingOfIndividualElement = spacingOfIndividualElement;
 
-        baseGalleryAdapterCopy.setSpacingOfElemnts(spacingOfIndividualElement);
-        baseGalleryAdapterCopy.notifyDataSetChanged();
+        if (baseGalleryAdapterCopy!=null) {
+            baseGalleryAdapterCopy.setSpacingOfElemnts(spacingOfIndividualElement);
+            baseGalleryAdapterCopy.notifyDataSetChanged();
+        }
     }
 
     public String getCropType() {
@@ -184,7 +188,9 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
     public void setCropType(String cropType) {
         this.cropType = cropType;
 
-        baseGalleryAdapterCopy.setCropType(cropType);
-        baseGalleryAdapterCopy.notifyDataSetChanged();
+        if(baseGalleryAdapterCopy!=null) {
+            baseGalleryAdapterCopy.setCropType(cropType);
+            baseGalleryAdapterCopy.notifyDataSetChanged();
+        }
     }
 }

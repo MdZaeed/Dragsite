@@ -24,6 +24,10 @@ import bs23.com.dragsite.model.ImageSelectModel;
  */
 public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implements BaseGalleryAdapter.CameraClick {
 
+    public static String[] typeArray={"none","partial","full"};
+    public static String[] cropTypeArray ={"none","square","rectangle"};
+
+
     Context context;
     private List<ImageSelectModel> imageSelectModels;
     private int noOfColoumns=3;
@@ -33,9 +37,9 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
     GestureDetector gestureDetector;
     private boolean isThumbnailCaptionHovering=true;
     private String thumbnailCaptionType=typeArray[0];
-    public static String[] typeArray={"none","partial","full"};
     private int borderSize;
     private int spacingOfIndividualElement;
+    private String cropType = cropTypeArray[1];
 
     public GalleryViewWidget(Context context) {
         super(context);
@@ -89,16 +93,18 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
         else {
             int spanPerColumn = width / getNoOfColoumns();
             int borderSize=0,spacingElements=3;
+            String cropType=GalleryViewWidget.cropTypeArray[1];
             if(baseGalleryAdapterCopy!=null)
             {
                 borderSize=baseGalleryAdapterCopy.getBorderSize();
                 spacingElements=baseGalleryAdapterCopy.getSpacingOfElemnts();
+                cropType=baseGalleryAdapterCopy.getCropType();
             }
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getNoOfColoumns()));
-            baseGalleryAdapterCopy = new BaseGalleryAdapterCopy(getContext(), imageSelectModels);
-            baseGalleryAdapterCopy.setImageSize(spanPerColumn);
+            baseGalleryAdapterCopy = new BaseGalleryAdapterCopy(getContext(), imageSelectModels,spanPerColumn);
             baseGalleryAdapterCopy.setBorderSize(borderSize);
             baseGalleryAdapterCopy.setSpacingOfElemnts(spacingElements);
+            baseGalleryAdapterCopy.setCropType(cropType);
             recyclerView.setAdapter(baseGalleryAdapterCopy);
 
             textView.setVisibility(GONE);
@@ -168,6 +174,17 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
         this.spacingOfIndividualElement = spacingOfIndividualElement;
 
         baseGalleryAdapterCopy.setSpacingOfElemnts(spacingOfIndividualElement);
+        baseGalleryAdapterCopy.notifyDataSetChanged();
+    }
+
+    public String getCropType() {
+        return cropType;
+    }
+
+    public void setCropType(String cropType) {
+        this.cropType = cropType;
+
+        baseGalleryAdapterCopy.setCropType(cropType);
         baseGalleryAdapterCopy.notifyDataSetChanged();
     }
 }

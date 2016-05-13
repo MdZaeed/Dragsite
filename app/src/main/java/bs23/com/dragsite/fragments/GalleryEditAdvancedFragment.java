@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
-import android.widget.Switch;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +23,7 @@ public class GalleryEditAdvancedFragment extends BaseSecondLevelEditFragment {
     GalleryEditFragment galleryEditFragment;
     Spinner borderSpinner;
     Spinner spacingSpinner;
+    Spinner croppingSpinner;
     int perCategoryDiffForSpacing=3;
 
     @Nullable
@@ -70,5 +69,23 @@ public class GalleryEditAdvancedFragment extends BaseSecondLevelEditFragment {
 
             }
         });
+
+        final List<String> croppingTypeList=Arrays.asList(GalleryViewWidget.cropTypeArray);
+        ArrayAdapter<String> croppingTypeAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, croppingTypeList);
+        croppingSpinner=(Spinner) view.findViewById(R.id.sp_cropping_gallery);
+        croppingSpinner.setAdapter(croppingTypeAdapter);
+        croppingSpinner.setSelection(croppingTypeList.indexOf(galleryEditFragment.getGalleryViewWidget().getCropType()));
+        croppingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                galleryEditFragment.getGalleryViewWidget().setCropType(croppingTypeList.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 }

@@ -2,11 +2,15 @@ package bs23.com.dragsite.widgets;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.model.ImageSelectModel;
 
 /**
  * Created by BS-86 on 4/1/2016.
@@ -20,6 +24,9 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
     private int borderColor;
     private String alternateText="Picture";
     private String captionString;
+    private ImageSelectModel image;
+    private TextView textView;
+    private ImageView imageView;
 
     public ImageViewWidget(Context context) {
         super(context);
@@ -43,6 +50,10 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
         setMainView(this.findViewById(R.id.ll_image_widget));
 
         captionString="";
+
+
+        textView = (TextView) this.findViewById(R.id.tv_image_widget);
+        imageView = (ImageView) this.findViewById(R.id.iv_image_widget);
     }
 
     @Override
@@ -163,5 +174,24 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
 
         ((TextView)findViewById(R.id.tv_image_caption)).setText(captionString);
 
+    }
+
+    public ImageSelectModel getImage() {
+        return image;
+    }
+
+    public void setImage(ImageSelectModel image) {
+        this.image = image;
+
+        if(image!=null) {
+            textView.setVisibility(View.GONE);
+            Picasso.with(getContext()).load(image.getFile()).resize(this.getWidth(),this.getWidth()).centerInside().into(imageView);
+            imageView.setVisibility(View.VISIBLE);
+        }else {
+            imageView.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
+        }
+
+        return;
     }
 }

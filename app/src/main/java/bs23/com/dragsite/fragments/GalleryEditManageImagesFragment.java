@@ -67,8 +67,7 @@ public class GalleryEditManageImagesFragment extends ImagesListingFragment imple
         int columnCount = 3;
         int spanPerColumn = width / columnCount;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columnCount));
-        baseGalleryAdapterCopyExtended = new BaseGalleryAdapterCopyExtended(getContext(), imageFiles);
-        baseGalleryAdapterCopyExtended.setImageSize(spanPerColumn);
+        baseGalleryAdapterCopyExtended = new BaseGalleryAdapterCopyExtended(getContext(), imageFiles,spanPerColumn);
         baseGalleryAdapterCopyExtended.setOnSingleImageClicked(this);
         recyclerView.setAdapter(baseGalleryAdapterCopyExtended);
     }

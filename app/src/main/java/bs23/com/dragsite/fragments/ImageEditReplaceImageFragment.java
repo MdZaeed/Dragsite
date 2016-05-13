@@ -31,6 +31,7 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment {
     private ImageView imageView;
     private Button replaceImageButton;
     private ImagesAdapter imagesAdapter;
+    ImageEditFragment imageEditFragment;
 
     public static ImageEditReplaceImageFragment newInstance() {
         return new ImageEditReplaceImageFragment();
@@ -46,7 +47,7 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ImageEditFragment imageEditFragment = (ImageEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
+        imageEditFragment = (ImageEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
 
         textView = (TextView) imageEditFragment.getImageViewWidget().findViewById(R.id.tv_image_widget);
         imageView = (ImageView) imageEditFragment.getImageViewWidget().findViewById(R.id.iv_image_widget);
@@ -75,18 +76,16 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment {
     }
 
     private void saveImageClick() {
+
         for (ImageSelectModel imageSelectModel : imageFiles) {
             if (imageSelectModel.isSelected()) {
-                textView.setVisibility(View.GONE);
-                Picasso.with(getContext()).load(imageSelectModel.getFile()).into(imageView);
-                imageView.setVisibility(View.VISIBLE);
+                imageEditFragment.getImageViewWidget().setImage(imageSelectModel);
                 super.backButtonClick();
                 return;
             }
         }
 
-        imageView.setVisibility(View.GONE);
-        textView.setVisibility(View.VISIBLE);
+        imageEditFragment.getImageViewWidget().setImage(null);
         super.backButtonClick();
     }
 

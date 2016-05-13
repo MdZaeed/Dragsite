@@ -1,8 +1,10 @@
 package bs23.com.dragsite.adapter;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,12 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 import bs23.com.dragsite.R;
 import bs23.com.dragsite.model.ImageSelectModel;
+import bs23.com.dragsite.widgets.GalleryViewWidget;
 
 /**
  * Created by BS-86 on 5/5/2016.
@@ -23,13 +27,65 @@ public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
     protected List<ImageSelectModel> imageFiles;
     protected Context context;
     protected int imageSize;
-    private int borderSize=0;
+    private int borderSize = 0;
     private int spacingOfElemnts;
+    private float scalingFactor;
+    private int lowestHeight;
+    private String cropType = GalleryViewWidget.cropTypeArray[1];
 
-    public BaseGalleryAdapterCopy(Context context, List<ImageSelectModel> imageFiles) {
+    public BaseGalleryAdapterCopy(Context context, List<ImageSelectModel> imageFiles, int imageSize) {
         this.context = context;
         this.setImageFiles(imageFiles);
         setSpacingOfElemnts(dpToPx(3));
+        this.imageSize = imageSize;
+
+        scalingFactor = calculateScalingFactor();
+
+        calculateTheLowestHeight();
+    }
+
+    private void calculateTheLowestHeight() {
+        int lowestHeight = 65555;
+        for (ImageSelectModel imageSelectModel : imageFiles) {
+            if (getFileImageWidth(imageSelectModel.getFile()) < lowestHeight) {
+                lowestHeight = getFileImageHeight(imageSelectModel.getFile());
+            }
+        }
+
+        this.lowestHeight = (int) (lowestHeight * scalingFactor);
+        if (this.lowestHeight<75)
+        {
+            this.lowestHeight=75;
+        }
+    }
+
+    private float calculateScalingFactor() {
+        int highestWidth = 0;
+        for (ImageSelectModel imageSelectModel : imageFiles) {
+            if (getFileImageWidth(imageSelectModel.getFile()) > highestWidth) {
+                highestWidth = getFileImageWidth(imageSelectModel.getFile());
+            }
+        }
+
+        if (highestWidth != 0) {
+            Log.d("Scaling Factor: ", imageSize + "/" + highestWidth + "=" + (float) imageSize / highestWidth);
+            return (float) imageSize / highestWidth;
+        }
+        return 1;
+    }
+
+    private int getFileImageWidth(File file) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+        return options.outWidth;
+    }
+
+    private int getFileImageHeight(File file) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+        return options.outHeight;
     }
 
     @Override
@@ -42,9 +98,37 @@ public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ImageSelectModel element = imageFiles.get(position);
         CameraHolder cameraHolder = (CameraHolder) holder;
-        holder.itemView.setPadding(spacingOfElemnts,spacingOfElemnts,spacingOfElemnts,spacingOfElemnts);
+        holder.itemView.setPadding(spacingOfElemnts, spacingOfElemnts, spacingOfElemnts, spacingOfElemnts);
         cameraHolder.getImageView().setPadding(getBorderSize(), getBorderSize(), getBorderSize(), getBorderSize());
-        Picasso.with(context).load(element.getFile()).resize(getImageSize(), getImageSize()).centerCrop().into(cameraHolder.getImageView());
+
+        if (getCropType().equals(GalleryViewWidget.cropTypeArray[0])) {
+            Picasso.with(context).load(element.getFile()).resize(getImageSize() - (spacingOfElemnts * 2), getImageSize() - (spacingOfElemnts * 2)).centerInside().into(cameraHolder.getImageView());
+        } else if (getCropType().equals(GalleryViewWidget.cropTypeArray[1])) {
+            Picasso.with(context).load(element.getFile()).resize(getImageSize() - (spacingOfElemnts * 2), getImageSize() - (spacingOfElemnts * 2)).centerCrop().into(cameraHolder.getImageView());
+        } else if (getCropType().equals(GalleryViewWidget.cropTypeArray[2]))
+        {
+            Picasso.with(context).load(element.getFile()).resize(lowestHeight-(spacingOfElemnts*2),getImageSize()-(spacingOfElemnts*2)).centerCrop().into(cameraHolder.getImageView());
+        }
+
+/*        Log.d("height and width: " , cameraHolder.getImageView().getHeight() + " " + cameraHolder.getImageView().getWidth());
+        Log.d("I height and width: " , holder.itemView.getHeight() + " " + holder.itemView.getWidth());*/
+
+        Log.d("height and width: " , getFileImageHeight(element.getFile()) + " " + getFileImageWidth(element.getFile()));
+/*        int width=(int) (getFileImageWidth(element.getFile())*scalingFactor);
+        int height=(int) (getFileImageHeight(element.getFile())*scalingFactor);
+
+        if (width<50 || height<50)
+        {
+            Picasso.with(context).load(element.getFile()).resize(50,50).centerInside().into(cameraHolder.getImageView());
+        }
+        else
+        {
+            Picasso.with(context).load(element.getFile()).resize(width-(spacingOfElemnts*2), height-(spacingOfElemnts*2)).centerInside().into(cameraHolder.getImageView());
+        }*/
+
+/*
+        Picasso.with(context).load(element.getFile()).resize(lowestHeight-(spacingOfElemnts*2),getImageSize()-(spacingOfElemnts*2)).centerCrop().into(cameraHolder.getImageView());
+*/
     }
 
     @Override
@@ -81,6 +165,14 @@ public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
         this.spacingOfElemnts = dpToPx(spacingOfElemnts);
     }
 
+    public String getCropType() {
+        return cropType;
+    }
+
+    public void setCropType(String cropType) {
+        this.cropType = cropType;
+    }
+
     protected class CameraHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView imageView;
@@ -90,20 +182,14 @@ public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
             setImageView((ImageView) itemView.findViewById(R.id.iv_single_image));
 
             getImageView().setPadding(getBorderSize(), getBorderSize(), getBorderSize(), getBorderSize());
-            itemView.setPadding(spacingOfElemnts,spacingOfElemnts,spacingOfElemnts,spacingOfElemnts);
+            itemView.setPadding(spacingOfElemnts, spacingOfElemnts, spacingOfElemnts, spacingOfElemnts);
 
             getImageView().setOnClickListener(this);
-/*            imageView.setEnabled(false);
-            imageView.setClickable(false);
-            imageView.setFocusable(false);
-            itemView.setEnabled(false);
-            itemView.setClickable(false);
-            itemView.setFocusable(false);*/
         }
 
         @Override
         public void onClick(View v) {
-            onGalleryImageClick(v,getAdapterPosition());
+            onGalleryImageClick(v, getAdapterPosition());
         }
 
         public ImageView getImageView() {
@@ -115,7 +201,7 @@ public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
         }
     }
 
-    public void onGalleryImageClick(View v,int position) {
+    public void onGalleryImageClick(View v, int position) {
     }
 
 

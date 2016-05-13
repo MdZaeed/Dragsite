@@ -20,9 +20,10 @@ public class BaseGalleryAdapterCopyExtended extends BaseGalleryAdapterCopy {
 
     private OnSingleImageClicked onSingleImageClicked;
 
-    public BaseGalleryAdapterCopyExtended(Context context, List<ImageSelectModel> imageFiles) {
-        super(context, imageFiles);
+    public BaseGalleryAdapterCopyExtended(Context context, List<ImageSelectModel> imageFiles, int imageSize) {
+        super(context, imageFiles, imageSize);
     }
+
 
     @Override
     public void onGalleryImageClick(View v, final int position) {

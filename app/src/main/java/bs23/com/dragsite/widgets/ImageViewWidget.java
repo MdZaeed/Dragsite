@@ -27,6 +27,7 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
     private ImageSelectModel image;
     private TextView textView;
     private ImageView imageView;
+    private String URL="";
 
     public ImageViewWidget(Context context) {
         super(context);
@@ -191,7 +192,17 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
             imageView.setVisibility(View.GONE);
             textView.setVisibility(View.VISIBLE);
         }
+    }
 
-        return;
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        if (!URL.equals("")) {
+            this.URL = "http://" + URL;
+        }else{
+            this.URL = URL;
+        }
     }
 }

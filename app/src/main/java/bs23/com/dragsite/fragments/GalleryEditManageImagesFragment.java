@@ -84,10 +84,10 @@ public class GalleryEditManageImagesFragment extends ImagesListingFragment imple
     }
 
     @Override
-    public void onSingleImageCaptionClick(int posiiton) {
+    public void onSingleImageCaptionClick(int position) {
         GalleryEditCaptionSingleImageFragment galleryEditCaptionSingleImageFragment = GalleryEditCaptionSingleImageFragment.newInstance();
         galleryEditCaptionSingleImageFragment.setFragmentManager1(getFragmentManager1());
-        galleryEditCaptionSingleImageFragment.setDataPosition(posiiton);
+        galleryEditCaptionSingleImageFragment.setDataPosition(position);
         getFragmentManager1().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, 0, android.R.anim.slide_in_left, 0)
                 .replace(((MainActivity) getActivity()).getBottomPaneLinearLayout().getId(), galleryEditCaptionSingleImageFragment)
@@ -96,10 +96,10 @@ public class GalleryEditManageImagesFragment extends ImagesListingFragment imple
     }
 
     @Override
-    public void onSIngleImageLinkClick(int posiiton) {
+    public void onSIngleImageLinkClick(int position) {
         GalleryEditLinkSingleImageFragment galleryEditLinkSingleImageFragment = GalleryEditLinkSingleImageFragment.newInstance();
         galleryEditLinkSingleImageFragment.setFragmentManager1(getFragmentManager1());
-        galleryEditLinkSingleImageFragment.setDataPosition(posiiton);
+        galleryEditLinkSingleImageFragment.setDataPosition(position);
         getFragmentManager1().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, 0, android.R.anim.slide_in_left, 0)
                 .replace(((MainActivity) getActivity()).getBottomPaneLinearLayout().getId(), galleryEditLinkSingleImageFragment)

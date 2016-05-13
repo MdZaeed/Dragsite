@@ -45,7 +45,7 @@ public class BaseGalleryAdapterCopyExtended extends BaseGalleryAdapterCopy {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deletSingleItem(position);
+                deleteSingleItem(position);
                 popup.dismiss();
             }
         });
@@ -73,7 +73,7 @@ public class BaseGalleryAdapterCopyExtended extends BaseGalleryAdapterCopy {
         getOnSingleImageClicked().onSIngleImageLinkClick(position);
     }
 
-    private void deletSingleItem(int position) {
+    private void deleteSingleItem(int position) {
         imageFiles.remove(position);
         notifyDataSetChanged();
         getOnSingleImageClicked().onSigleImageDeleteClick();
@@ -108,7 +108,7 @@ public class BaseGalleryAdapterCopyExtended extends BaseGalleryAdapterCopy {
     public interface OnSingleImageClicked
     {
         void onSigleImageDeleteClick();
-        void onSingleImageCaptionClick(int posiiton);
-        void onSIngleImageLinkClick(int posiiton);
+        void onSingleImageCaptionClick(int position);
+        void onSIngleImageLinkClick(int position);
     }
 }

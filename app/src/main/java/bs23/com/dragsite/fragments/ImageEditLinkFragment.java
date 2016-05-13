@@ -2,27 +2,20 @@ package bs23.com.dragsite.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
 
 /**
- * Created by BS-86 on 5/11/2016.
+ * Created by BS-86 on 4/28/2016.
  */
-public class GalleryEditLinkSingleImageFragment extends BaseSecondLevelEditFragment {
+public class ImageEditLinkFragment extends BaseSecondLevelEditFragment {
 
-    GalleryEditFragment galleryEditFragment;
-    private int dataPosition;
-    EditText linkEditText;
-    TextInputLayout linkTextInputLayout;
+    private Button removeLinkButton;
 
     @Nullable
     @Override
@@ -30,33 +23,32 @@ public class GalleryEditLinkSingleImageFragment extends BaseSecondLevelEditFragm
         return inflater.inflate(R.layout.fragment_link_image_button, container, false);
     }
 
-    public static GalleryEditLinkSingleImageFragment newInstance() {
-        return new GalleryEditLinkSingleImageFragment();
+    public static ImageEditLinkFragment newInstance() {
+        return new ImageEditLinkFragment();
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        galleryEditFragment = (GalleryEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
+        final ImageEditFragment imageEditFragment = (ImageEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
 
         Button setURLButton = (Button) view.findViewById(R.id.btn_set_url_image);
         setURLButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GalleryEditLinkURLFragment galleryEditLinkURLFragment = GalleryEditLinkURLFragment.newInstance();
-                galleryEditLinkURLFragment.setFragmentManager1(getFragmentManager1());
-                galleryEditLinkURLFragment.setDataPosition(dataPosition);
+                ImageEditLinkURLFragment imageEditLinkURLFragment = ImageEditLinkURLFragment.newInstance();
+                imageEditLinkURLFragment.setFragmentManager1(getFragmentManager1());
                 getFragmentManager1().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, 0, android.R.anim.slide_in_left, 0)
-                        .replace(((MainActivity) getActivity()).getBottomPaneLinearLayout().getId(), galleryEditLinkURLFragment)
+                        .replace(((MainActivity) getActivity()).getBottomPaneLinearLayout().getId(), imageEditLinkURLFragment)
                         .addToBackStack("null")
                         .commit();
             }
         });
 
-        final Button removeLinkButton=(Button) view.findViewById(R.id.btn_remove_link);
-        if(galleryEditFragment.getGalleryViewWidget().getImageSelectModels().get(dataPosition).getLink().equals(""))
+        removeLinkButton=(Button) view.findViewById(R.id.btn_remove_link);
+        if(imageEditFragment.getImageViewWidget().getURL().equals(""))
         {
             removeLinkButton.setTextColor(getContext().getResources().getColor(android.R.color.darker_gray));
         }else
@@ -67,17 +59,9 @@ public class GalleryEditLinkSingleImageFragment extends BaseSecondLevelEditFragm
         removeLinkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                galleryEditFragment.getGalleryViewWidget().getImageSelectModels().get(dataPosition).setLink("");
+                imageEditFragment.getImageViewWidget().setURL("");
                 removeLinkButton.setTextColor(getContext().getResources().getColor(android.R.color.darker_gray));
             }
         });
-    }
-
-    public int getDataPosition() {
-        return dataPosition;
-    }
-
-    public void setDataPosition(int dataPosition) {
-        this.dataPosition = dataPosition;
     }
 }

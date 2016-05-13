@@ -24,6 +24,7 @@ public class ImageEditFragment extends BaseEditFragment {
     private ImageViewWidget imageViewWidget;
     private String additionMood="ADD IMAGE";
     private EditText captionEditText;
+    private Button linkButton;
 
     public static ImageEditFragment newInstance() {
         return new ImageEditFragment();
@@ -40,9 +41,10 @@ public class ImageEditFragment extends BaseEditFragment {
         super.onViewCreated(view, savedInstanceState);
 
         editImageButton=(Button) view.findViewById(R.id.btn_edit_image);
+
+
+
         addImageButton=(Button) view.findViewById(R.id.btn_add_image);
-
-
         if (getImageViewWidget().findViewById(R.id.tv_image_widget).getVisibility()==View.GONE)
         {
             editImageButton.setVisibility(View.VISIBLE);
@@ -54,7 +56,6 @@ public class ImageEditFragment extends BaseEditFragment {
             addImageButton.setText("ADD IMAGE");
             additionMood="ADD IMAGE";
         }
-
 
         addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +71,6 @@ public class ImageEditFragment extends BaseEditFragment {
         });
 
         Button spacingButton = (Button) view.findViewById(R.id.btn_spacing_image);
-
         spacingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +85,6 @@ public class ImageEditFragment extends BaseEditFragment {
         });
 
         Button advancedOptionButton = (Button) view.findViewById(R.id.btn_image_edit_advanced);
-
         advancedOptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +105,20 @@ public class ImageEditFragment extends BaseEditFragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 getImageViewWidget().setCaptionString(captionEditText.getText().toString());
                 return false;
+            }
+        });
+
+        linkButton=(Button) view.findViewById(R.id.btn_image_link);
+        linkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageEditLinkFragment imageEditLinkFragment=ImageEditLinkFragment.newInstance();
+                imageEditLinkFragment.setFragmentManager1(getFragmentManager1());
+                getFragmentManager1().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
+                        .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), imageEditLinkFragment)
+                        .addToBackStack("null")
+                        .commit();
             }
         });
     }

@@ -52,13 +52,6 @@ public abstract class BaseLinearLayout extends LinearLayout implements View.OnLo
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-/*
-        canvas.drawColor(Color.rgb(0, 0, 0));
-*//*
-        Paint myPaint = new Paint();
-        myPaint.setColor(Color.rgb(0, 0, 0));
-        myPaint.setStrokeWidth(1);
-        myPaint.*/
 
         if (isDrawn) {
             Paint strokePaint = new Paint();
@@ -70,9 +63,6 @@ public abstract class BaseLinearLayout extends LinearLayout implements View.OnLo
             canvas.drawRect(outline, strokePaint);
             isDrawn = false;
         } else if (isForegroundDrawable && !isDrawn) {
-/*
-            canvas.drawRect(this.getLeft(), this.getTop(), this.getRight(), this.getBottom(), myPaint);
-*/
             Paint strokePaint = new Paint();
             strokePaint.setARGB(255, 255, 0, 0);
             strokePaint.setStyle(Paint.Style.STROKE);
@@ -89,30 +79,6 @@ public abstract class BaseLinearLayout extends LinearLayout implements View.OnLo
         isForegroundDrawable = true;
         invalidate();
     }
-
-    /*
-    @Override
-    protected void dispa(Canvas canvas) {
-        this.canvas=canvas;
-        super.onDraw(canvas);
-        drawRect(canvas);
-    }*/
-/*
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
-
-        drawRect(canvas);
-    }
-
-    public void drawRect(Canvas canvas)
-    {
-        canvas.drawColor(Color.rgb(0, 0, 0));
-        Paint myPaint = new Paint();
-        myPaint.setColor(Color.rgb(0, 0, 0));
-        myPaint.setStrokeWidth(10);
-        canvas.drawRect(this.getX(),this.getY(), this.getX()+this.getWidth(), this.getY()+this.getHeight(), myPaint);
-    }*/
 
     @Override
     public boolean onLongClick(View v) {

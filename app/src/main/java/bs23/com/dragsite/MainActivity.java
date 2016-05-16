@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -227,20 +229,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
                     hideBottomOptionMenu();
-/*
-                    Log.d("Action Drag started  ", " " + v);
-*/
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
-/*
-                    Log.d("Action Drag entered  ", " " + v);
-*/
                     break;
                 case DragEvent.ACTION_DRAG_EXITED:
                     clearBottomLayoutColor(v);
-/*
-                    Log.d("Action Drag exited  ", " " + v);
-*/
                     break;
                 case DragEvent.ACTION_DROP:
                     View view = (View) event.getLocalState();
@@ -305,14 +298,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else {
                         replaceNewElementsOfType(v, (BaseLinearLayout) view, event);
                     }
-/*
-                    Log.d("Up Goes the mountain", "Working drag dropped " + v);
-*/
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
-/*
-                    Log.d("Action Drag ended  ", " " + v);
-*/
                     break;
                 default:
                     if (v instanceof BaseLinearLayout) {
@@ -332,10 +319,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void replaceNewElementsOfType(View v, BaseLinearLayout view, DragEvent event) {
-        setUpDragStartedViews(view);
-        mainRelativeLayout.removeView(view);
-        addElementsInRelativeLayout((ViewGroup) v, view, event);
-        setLayoutParameters(view);
+        if(v==view)
+        {
+            Toast.makeText(this,"Dropped On The Same Element",Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            setUpDragStartedViews(view);
+            removeView(view);
+            addElementsInRelativeLayout((ViewGroup) v, view, event);
+            setLayoutParameters(view);
+        }
     }
 
     private void setUpDragStartedViews(BaseLinearLayout view) {
@@ -476,10 +470,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             deleteNoticeDialog(foregroundDrawn);
         }
 
-/*
-        mainRelativeLayout.scrollTo(child.getLeft(),child.getTop());
-*/
-
         foregroundDrawn = child;
         editOptionsDialog = new EditOptionsDialog(this);
         ViewCompat.setElevation(editOptionsDialog, 20);
@@ -491,9 +481,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editOptionsDialog.setLayoutParams(params);
         child.drawForegroundRectangle();
 
-/*
-        child.setBackgroundResource(R.drawable.dark_blue_border_transparent_background);
-*/
         editOptionsDialog.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -501,6 +488,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 deleteNoticeDialog(child);
             }
         });
+
+        editOptionsDialog.findViewById(R.id.btn_delete_widget).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteNoticeDialog(child);
+                removeView(child);
+            }
+        });
+    }
+
+    private void removeView(BaseLinearLayout layoutToBeDeleted) {
+        RelativeLayout.LayoutParams relaLayoutParams = (RelativeLayout.LayoutParams) layoutToBeDeleted.getLayoutParams();
+        final int belowId=relaLayoutParams.getRules()[RelativeLayout.BELOW];
+
+        final int topId=layoutToBeDeleted.getAboveId();
+
+        BaseLinearLayout belowBaseLinearLayout=(BaseLinearLayout) this.findViewById(belowId);
+
+        if(topId!=0)
+        {
+            BaseLinearLayout topBaseLinearLayout=(BaseLinearLayout) this.findViewById(topId);
+
+            RelativeLayout.LayoutParams relaLayoutParams1 = (RelativeLayout.LayoutParams) topBaseLinearLayout.getLayoutParams();
+            relaLayoutParams1.addRule(RelativeLayout.BELOW,belowId);
+        }
+
+        belowBaseLinearLayout.setAboveId(topId);
+        mainRelativeLayout.removeView(layoutToBeDeleted);
     }
 
     private void editLayoutAddition(BaseLinearLayout child) {

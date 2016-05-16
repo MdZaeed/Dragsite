@@ -26,8 +26,6 @@ import bs23.com.dragsite.widgets.GalleryViewWidget;
 public class GalleryEditCaptionFragment extends BaseSecondLevelEditFragment {
 
     GalleryEditFragment galleryEditFragment;
-    private Switch hoverSwitch;
-    private Spinner captionTypeSpinner;
 
     @Nullable
     @Override
@@ -45,7 +43,7 @@ public class GalleryEditCaptionFragment extends BaseSecondLevelEditFragment {
 
         galleryEditFragment = (GalleryEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
 
-        hoverSwitch=(Switch) view.findViewById(R.id.switch_caption_hover_gallery);
+        Switch hoverSwitch = (Switch) view.findViewById(R.id.switch_caption_hover_gallery);
         hoverSwitch.setChecked(galleryEditFragment.getGalleryViewWidget().isThumbnailCaptionHovering());
         hoverSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -56,7 +54,7 @@ public class GalleryEditCaptionFragment extends BaseSecondLevelEditFragment {
 
         final List<String> typeList=Arrays.asList(GalleryViewWidget.typeArray);
         ArrayAdapter<String> typeAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, typeList);
-        captionTypeSpinner=(Spinner) view.findViewById(R.id.sp_caption_hover_type_gallery);
+        Spinner captionTypeSpinner = (Spinner) view.findViewById(R.id.sp_caption_hover_type_gallery);
         captionTypeSpinner.setAdapter(typeAdapter);
         captionTypeSpinner.setSelection(typeList.indexOf(galleryEditFragment.getGalleryViewWidget().getThumbnailCaptionType()));
         captionTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

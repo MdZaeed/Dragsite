@@ -16,15 +16,16 @@ import java.io.File;
 import java.util.List;
 
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.model.ImageSelectGalleryElementModel;
 import bs23.com.dragsite.model.ImageSelectModel;
 import bs23.com.dragsite.widgets.GalleryViewWidget;
 
 /**
  * Created by BS-86 on 5/5/2016.
  */
-public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
+public class GalleryAdapterWithAllElementTouchDisabled extends RecyclerView.Adapter {
 
-    protected List<ImageSelectModel> imageFiles;
+    protected List<ImageSelectGalleryElementModel> imageFiles;
     protected Context context;
     protected int imageSize;
     private int borderSize = 0;
@@ -33,7 +34,7 @@ public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
     private int lowestHeight;
     private String cropType = GalleryViewWidget.cropTypeArray[1];
 
-    public BaseGalleryAdapterCopy(Context context, List<ImageSelectModel> imageFiles, int imageSize) {
+    public GalleryAdapterWithAllElementTouchDisabled(Context context, List<ImageSelectGalleryElementModel> imageFiles, int imageSize) {
         this.context = context;
         this.setImageFiles(imageFiles);
         setSpacingOfElemnts(dpToPx(3));
@@ -145,7 +146,7 @@ public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
         return getItem(position).VIEW_TYPE;
     }
 
-    public List<ImageSelectModel> getImageFiles() {
+    public List<ImageSelectGalleryElementModel> getImageFiles() {
         return imageFiles;
     }
 
@@ -213,7 +214,7 @@ public class BaseGalleryAdapterCopy extends RecyclerView.Adapter {
         this.imageSize = imageSize;
     }
 
-    public void setImageFiles(List<ImageSelectModel> imageFiles) {
+    public void setImageFiles(List<ImageSelectGalleryElementModel> imageFiles) {
         this.imageFiles = imageFiles;
     }
 

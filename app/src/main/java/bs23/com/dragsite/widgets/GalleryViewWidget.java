@@ -15,24 +15,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.adapter.BaseGalleryAdapter;
-import bs23.com.dragsite.adapter.BaseGalleryAdapterCopy;
-import bs23.com.dragsite.model.ImageSelectModel;
+import bs23.com.dragsite.adapter.GalleryAdapterWithMultiSelection;
+import bs23.com.dragsite.adapter.GalleryAdapterWithAllElementTouchDisabled;
+import bs23.com.dragsite.model.ImageSelectGalleryElementModel;
 
 /**
  * Created by BrainStation on 4/4/16.
  */
-public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implements BaseGalleryAdapter.CameraClick {
+public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implements GalleryAdapterWithMultiSelection.CameraClick {
 
     public static String[] typeArray={"none","partial","full"};
     public static String[] cropTypeArray ={"none","square","rectangle"};
 
 
     Context context;
-    private List<ImageSelectModel> imageSelectModels;
+    private List<ImageSelectGalleryElementModel> imageSelectModels;
     private int noOfColoumns=3;
     RecyclerView recyclerView;
-    BaseGalleryAdapterCopy baseGalleryAdapterCopy;
+    GalleryAdapterWithAllElementTouchDisabled baseGalleryAdapterCopy;
     TextView textView;
     GestureDetector gestureDetector;
     private boolean isThumbnailCaptionHovering=true;
@@ -74,11 +74,11 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
         textView=(TextView) this.findViewById(R.id.tv_gallery_dummy);
     }
 
-    public List<ImageSelectModel> getImageSelectModels() {
+    public List<ImageSelectGalleryElementModel> getImageSelectModels() {
         return imageSelectModels;
     }
 
-    public void setImageSelectModels(List<ImageSelectModel> imageSelectModels) {
+    public void setImageSelectModels(List<ImageSelectGalleryElementModel> imageSelectModels) {
         this.imageSelectModels = imageSelectModels;
 
         addRecyclerView(recyclerView.getWidth());
@@ -101,7 +101,7 @@ public class GalleryViewWidget extends BaseLinearLayoutWithSpacingNeeds implemen
                 cropType=baseGalleryAdapterCopy.getCropType();
             }*/
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getNoOfColoumns()));
-            baseGalleryAdapterCopy = new BaseGalleryAdapterCopy(getContext(), imageSelectModels,spanPerColumn);
+            baseGalleryAdapterCopy = new GalleryAdapterWithAllElementTouchDisabled(getContext(), imageSelectModels,spanPerColumn);
             baseGalleryAdapterCopy.setBorderSize(borderSize);
             baseGalleryAdapterCopy.setSpacingOfElemnts(spacingOfIndividualElement);
             baseGalleryAdapterCopy.setCropType(cropType);

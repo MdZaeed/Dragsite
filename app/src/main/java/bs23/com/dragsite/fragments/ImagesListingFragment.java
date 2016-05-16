@@ -23,13 +23,13 @@ import java.util.List;
 import java.util.Locale;
 
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.adapter.BaseGalleryAdapter;
+import bs23.com.dragsite.adapter.GalleryAdapterWithMultiSelection;
 import bs23.com.dragsite.model.ImageSelectModel;
 
 /**
  * Created by BS-86 on 5/5/2016.
  */
-public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment implements BaseGalleryAdapter.CameraClick {
+public abstract class ImagesListingFragment extends BaseSecondLevelEditFragment implements GalleryAdapterWithMultiSelection.CameraClick {
 
     protected List<ImageSelectModel> imageFiles;
     protected File photoFile;

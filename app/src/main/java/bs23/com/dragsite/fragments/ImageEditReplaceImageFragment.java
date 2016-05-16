@@ -3,10 +3,8 @@ package bs23.com.dragsite.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.adapter.ImagesAdapter;
+import bs23.com.dragsite.adapter.GalleryAdapterWithSingleSelection;
 import bs23.com.dragsite.model.ImageSelectModel;
 
 /**
@@ -30,7 +24,7 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment {
     private TextView textView;
     private ImageView imageView;
     private Button replaceImageButton;
-    private ImagesAdapter imagesAdapter;
+    private GalleryAdapterWithSingleSelection galleryAdapterWithSingleSelection;
     ImageEditFragment imageEditFragment;
 
     public static ImageEditReplaceImageFragment newInstance() {
@@ -69,10 +63,10 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment {
         int columnCount = 3;
         int spanPerColumn = width / columnCount;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columnCount));
-        imagesAdapter = new ImagesAdapter(getContext(), imageFiles);
-        imagesAdapter.setImageSize(spanPerColumn);
-        recyclerView.setAdapter(imagesAdapter);
-        imagesAdapter.setCameraClick(this);
+        galleryAdapterWithSingleSelection = new GalleryAdapterWithSingleSelection(getContext(), imageFiles);
+        galleryAdapterWithSingleSelection.setImageSize(spanPerColumn);
+        recyclerView.setAdapter(galleryAdapterWithSingleSelection);
+        galleryAdapterWithSingleSelection.setCameraClick(this);
     }
 
     private void saveImageClick() {
@@ -93,9 +87,9 @@ public class ImageEditReplaceImageFragment extends ImagesListingFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1  && resultCode== Activity.RESULT_OK) {
             clearImageFilesSelection();
-            imageFiles.add(1,imagesAdapter.setLastElement(new ImageSelectModel(photoFile,true,2)));
-            imagesAdapter.setImageFiles(imageFiles);
-            imagesAdapter.notifyDataSetChanged();
+            imageFiles.add(1, galleryAdapterWithSingleSelection.setLastElement(new ImageSelectModel(photoFile,true,2)));
+            galleryAdapterWithSingleSelection.setImageFiles(imageFiles);
+            galleryAdapterWithSingleSelection.notifyDataSetChanged();
         }
     }
 }

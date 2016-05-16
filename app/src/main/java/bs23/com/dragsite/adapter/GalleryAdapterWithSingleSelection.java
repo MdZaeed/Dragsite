@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * Created by Ashraful on 3/3/2016.
  */
-public class ImagesAdapter extends BaseGalleryAdapter {
+public class GalleryAdapterWithSingleSelection extends GalleryAdapterWithMultiSelection {
 
     private ImageSelectModel lastElement;
 
-    public ImagesAdapter(Context context, List<ImageSelectModel> imageFiles) {
+    public GalleryAdapterWithSingleSelection(Context context, List<ImageSelectModel> imageFiles) {
         super(context, imageFiles);
     }
 

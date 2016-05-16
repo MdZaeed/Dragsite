@@ -21,8 +21,6 @@ public class GalleryEditLinkSingleImageFragment extends BaseSecondLevelEditFragm
 
     GalleryEditFragment galleryEditFragment;
     private int dataPosition;
-    EditText linkEditText;
-    TextInputLayout linkTextInputLayout;
 
     @Nullable
     @Override

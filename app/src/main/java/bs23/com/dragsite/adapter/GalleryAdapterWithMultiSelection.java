@@ -19,14 +19,14 @@ import bs23.com.dragsite.model.ImageSelectModel;
 /**
  * Created by BS-86 on 5/5/2016.
  */
-public class BaseGalleryAdapter extends RecyclerView.Adapter {
+public class GalleryAdapterWithMultiSelection extends RecyclerView.Adapter {
 
     protected List<ImageSelectModel> imageFiles;
     protected Context context;
     protected int imageSize;
     protected CameraClick cameraClick;
 
-    public BaseGalleryAdapter(Context context, List<ImageSelectModel> imageFiles) {
+    public GalleryAdapterWithMultiSelection(Context context, List<ImageSelectModel> imageFiles) {
         this.context = context;
         this.setImageFiles(imageFiles);
     }
@@ -164,6 +164,6 @@ public class BaseGalleryAdapter extends RecyclerView.Adapter {
 
     public interface CameraClick
     {
-        public void onCameraClick(View v);
+        void onCameraClick(View v);
     }
 }

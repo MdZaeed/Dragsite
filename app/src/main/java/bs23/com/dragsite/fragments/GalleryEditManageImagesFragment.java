@@ -10,19 +10,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.adapter.BaseGalleryAdapterCopyExtended;
+import bs23.com.dragsite.adapter.GalleryAdapterWithSingleElementTouchPopupWindowEnabled;
+import bs23.com.dragsite.model.ImageSelectGalleryElementModel;
 
 /**
  * Created by BS-86 on 5/9/2016.
  */
-public class GalleryEditManageImagesFragment extends ImagesListingFragment implements BaseGalleryAdapterCopyExtended.OnSingleImageClicked {
+public class GalleryEditManageImagesFragment extends ImagesListingFragment implements GalleryAdapterWithSingleElementTouchPopupWindowEnabled.OnSingleImageClicked {
 
-    BaseGalleryAdapterCopyExtended baseGalleryAdapterCopyExtended;
+    GalleryAdapterWithSingleElementTouchPopupWindowEnabled baseGalleryAdapterCopyExtended;
     private Button addImageButton;
     GalleryEditFragment galleryEditFragment;
+    protected List<ImageSelectGalleryElementModel> imageFiles;
 
     @Nullable
     @Override
@@ -67,7 +70,7 @@ public class GalleryEditManageImagesFragment extends ImagesListingFragment imple
         int columnCount = 3;
         int spanPerColumn = width / columnCount;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columnCount));
-        baseGalleryAdapterCopyExtended = new BaseGalleryAdapterCopyExtended(getContext(), imageFiles,spanPerColumn);
+        baseGalleryAdapterCopyExtended = new GalleryAdapterWithSingleElementTouchPopupWindowEnabled(getContext(), imageFiles,spanPerColumn);
         baseGalleryAdapterCopyExtended.setOnSingleImageClicked(this);
         recyclerView.setAdapter(baseGalleryAdapterCopyExtended);
     }

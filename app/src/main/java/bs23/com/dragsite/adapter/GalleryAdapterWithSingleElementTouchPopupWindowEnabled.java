@@ -11,16 +11,16 @@ import android.widget.PopupWindow;
 import java.util.List;
 
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.model.ImageSelectModel;
+import bs23.com.dragsite.model.ImageSelectGalleryElementModel;
 
 /**
  * Created by BS-86 on 5/5/2016.
  */
-public class BaseGalleryAdapterCopyExtended extends BaseGalleryAdapterCopy {
+public class GalleryAdapterWithSingleElementTouchPopupWindowEnabled extends GalleryAdapterWithAllElementTouchDisabled {
 
     private OnSingleImageClicked onSingleImageClicked;
 
-    public BaseGalleryAdapterCopyExtended(Context context, List<ImageSelectModel> imageFiles, int imageSize) {
+    public GalleryAdapterWithSingleElementTouchPopupWindowEnabled(Context context, List<ImageSelectGalleryElementModel> imageFiles, int imageSize) {
         super(context, imageFiles, imageSize);
     }
 

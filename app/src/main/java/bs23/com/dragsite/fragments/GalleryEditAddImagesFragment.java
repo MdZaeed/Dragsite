@@ -3,23 +3,19 @@ package bs23.com.dragsite.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.adapter.BaseGalleryAdapter;
-import bs23.com.dragsite.adapter.ImagesAdapter;
+import bs23.com.dragsite.adapter.GalleryAdapterWithMultiSelection;
+import bs23.com.dragsite.model.ImageSelectGalleryElementModel;
 import bs23.com.dragsite.model.ImageSelectModel;
 
 /**
@@ -27,9 +23,9 @@ import bs23.com.dragsite.model.ImageSelectModel;
  */
 public class GalleryEditAddImagesFragment extends ImagesListingFragment {
 
-    BaseGalleryAdapter imagesAdapter;
+    GalleryAdapterWithMultiSelection imagesAdapter;
     private Button replaceImageButton;
-    private List<ImageSelectModel> galleryFiles;
+    private List<ImageSelectGalleryElementModel> galleryFiles;
     GalleryEditFragment galleryEditFragment;
 
     @Nullable
@@ -77,7 +73,7 @@ public class GalleryEditAddImagesFragment extends ImagesListingFragment {
             if (imageSelectModel.isSelected()) {
                 ImageSelectModel imageSelectModelTemp=imageSelectModel;
                 imageSelectModelTemp.VIEW_TYPE=1;
-                galleryFiles.add(imageSelectModelTemp);
+                galleryFiles.add(new ImageSelectGalleryElementModel(imageSelectModel.getFile(),imageSelectModel.isSelected(),imageSelectModel.VIEW_TYPE));
             }
         }
 
@@ -90,7 +86,7 @@ public class GalleryEditAddImagesFragment extends ImagesListingFragment {
         int columnCount = 3;
         int spanPerColumn = width / columnCount;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columnCount));
-        imagesAdapter = new BaseGalleryAdapter(getContext(), imageFiles);
+        imagesAdapter = new GalleryAdapterWithMultiSelection(getContext(), imageFiles);
         imagesAdapter.setImageSize(spanPerColumn);
         recyclerView.setAdapter(imagesAdapter);
         imagesAdapter.setCameraClick(this);

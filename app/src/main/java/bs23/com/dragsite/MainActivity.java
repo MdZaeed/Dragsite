@@ -1,6 +1,8 @@
 package bs23.com.dragsite;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
@@ -582,6 +584,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         baseEditFragment.setFragmentManager1(fragmentManager);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void setEditTextEdit(EditText editText, TextView textView) {
 
         focusedEditText = editText;
@@ -589,6 +592,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textView.setVisibility(View.GONE);
         editText.setVisibility(View.VISIBLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                editText.setBackground(getResources().getDrawable(R.drawable.dark_blue_border_transparent_background,getTheme()));
+            }else
+            {
+                editText.setBackground(getResources().getDrawable(R.drawable.dark_blue_border_transparent_background));
+            }
+        }else
+        {
+            editText.setBackgroundDrawable(getResources().getDrawable(R.drawable.dark_blue_border_transparent_background));
+        }
+
         editText.requestFocus();
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
@@ -612,7 +627,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainRelativeLayout.requestFocus();
 
         mainRelativeLayout.removeSoftKeyboardLsner();
-
     }
 
     private void deleteNoticeDialog(BaseLinearLayout child) {

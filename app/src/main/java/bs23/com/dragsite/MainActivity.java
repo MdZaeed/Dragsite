@@ -2,6 +2,7 @@ package bs23.com.dragsite;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BaseLinearLayout foregroundDrawn;
     TextView focusedTextView;
     EditText focusedEditText;
+    PopupWindow popupWindow;
 
     /*
     LatLng dhaka;
@@ -466,7 +469,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showNoticeDialog(final BaseLinearLayout child) {
 
-        if (editOptionsDialog != null) {
+/*        if (editOptionsDialog != null) {
             deleteNoticeDialog(foregroundDrawn);
         }
 
@@ -479,8 +482,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.addRule(RelativeLayout.ABOVE, child.getId());
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         editOptionsDialog.setLayoutParams(params);
-        child.drawForegroundRectangle();
+        child.drawForegroundRectangle();*/
 
+
+
+
+/*
         editOptionsDialog.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -495,7 +502,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 deleteNoticeDialog(child);
                 removeView(child);
             }
-        });
+        });*/
+
+        foregroundDrawn=child;
+        child.drawForegroundRectangle();
+
+        if(popupWindow!=null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+            child.drawForegroundRectangle();
+        }
+
+        popupWindow=createPopupWindow();
+        Rect rect=new Rect();
+        child.getLocalVisibleRect(rect);
+        popupWindow.setFocusable(false);
+        popupWindow.setOutsideTouchable(false);
+        if(rect.contains(child.getLeft(),child.getTop()-200))
+        {
+            popupWindow.showAsDropDown(child,0,-(child.getHeight()-200));
+        }
+        else
+        {
+            popupWindow.showAsDropDown(child,0,-rect.height());
+        }
+    }
+
+    public PopupWindow createPopupWindow() {
+
+        PopupWindow popupWindow = new PopupWindow(this);
+
+        popupWindow.setFocusable(true);
+        popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        popupWindow.setContentView(LayoutInflater.from(this).inflate(R.layout.dialog_on_click, null, false));
+
+        return popupWindow;
     }
 
     private void removeView(BaseLinearLayout layoutToBeDeleted) {
@@ -646,16 +688,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void deleteNoticeDialog(BaseLinearLayout child) {
 
-        if (child != null) {
+/*        if (child != null) {
             child.drawForegroundRectangle();
         }
 
         if (editOptionsDialog != null) {
             mainRelativeLayout.removeView(editOptionsDialog);
             editOptionsDialog = null;
+        }*/
+
+        if (child != null) {
+            child.drawForegroundRectangle();
+            foregroundDrawn=null;
         }
 
+        if(popupWindow!=null)
+        {
+            popupWindow.dismiss();
+        }
+
+/*
         foregroundDrawn = null;
+*/
     }
 
     private void handleMapCreation(MapsWidget mapsWidget) {

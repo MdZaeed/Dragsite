@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     WebElementsAdapter recommendedStoreAdapter;
     BaseLinearLayout lastBaseLinearLayout;
     private LinearLayout bottomPaneLinearLayout;
-    EditOptionsDialog editOptionsDialog;
     List<Fragment> fragmentList;
     BaseLinearLayout foregroundDrawn;
     TextView focusedTextView;
@@ -130,9 +129,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 hideBottomOptionMenu();
             }
         });
-/*
-        mainRelativeLayout.setOnClickListener(this);
-*/
 
         recyclerView = (RecyclerView) getBottomPaneLinearLayout().findViewById(R.id.rv_elements_list_add_dialog);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -469,41 +465,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showNoticeDialog(final BaseLinearLayout child) {
-
-/*        if (editOptionsDialog != null) {
-            deleteNoticeDialog(foregroundDrawn);
-        }
-
-        foregroundDrawn = child;
-        editOptionsDialog = new EditOptionsDialog(this);
-        ViewCompat.setElevation(editOptionsDialog, 20);
-        mainRelativeLayout.addView(editOptionsDialog);
-        editOptionsDialog.addContents();
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) editOptionsDialog.getLayoutParams();
-        params.addRule(RelativeLayout.ABOVE, child.getId());
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        editOptionsDialog.setLayoutParams(params);
-        child.drawForegroundRectangle();*/
-
-
-
-
-/*
-        editOptionsDialog.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editLayoutAddition(child);
-                deleteNoticeDialog(child);
-            }
-        });
-
-        editOptionsDialog.findViewById(R.id.btn_delete_widget).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteNoticeDialog(child);
-                removeView(child);
-            }
-        });*/
 
         if(popupWindow!=null && popupWindow.isShowing()) {
             if(foregroundDrawn==child)

@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
         deleteNoticeDialog(foregroundDrawn);
     }
 
@@ -504,27 +505,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });*/
 
-        foregroundDrawn=child;
-        child.drawForegroundRectangle();
-
         if(popupWindow!=null && popupWindow.isShowing()) {
-            popupWindow.dismiss();
+            if(foregroundDrawn==child)
+            {
+                popupWindow.dismiss();
+            }else
+            {
+                deleteNoticeDialog(foregroundDrawn);
+            }
+        }
+
+        if(!child.isDrawn()) {
             child.drawForegroundRectangle();
+            foregroundDrawn=child;
         }
 
         popupWindow=createPopupWindow();
         Rect rect=new Rect();
-        child.getLocalVisibleRect(rect);
+        mainRelativeLayout.getLocalVisibleRect(rect);
+        Rect ownRect=new Rect();
+        child.getLocalVisibleRect(ownRect);
         popupWindow.setFocusable(false);
         popupWindow.setOutsideTouchable(false);
-        if(rect.contains(child.getLeft(),child.getTop()-200))
+        if(rect.contains(child.getLeft(),child.getTop()-80))
         {
-            popupWindow.showAsDropDown(child,0,-(child.getHeight()-200));
+            popupWindow.showAsDropDown(child,0,-child.getHeight()-80);
+        }
+        else if(rect.contains(child.getLeft(),child.getBottom()+80))
+        {
+            popupWindow.showAsDropDown(child,0,0);
         }
         else
         {
-            popupWindow.showAsDropDown(child,0,-rect.height());
+            popupWindow.showAsDropDown(child,0,-ownRect.height());
         }
+
+        popupWindow.getContentView().findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editLayoutAddition(child);
+                deleteNoticeDialog(child);
+            }
+        });
+
+        popupWindow.getContentView().findViewById(R.id.btn_delete_widget).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteNoticeDialog(child);
+                removeView(child);
+            }
+        });
     }
 
     public PopupWindow createPopupWindow() {
@@ -554,6 +584,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             RelativeLayout.LayoutParams relaLayoutParams1 = (RelativeLayout.LayoutParams) topBaseLinearLayout.getLayoutParams();
             relaLayoutParams1.addRule(RelativeLayout.BELOW,belowId);
+        }else
+        {
+            lastBaseLinearLayout=belowBaseLinearLayout;
         }
 
         belowBaseLinearLayout.setAboveId(topId);
@@ -688,28 +721,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void deleteNoticeDialog(BaseLinearLayout child) {
 
-/*        if (child != null) {
-            child.drawForegroundRectangle();
-        }
-
-        if (editOptionsDialog != null) {
-            mainRelativeLayout.removeView(editOptionsDialog);
-            editOptionsDialog = null;
-        }*/
-
-        if (child != null) {
-            child.drawForegroundRectangle();
-            foregroundDrawn=null;
-        }
-
-        if(popupWindow!=null)
+        if(popupWindow!=null && popupWindow.isShowing())
         {
             popupWindow.dismiss();
+            child.drawForegroundRectangle();
         }
-
-/*
-        foregroundDrawn = null;
-*/
     }
 
     private void handleMapCreation(MapsWidget mapsWidget) {

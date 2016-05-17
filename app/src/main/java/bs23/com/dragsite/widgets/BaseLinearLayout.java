@@ -3,10 +3,8 @@ package bs23.com.dragsite.widgets;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -19,7 +17,7 @@ public abstract class BaseLinearLayout extends LinearLayout implements View.OnLo
     private int aboveId = 0;
     View bottomView;
     boolean isForegroundDrawable = false;
-    boolean isDrawn = false;
+    private boolean isDrawn = false;
 
     public BaseLinearLayout(Context context) {
         super(context);
@@ -53,7 +51,7 @@ public abstract class BaseLinearLayout extends LinearLayout implements View.OnLo
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
 
-        if (isDrawn) {
+        if (isForegroundDrawable && isDrawn()) {
             Paint strokePaint = new Paint();
             strokePaint.setARGB(0, 0, 0, 0);
             strokePaint.setStyle(Paint.Style.STROKE);
@@ -61,8 +59,8 @@ public abstract class BaseLinearLayout extends LinearLayout implements View.OnLo
             Rect r = canvas.getClipBounds();
             Rect outline = new Rect(1, 1, r.right - 1, r.bottom - 1);
             canvas.drawRect(outline, strokePaint);
-            isDrawn = false;
-        } else if (isForegroundDrawable && !isDrawn) {
+            setDrawn(false);
+        } else if (isForegroundDrawable && !isDrawn()) {
             Paint strokePaint = new Paint();
             strokePaint.setARGB(255, 255, 0, 0);
             strokePaint.setStyle(Paint.Style.STROKE);
@@ -70,14 +68,14 @@ public abstract class BaseLinearLayout extends LinearLayout implements View.OnLo
             Rect r = canvas.getClipBounds();
             Rect outline = new Rect(1, 1, r.right - 1, r.bottom - 1);
             canvas.drawRect(outline, strokePaint);
-            isDrawn = true;
+            setDrawn(true);
         }
         isForegroundDrawable = false;
     }
 
     public void drawForegroundRectangle() {
         isForegroundDrawable = true;
-        invalidate();
+        postInvalidate();
     }
 
     @Override
@@ -88,4 +86,11 @@ public abstract class BaseLinearLayout extends LinearLayout implements View.OnLo
         return true;
     }
 
+    public boolean isDrawn() {
+        return isDrawn;
+    }
+
+    public void setDrawn(boolean drawn) {
+        isDrawn = drawn;
+    }
 }

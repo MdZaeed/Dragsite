@@ -3,15 +3,15 @@ package bs23.com.dragsite;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.util.List;
 
+import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.ImageViewWidget;
 
 /**
@@ -24,6 +24,8 @@ public class JsonWriter {
     File file;
     String filename = "myfile";
     JSONArray jsonArray;
+    JSONObject jsonObject;
+    private static List<Integer> widgetSequence;
 
     public static JsonWriter getInstance(Context context) {
         if (jsonWriter == null) {
@@ -32,32 +34,29 @@ public class JsonWriter {
         return jsonWriter;
     }
 
-    private JsonWriter(Context context)
-    {
-        this.context=context;
+    private JsonWriter(Context context) {
+        this.context = context;
 
         file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES),filename);
+                Environment.DIRECTORY_PICTURES), filename);
 
-        jsonArray=new JSONArray();
+        jsonArray = new JSONArray();
+        jsonObject = new JSONObject();
+
     }
 
-    public void writeToFile(ImageViewWidget imageViewWidget)
-    {
+    public void writeToFile(int id, String key, String value) {
 /*
         Toast.makeText(context,message,Toast.LENGTH_LONG).show();
         Log.d("Path: " , file.getAbsolutePath());
 */
 
-        JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("alternateText",imageViewWidget.getAlternateText());
-            jsonObject.put("spacingAbove",imageViewWidget.getSpacingAbove());
+            JSONObject tempJsonObject = jsonObject.getJSONObject(String.valueOf(id));
+            tempJsonObject.put(key, value);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        jsonArray.put(jsonObject);
 
         printArray();
 
@@ -72,14 +71,68 @@ public class JsonWriter {
         }*/
     }
 
+    public void writeToFile(int id, String key, int value) {
+        try {
+            JSONObject tempJsonObject = jsonObject.getJSONObject(String.valueOf(id));
+            tempJsonObject.put(key, value);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeToFile(int id, String key, Double value) {
+        try {
+            JSONObject tempJsonObject = jsonObject.getJSONObject(String.valueOf(id));
+            tempJsonObject.put(key, value);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeToFile(int id, String key, Float value) {
+        try {
+            JSONObject tempJsonObject = jsonObject.getJSONObject(String.valueOf(id));
+            tempJsonObject.put(key, value);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createImageWidgetObject(ImageViewWidget imageViewWidget) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, imageViewWidget.getAlternateText());
+            jsonObject.put(JsonKeys.IMAGE_WIDGET_CAPTION, imageViewWidget.getCaptionString());
+
+            this.jsonObject.put(String.valueOf(imageViewWidget.getId()), jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        jsonArray.put(jsonObject);
+    }
+
     private void printArray() {
-        for (int i=0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject obj = jsonArray.getJSONObject(i);
-                Log.i("Json Object",obj.toString());
+                Log.i("Json Object", obj.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public List<Integer> getWidgetSequence() {
+        return widgetSequence;
+    }
+
+    public void setWidgetSequence(List<Integer> widgetSequence) {
+        this.widgetSequence = widgetSequence;
+
+        for(Integer integer: widgetSequence)
+        {
+            Log.i("Sequnce element", integer + "");
         }
     }
 }

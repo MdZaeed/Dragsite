@@ -296,8 +296,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                             });
                         }
+
+                        JsonWriter.getInstance(getApplicationContext()).setWidgetSequence(getSequence());
                     } else {
                         replaceNewElementsOfType(v, (BaseLinearLayout) view, event);
+                        JsonWriter.getInstance(getApplicationContext()).setWidgetSequence(getSequence());
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
@@ -320,20 +323,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void replaceNewElementsOfType(View v, BaseLinearLayout view, DragEvent event) {
-        if(v==view)
-        {
-            Toast.makeText(this,"Dropped On The Same Element",Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            setUpDragStartedViews(view);
+        if (v == view) {
+            Toast.makeText(this, "Dropped On The Same Element", Toast.LENGTH_LONG).show();
+        } else {
+            int id = view.getId();
             removeView(view);
-            addElementsInRelativeLayout((ViewGroup) v, view, event);
+            addElementsInRelativeLayout((ViewGroup) v, view, event, id);
             setLayoutParameters(view);
         }
     }
 
-    private void setUpDragStartedViews(BaseLinearLayout view) {
+/*    private void setUpDragStartedViews(BaseLinearLayout view) {
 
         BaseLinearLayout baseLinearLayout = null;
         int belowId = ((RelativeLayout.LayoutParams) view.getLayoutParams()).getRules()[RelativeLayout.BELOW];
@@ -350,11 +350,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             layoutParams.addRule(RelativeLayout.BELOW, belowId);
             baseLinearLayout1.setLayoutParams(layoutParams);
         }
-    }
+    }*/
 
-    private void addElementsInRelativeLayout(ViewGroup droppedOnLayout, BaseLinearLayout childToBeAdded, DragEvent dragEvent) {
+    private void addElementsInRelativeLayout(ViewGroup droppedOnLayout, BaseLinearLayout childToBeAdded, DragEvent dragEvent, int id) {
         if (droppedOnLayout instanceof RelativeLayout) {
-            childToBeAdded.setId(uniqueIdGenerator());
+            childToBeAdded.setId(id);
             if (lastBaseLinearLayout != null) {
                 setUpAboveLayoutParameters(lastBaseLinearLayout, childToBeAdded);
                 setUpNewChildParameters(lastBaseLinearLayout, 0, childToBeAdded);
@@ -371,7 +371,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (!isInLowerHalf(droppedOnLayout, dragEvent) && topLayoutId != 0) {
                 droppedOnLayout = (ViewGroup) findViewById(topLayoutId);
             }
-            childToBeAdded.setId(uniqueIdGenerator());
+
+            childToBeAdded.setId(id);
 
             clearBottomLayoutColor(droppedOnLayout);
 
@@ -460,46 +461,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void addNewElementsOfType(View v, BaseLinearLayout customLayout, DragEvent event) {
-        addElementsInRelativeLayout((ViewGroup) v, customLayout, event);
+        addElementsInRelativeLayout((ViewGroup) v, customLayout, event, uniqueIdGenerator());
         setLayoutParameters(customLayout);
         customLayout.addContents();
     }
 
     private void showNoticeDialog(final BaseLinearLayout child) {
 
-        if(popupWindow!=null && popupWindow.isShowing()) {
-            if(foregroundDrawn==child)
-            {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            if (foregroundDrawn == child) {
                 popupWindow.dismiss();
-            }else
-            {
+            } else {
                 deleteNoticeDialog(foregroundDrawn);
             }
         }
 
-        if(!child.isDrawn()) {
+        if (!child.isDrawn()) {
             child.drawForegroundRectangle();
-            foregroundDrawn=child;
+            foregroundDrawn = child;
         }
 
-        popupWindow=createPopupWindow();
-        Rect rect=new Rect();
+        popupWindow = createPopupWindow();
+        Rect rect = new Rect();
         mainRelativeLayout.getLocalVisibleRect(rect);
-        Rect ownRect=new Rect();
+        Rect ownRect = new Rect();
         child.getLocalVisibleRect(ownRect);
         popupWindow.setFocusable(false);
         popupWindow.setOutsideTouchable(false);
-        if(rect.contains(child.getLeft(),child.getTop()-80))
-        {
-            popupWindow.showAsDropDown(child,0,-child.getHeight()-80);
-        }
-        else if(rect.contains(child.getLeft(),child.getBottom()+80))
-        {
-            popupWindow.showAsDropDown(child,0,0);
-        }
-        else
-        {
-            popupWindow.showAsDropDown(child,0,-ownRect.height());
+        if (rect.contains(child.getLeft(), child.getTop() - 80)) {
+            popupWindow.showAsDropDown(child, 0, -child.getHeight() - 80);
+        } else if (rect.contains(child.getLeft(), child.getBottom() + 80)) {
+            popupWindow.showAsDropDown(child, 0, 0);
+        } else {
+            popupWindow.showAsDropDown(child, 0, -ownRect.height());
         }
 
         popupWindow.getContentView().findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
@@ -534,21 +528,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void removeView(BaseLinearLayout layoutToBeDeleted) {
         RelativeLayout.LayoutParams relaLayoutParams = (RelativeLayout.LayoutParams) layoutToBeDeleted.getLayoutParams();
-        final int belowId=relaLayoutParams.getRules()[RelativeLayout.BELOW];
+        final int belowId = relaLayoutParams.getRules()[RelativeLayout.BELOW];
 
-        final int topId=layoutToBeDeleted.getAboveId();
+        final int topId = layoutToBeDeleted.getAboveId();
 
-        BaseLinearLayout belowBaseLinearLayout=(BaseLinearLayout) this.findViewById(belowId);
+        BaseLinearLayout belowBaseLinearLayout = (BaseLinearLayout) this.findViewById(belowId);
 
-        if(topId!=0)
-        {
-            BaseLinearLayout topBaseLinearLayout=(BaseLinearLayout) this.findViewById(topId);
+        if (topId != 0) {
+            BaseLinearLayout topBaseLinearLayout = (BaseLinearLayout) this.findViewById(topId);
 
             RelativeLayout.LayoutParams relaLayoutParams1 = (RelativeLayout.LayoutParams) topBaseLinearLayout.getLayoutParams();
-            relaLayoutParams1.addRule(RelativeLayout.BELOW,belowId);
-        }else
-        {
-            lastBaseLinearLayout=belowBaseLinearLayout;
+            relaLayoutParams1.addRule(RelativeLayout.BELOW, belowId);
+        } else {
+            lastBaseLinearLayout = belowBaseLinearLayout;
         }
 
         belowBaseLinearLayout.setAboveId(topId);
@@ -597,29 +589,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             beginFragmentTransaction(buttonEditFragment);
         } else if (child instanceof SearchBoxWidget) {
             SearchBoxEditFragment searchBoxEditFragment = SearchBoxEditFragment.newInstance();
-            searchBoxEditFragment.setSearchBoxWidget((SearchBoxWidget)child);
+            searchBoxEditFragment.setSearchBoxWidget((SearchBoxWidget) child);
             beginFragmentTransaction(searchBoxEditFragment);
             fragmentList.add(searchBoxEditFragment);
-        }    else if (child instanceof HdVideoWidget) {
-            HdVideoEditFragment hdVideoEditFragment=HdVideoEditFragment.newInstance();
+        } else if (child instanceof HdVideoWidget) {
+            HdVideoEditFragment hdVideoEditFragment = HdVideoEditFragment.newInstance();
             beginFragmentTransaction(hdVideoEditFragment);
-        }    else if (child instanceof AudioWidget) {
-            AudioEditFragment audioEditFragment=AudioEditFragment.newInstance();
+        } else if (child instanceof AudioWidget) {
+            AudioEditFragment audioEditFragment = AudioEditFragment.newInstance();
             beginFragmentTransaction(audioEditFragment);
-        }    else if (child instanceof YoutubeWidget) {
-            YoutubeEditFragment youtubeEditFragment=YoutubeEditFragment.newInstance();
+        } else if (child instanceof YoutubeWidget) {
+            YoutubeEditFragment youtubeEditFragment = YoutubeEditFragment.newInstance();
             youtubeEditFragment.setYoutubeWidget((YoutubeWidget) child);
             beginFragmentTransaction(youtubeEditFragment);
             fragmentList.add(youtubeEditFragment);
-        }    else if (child instanceof FileWidget) {
-            FileEditFragment fileEditFragment=FileEditFragment.newInstance();
+        } else if (child instanceof FileWidget) {
+            FileEditFragment fileEditFragment = FileEditFragment.newInstance();
             beginFragmentTransaction(fileEditFragment);
         } else if (child instanceof BlockquoteWidget) {
             EditText editText = (EditText) child.findViewById(R.id.et_blockquote_text);
             TextView textView = (TextView) child.findViewById(R.id.tv_blockquote_text);
             setEditTextEdit(editText, textView);
-        }    else if (child instanceof SocialIconsWidget) {
-            SocialIconsEditFragment socialIconsEditFragment=SocialIconsEditFragment.newInstance();
+        } else if (child instanceof SocialIconsWidget) {
+            SocialIconsEditFragment socialIconsEditFragment = SocialIconsEditFragment.newInstance();
             beginFragmentTransaction(socialIconsEditFragment);
         } else if (child instanceof MapsWidget) {
             MapEditFragment mapEditFragment = MapEditFragment.newInstance();
@@ -646,13 +638,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText.setVisibility(View.VISIBLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                editText.setBackground(getResources().getDrawable(R.drawable.dark_blue_border_transparent_background,getTheme()));
-            }else
-            {
+                editText.setBackground(getResources().getDrawable(R.drawable.dark_blue_border_transparent_background, getTheme()));
+            } else {
                 editText.setBackground(getResources().getDrawable(R.drawable.dark_blue_border_transparent_background));
             }
-        }else
-        {
+        } else {
             editText.setBackgroundDrawable(getResources().getDrawable(R.drawable.dark_blue_border_transparent_background));
         }
 
@@ -670,7 +660,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void hideSOftKeyBoard() {
-        InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInputFromWindow(focusedEditText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
         focusedTextView.setText(focusedEditText.getText().toString());
@@ -683,8 +673,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void deleteNoticeDialog(BaseLinearLayout child) {
 
-        if(popupWindow!=null && popupWindow.isShowing())
-        {
+        if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
             child.drawForegroundRectangle();
         }
@@ -735,5 +724,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mapView.onPause();
         }
         super.onPause();
+    }
+
+    public List<Integer> getSequence() {
+        List<Integer> tempList = new ArrayList<>();
+
+        BaseLinearLayout tempBaseLinearLayout=(BaseLinearLayout) mainRelativeLayout.getChildAt(0);
+        tempList.add(tempBaseLinearLayout.getId());
+        while(tempBaseLinearLayout.getAboveId()!=0)
+        {
+            tempBaseLinearLayout= (BaseLinearLayout) findViewById(tempBaseLinearLayout.getAboveId());
+            tempList.add(tempBaseLinearLayout.getId());
+        }
+        return tempList;
     }
 }

@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import bs23.com.dragsite.JsonWriter;
 import bs23.com.dragsite.R;
 import bs23.com.dragsite.model.ImageSelectModel;
+import bs23.com.dragsite.utils.JsonKeys;
 
 /**
  * Created by BS-86 on 4/1/2016.
@@ -24,7 +25,7 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
     private int borderSize;
     private int borderColor;
     private String alternateText="Picture";
-    private String captionString;
+    private String captionString="";
     private ImageSelectModel image;
     private TextView textView;
     private ImageView imageView;
@@ -47,15 +48,14 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
         spacingBelow = dpToPx(0);
         spacingLeft = dpToPx(0);
         spacingRight = dpToPx(0);
-        setBorderSize(dpToPx(0));
-        setBorderColor(0);
+        borderSize=dpToPx(0);
+        borderColor=0;
         setMainView(this.findViewById(R.id.ll_image_widget));
-
-        captionString="";
-
 
         textView = (TextView) this.findViewById(R.id.tv_image_widget);
         imageView = (ImageView) this.findViewById(R.id.iv_image_widget);
+
+        JsonWriter.getInstance(context).createImageWidgetObject(this);
     }
 
     @Override
@@ -158,9 +158,7 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
     public void setAlternateText(String alternateText) {
         this.alternateText = alternateText;
 
-/*
-        JsonWriter.getInstance(getContext()).writeToFile(captionString);
-*/
+        JsonWriter.getInstance(getContext()).writeToFile(getId(), JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,alternateText);
     }
 
     public String getCaptionString() {
@@ -180,7 +178,7 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
 
         ((TextView)findViewById(R.id.tv_image_caption)).setText(captionString);
 
-        JsonWriter.getInstance(getContext()).writeToFile(this);
+        JsonWriter.getInstance(getContext()).writeToFile(getId(),JsonKeys.IMAGE_WIDGET_CAPTION,captionString);
 
     }
 

@@ -13,6 +13,7 @@ public class TitleViewWidget extends BaseLinearLayout {
 
     Context context;
     boolean isButtonPressedHere=false;
+    private String titleText="";
 
     public TitleViewWidget(Context context) {
         super(context);
@@ -25,5 +26,13 @@ public class TitleViewWidget extends BaseLinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
+    }
+
+    public String getTitleText() {
+        return titleText;
+    }
+
+    public void setTitleText(String titleText) {
+        this.titleText = titleText;
     }
 }

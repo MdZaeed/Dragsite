@@ -564,11 +564,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (child instanceof TitleViewWidget) {
             EditText editText = (EditText) child.findViewById(R.id.et_title);
             TextView textView = (TextView) child.findViewById(R.id.tv_title);
-            setEditTextEdit(editText, textView);
+            setEditTextEdit(editText, textView, (TitleViewWidget) child);
         } else if (child instanceof TextViewWidget) {
             EditText editText = (EditText) child.findViewById(R.id.et_text_widget);
             TextView textView = (TextView) child.findViewById(R.id.tv_text_widget);
-            setEditTextEdit(editText, textView);
+            setEditTextEdit(editText, textView,null);
         } else if (child instanceof ImageViewWidget) {
             ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
             imageEditFragment.setImageViewWidget((ImageViewWidget) child);
@@ -609,7 +609,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (child instanceof BlockquoteWidget) {
             EditText editText = (EditText) child.findViewById(R.id.et_blockquote_text);
             TextView textView = (TextView) child.findViewById(R.id.tv_blockquote_text);
-            setEditTextEdit(editText, textView);
+            setEditTextEdit(editText, textView,null);
         } else if (child instanceof SocialIconsWidget) {
             SocialIconsEditFragment socialIconsEditFragment = SocialIconsEditFragment.newInstance();
             beginFragmentTransaction(socialIconsEditFragment);
@@ -629,7 +629,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void setEditTextEdit(EditText editText, TextView textView) {
+    private void setEditTextEdit(EditText editText, TextView textView, final TitleViewWidget titleViewWidget) {
 
         focusedEditText = editText;
         focusedTextView = textView;
@@ -654,12 +654,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onSoftKeyboardHide() {
-                hideSOftKeyBoard();
+                hideSOftKeyBoard(titleViewWidget);
             }
         });
     }
 
-    private void hideSOftKeyBoard() {
+    private void hideSOftKeyBoard(TitleViewWidget titleViewWidget) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInputFromWindow(focusedEditText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
@@ -669,6 +669,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainRelativeLayout.requestFocus();
 
         mainRelativeLayout.removeSoftKeyboardLsner();
+
+        titleViewWidget.setTitleText(focusedTextView.getText().toString());
     }
 
     private void deleteNoticeDialog(BaseLinearLayout child) {

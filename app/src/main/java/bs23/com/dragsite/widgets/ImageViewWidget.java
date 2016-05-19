@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import bs23.com.dragsite.JsonWriter;
 import bs23.com.dragsite.R;
 import bs23.com.dragsite.model.ImageSelectModel;
 
@@ -156,6 +157,10 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
 
     public void setAlternateText(String alternateText) {
         this.alternateText = alternateText;
+
+/*
+        JsonWriter.getInstance(getContext()).writeToFile(captionString);
+*/
     }
 
     public String getCaptionString() {
@@ -174,6 +179,8 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
         }
 
         ((TextView)findViewById(R.id.tv_image_caption)).setText(captionString);
+
+        JsonWriter.getInstance(getContext()).writeToFile(this);
 
     }
 

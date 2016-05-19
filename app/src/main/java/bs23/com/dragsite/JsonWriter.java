@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.List;
 
+import Services.AsyncFileWriter;
 import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.ImageViewWidget;
 
@@ -21,10 +22,8 @@ public class JsonWriter {
 
     static JsonWriter jsonWriter;
     static Context context;
-    File file;
-    String filename = "myfile";
-    JSONArray jsonArray;
-    JSONObject jsonObject;
+    private static JSONArray jsonArray;
+    private static JSONObject jsonObject;
     private static List<Integer> widgetSequence;
 
     public static JsonWriter getInstance(Context context) {
@@ -37,12 +36,8 @@ public class JsonWriter {
     private JsonWriter(Context context) {
         this.context = context;
 
-        file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), filename);
-
         jsonArray = new JSONArray();
         jsonObject = new JSONObject();
-
     }
 
     public void writeToFile(int id, String key, String value) {
@@ -57,6 +52,8 @@ public class JsonWriter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        new AsyncFileWriter().execute(String.valueOf(jsonObject));
 
         printArray();
 
@@ -109,7 +106,11 @@ public class JsonWriter {
             e.printStackTrace();
         }
 
+        new AsyncFileWriter().execute(String.valueOf(jsonObject));
+
+/*
         jsonArray.put(jsonObject);
+*/
     }
 
     private void printArray() {
@@ -129,10 +130,24 @@ public class JsonWriter {
 
     public void setWidgetSequence(List<Integer> widgetSequence) {
         this.widgetSequence = widgetSequence;
+        jsonArray=new JSONArray();
 
         for(Integer integer: widgetSequence)
         {
+/*
             Log.i("Sequnce element", integer + "");
+*/
+            jsonArray.put(integer);
         }
+
+        try {
+            jsonObject.put(JsonKeys.WIDGET_IDS,jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.i("Json" , String.valueOf(jsonObject));
+
+        new AsyncFileWriter().execute(String.valueOf(jsonObject));
     }
 }

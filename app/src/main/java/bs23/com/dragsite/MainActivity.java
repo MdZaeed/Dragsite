@@ -2,17 +2,14 @@ package bs23.com.dragsite;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,6 +117,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainRelativeLayout.setOnDragListener(new MyDragListener());
 
         slidingUpPanelLayout.setTouchEnabled(false);
+
+/*
+        Log.i("Json R:",JsonReader.getInstance(this).readFromFile().toString());
+*/
+        List<BaseLinearLayout> baseLinearLayouts=JsonReader.getInstance(this).readFromFile();
+
+        for(BaseLinearLayout baseLinearLayout: baseLinearLayouts)
+        {
+            addNewElementsOfType(mainRelativeLayout,baseLinearLayout,null);
+            baseLinearLayout.setOnClickListener(new WidgetTouchHandler(baseLinearLayout));
+            JsonWriter.getInstance(getApplicationContext()).setWidgetSequence(getSequence());
+        }
     }
 
     private void setUpSlidingPane() {
@@ -288,13 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 addNewElementsOfType(v, customLayout, event);
                             }
 
-                            customLayout.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    hideBottomOptionMenu();
-                                    showNoticeDialog(customLayout);
-                                }
-                            });
+                            customLayout.setOnClickListener(new WidgetTouchHandler(customLayout));
                         }
 
                         JsonWriter.getInstance(getApplicationContext()).setWidgetSequence(getSequence());
@@ -320,6 +323,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
 
+    }
+
+    private class WidgetTouchHandler implements View.OnClickListener {
+
+        BaseLinearLayout baseLinearLayout;
+        public WidgetTouchHandler(BaseLinearLayout baseLinearLayout)
+        {
+            this.baseLinearLayout=baseLinearLayout;
+        }
+        @Override
+        public void onClick(View v) {
+            hideBottomOptionMenu();
+            showNoticeDialog(baseLinearLayout);
+        }
     }
 
     private void replaceNewElementsOfType(View v, BaseLinearLayout view, DragEvent event) {
@@ -509,6 +526,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 deleteNoticeDialog(child);
                 removeView(child);
+                JsonWriter.getInstance(getApplicationContext()).setWidgetSequence(getSequence());
             }
         });
     }

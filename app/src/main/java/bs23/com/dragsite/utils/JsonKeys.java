@@ -8,4 +8,6 @@ public class JsonKeys {
     public static final String IMAGE_WIDGET_CAPTION="caption";
     public static final String IMAGE_WIDGET_ALTERNATIVE_TEXT="altText";
     public static final String WIDGET_IDS="ids";
+    public static final String TITLE_WIDGET_TEXT="title";
+    public static final String WIDGET_TYPE="type";
 }

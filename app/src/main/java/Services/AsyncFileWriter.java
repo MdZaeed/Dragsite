@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 public class AsyncFileWriter extends AsyncTask<String, String, String> {
 
     File file;
-    String filename = "myfile";
+    public static final String filename = "myfile";
 
     @Override
     protected void onPreExecute() {

@@ -30,6 +30,7 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
     private TextView textView;
     private ImageView imageView;
     private String URL="";
+    public static final String TYPE="image";
 
     public ImageViewWidget(Context context) {
         super(context);

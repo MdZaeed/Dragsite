@@ -14,6 +14,7 @@ import java.util.List;
 import Services.AsyncFileWriter;
 import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.ImageViewWidget;
+import bs23.com.dragsite.widgets.TitleViewWidget;
 
 /**
  * Created by BS-86 on 5/17/2016.
@@ -100,6 +101,7 @@ public class JsonWriter {
         try {
             jsonObject.put(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, imageViewWidget.getAlternateText());
             jsonObject.put(JsonKeys.IMAGE_WIDGET_CAPTION, imageViewWidget.getCaptionString());
+            jsonObject.put(JsonKeys.WIDGET_TYPE, ImageViewWidget.TYPE);
 
             this.jsonObject.put(String.valueOf(imageViewWidget.getId()), jsonObject);
         } catch (JSONException e) {
@@ -111,6 +113,21 @@ public class JsonWriter {
 /*
         jsonArray.put(jsonObject);
 */
+    }
+
+    public void createTitleWidget(TitleViewWidget titleViewWidget)
+    {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(JsonKeys.TITLE_WIDGET_TEXT, titleViewWidget.getTitleText());
+            jsonObject.put(JsonKeys.WIDGET_TYPE, TitleViewWidget.TYPE);
+
+            this.jsonObject.put(String.valueOf(titleViewWidget.getId()), jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new AsyncFileWriter().execute(String.valueOf(jsonObject));
     }
 
     private void printArray() {

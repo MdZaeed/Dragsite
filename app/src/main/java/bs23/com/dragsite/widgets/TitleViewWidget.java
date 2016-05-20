@@ -6,7 +6,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import bs23.com.dragsite.JsonWriter;
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.utils.JsonKeys;
 
 
 public class TitleViewWidget extends BaseLinearLayout {
@@ -14,6 +16,7 @@ public class TitleViewWidget extends BaseLinearLayout {
     Context context;
     boolean isButtonPressedHere=false;
     private String titleText="";
+    public static final String TYPE="title";
 
     public TitleViewWidget(Context context) {
         super(context);
@@ -26,6 +29,8 @@ public class TitleViewWidget extends BaseLinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         addBottomVIew(context);
+
+        JsonWriter.getInstance(context).createTitleWidget(this);
     }
 
     public String getTitleText() {
@@ -34,5 +39,6 @@ public class TitleViewWidget extends BaseLinearLayout {
 
     public void setTitleText(String titleText) {
         this.titleText = titleText;
+        JsonWriter.getInstance(context).writeToFile(getId(), JsonKeys.TITLE_WIDGET_TEXT,titleText);
     }
 }

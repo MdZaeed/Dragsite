@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import bs23.com.dragsite.JsonWriter;
 import bs23.com.dragsite.R;
@@ -17,6 +18,8 @@ public class TitleViewWidget extends BaseLinearLayout {
     boolean isButtonPressedHere=false;
     private String titleText="";
     public static final String TYPE="title";
+    private String textSize=textSizes[1];
+    public static String[] textSizes={"Small","Medium","Large"};
 
     public TitleViewWidget(Context context) {
         super(context);
@@ -39,6 +42,16 @@ public class TitleViewWidget extends BaseLinearLayout {
 
     public void setTitleText(String titleText) {
         this.titleText = titleText;
+
+        ((TextView)this.findViewById(R.id.tv_title)).setText(titleText);
         JsonWriter.getInstance(context).writeToFile(getId(), JsonKeys.TITLE_WIDGET_TEXT,titleText);
+    }
+
+    public String getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(String textSize) {
+        this.textSize = textSize;
     }
 }

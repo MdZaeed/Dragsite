@@ -45,6 +45,7 @@ import bs23.com.dragsite.fragments.ImageEditFragment;
 import bs23.com.dragsite.fragments.MapEditFragment;
 import bs23.com.dragsite.fragments.SearchBoxEditFragment;
 import bs23.com.dragsite.fragments.SocialIconsEditFragment;
+import bs23.com.dragsite.fragments.TitleEditFragment;
 import bs23.com.dragsite.fragments.YoutubeEditFragment;
 import bs23.com.dragsite.model.ElementsModel;
 import bs23.com.dragsite.widgets.AudioWidget;
@@ -69,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
     ScrollView mainScrollView;
-    SoftKeyboardLsnedRelativeLayout mainRelativeLayout;
-    SlidingUpPanelLayout slidingUpPanelLayout;
+    public SoftKeyboardLsnedRelativeLayout mainRelativeLayout;
+    public SlidingUpPanelLayout slidingUpPanelLayout;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     WebElementsAdapter recommendedStoreAdapter;
@@ -180,6 +181,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onReady(View view) {
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
+    }
+
     public void showElementsAddDialog(View view) {
         if (getBottomPaneLinearLayout().getChildCount() != 0) {
             getBottomPaneLinearLayout().removeAllViews();
@@ -212,16 +223,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             getBottomPaneLinearLayout().removeAllViews();
         }
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-    }
-
-    @Override
-    public void onReady(View view) {
-        view.post(new Runnable() {
-            @Override
-            public void run() {
-                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-            }
-        });
     }
 
     public LinearLayout getBottomPaneLinearLayout() {
@@ -325,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private class WidgetTouchHandler implements View.OnClickListener {
+    public class WidgetTouchHandler implements View.OnClickListener {
 
         BaseLinearLayout baseLinearLayout;
         public WidgetTouchHandler(BaseLinearLayout baseLinearLayout)
@@ -580,9 +581,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (child instanceof TitleViewWidget) {
-            EditText editText = (EditText) child.findViewById(R.id.et_title);
+/*            EditText editText = (EditText) child.findViewById(R.id.et_title);
             TextView textView = (TextView) child.findViewById(R.id.tv_title);
-            setEditTextEdit(editText, textView, (TitleViewWidget) child);
+            setEditTextEdit(editText, textView, (TitleViewWidget) child);*/
+            TitleEditFragment titleEditFragment= TitleEditFragment.newInstance();
+            titleEditFragment.setTitleViewWidget((TitleViewWidget) child);
+            beginFragmentTransaction(titleEditFragment);
+            fragmentList.add(titleEditFragment);
         } else if (child instanceof TextViewWidget) {
             EditText editText = (EditText) child.findViewById(R.id.et_text_widget);
             TextView textView = (TextView) child.findViewById(R.id.tv_text_widget);
@@ -666,6 +671,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         editText.requestFocus();
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
         mainRelativeLayout.addSoftKeyboardLsner(new SoftKeyboardLsnedRelativeLayout.SoftKeyboardListenner() {

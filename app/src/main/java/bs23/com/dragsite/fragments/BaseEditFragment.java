@@ -51,10 +51,15 @@ public abstract class BaseEditFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).hideBottomOptionMenu();
+                onCloseButtonPressed();
             }
         });
     }
+
+    public void onCloseButtonPressed(){
+        ((MainActivity)getActivity()).hideBottomOptionMenu();
+    }
+
 
     public interface OnViewReady {
         void onReady(View view);

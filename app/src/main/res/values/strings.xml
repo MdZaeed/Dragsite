@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">DragSite</string>
-    <string name="google_maps_key" >
+    <string name="google_maps_key">
     AIzaSyDbskH9hmLHtj4CddXeB3NGOB7NXrtWhAg
     </string>
 
@@ -31,6 +31,12 @@
 
     <string-array name="youtube_video_margins">
         <item>None</item>
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+
+    <string-array name="text_sizes">
         <item>Small</item>
         <item>Medium</item>
         <item>Large</item>

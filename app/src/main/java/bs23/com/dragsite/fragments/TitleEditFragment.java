@@ -110,10 +110,8 @@ public class TitleEditFragment extends BaseEditFragment {
         editText.requestFocus();
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-/*
         ((MainActivity) getActivity()).slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-*/
-        inputMethodManager.showSoftInputFromInputMethod(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED);
+        inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
 
         ((MainActivity) getActivity()).mainRelativeLayout.addSoftKeyboardLsner(new SoftKeyboardLsnedRelativeLayout.SoftKeyboardListenner() {
 
@@ -137,14 +135,14 @@ public class TitleEditFragment extends BaseEditFragment {
 
         titleViewWidget.setTitleText(focusedTextView.getText().toString());
 
-/*        ((MainActivity) getActivity()).mainRelativeLayout.post(
+        ((MainActivity) getActivity()).mainScrollView.post(
                 new Runnable() {
                     @Override
                     public void run() {
                         ((MainActivity) getActivity()).slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                     }
                 }
-        );*/
+        );
     }
 
     public TitleViewWidget getTitleViewWidget() {

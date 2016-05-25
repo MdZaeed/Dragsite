@@ -69,7 +69,7 @@ import bs23.com.dragsite.widgets.YoutubeWidget;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, BaseEditFragment.OnViewReady {
     public android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
-    ScrollView mainScrollView;
+    public ScrollView mainScrollView;
     public SoftKeyboardLsnedRelativeLayout mainRelativeLayout;
     public SlidingUpPanelLayout slidingUpPanelLayout;
     RecyclerView recyclerView;
@@ -693,8 +693,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainRelativeLayout.requestFocus();
 
         mainRelativeLayout.removeSoftKeyboardLsner();
-
-        titleViewWidget.setTitleText(focusedTextView.getText().toString());
     }
 
     private void deleteNoticeDialog(BaseLinearLayout child) {

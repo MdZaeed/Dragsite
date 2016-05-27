@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.model.Style;
+import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.ImageViewWidget;
 
 /**
@@ -103,7 +105,11 @@ public class ImageEditFragment extends BaseEditFragment {
         captionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+/*
                 getImageViewWidget().setCaptionString(captionEditText.getText().toString());
+*/
+
+                ((MainActivity)getActivity()).changeStyle(new Style(getImageViewWidget().getId(), JsonKeys.IMAGE_WIDGET_CAPTION,captionEditText.getText().toString()));
                 return false;
             }
         });

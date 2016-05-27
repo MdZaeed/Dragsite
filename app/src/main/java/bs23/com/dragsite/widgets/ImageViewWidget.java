@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import bs23.com.dragsite.Interfaces.IStyleChanger;
 import bs23.com.dragsite.JsonWriter;
 import bs23.com.dragsite.R;
 import bs23.com.dragsite.model.ImageSelectModel;
@@ -17,7 +18,7 @@ import bs23.com.dragsite.utils.JsonKeys;
 /**
  * Created by BS-86 on 4/1/2016.
  */
-public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
+public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements IStyleChanger {
 
     Context context;
     private int spacingLeft;
@@ -209,6 +210,15 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds {
             this.URL = "http://" + URL;
         }else{
             this.URL = URL;
+        }
+    }
+
+    @Override
+    public void applyStyle(String attributeName, String attributeValue) {
+
+        if(attributeName.equals(JsonKeys.IMAGE_WIDGET_CAPTION))
+        {
+            setCaptionString(attributeValue);
         }
     }
 }

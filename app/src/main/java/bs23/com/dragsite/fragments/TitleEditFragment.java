@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,6 +25,8 @@ import java.util.Arrays;
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
 import bs23.com.dragsite.SoftKeyboardLsnedRelativeLayout;
+import bs23.com.dragsite.model.Style;
+import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.TitleViewWidget;
 
 /**
@@ -59,6 +63,25 @@ public class TitleEditFragment extends BaseEditFragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        final EditText editText = (EditText) view.findViewById(R.id.et_title);
+        editText.setText(titleViewWidget.getTitleText());
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                ((MainActivity)getActivity()).changeStyle(new Style(titleViewWidget.getId(), JsonKeys.TITLE_WIDGET_TEXT,editText.getText().toString()));
+                return false;
+            }
+        });
+
+        Button button=(Button) view.findViewById(R.id.habijabi);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("adas","sda");
+                ((MainActivity)getActivity()).changeStyle(new Style(titleViewWidget.getId(), JsonKeys.TITLE_WIDGET_TEXT,editText.getText().toString()));
             }
         });
 

@@ -33,6 +33,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import bs23.com.dragsite.Interfaces.IStyleChanger;
 import bs23.com.dragsite.adapter.WebElementsAdapter;
 import bs23.com.dragsite.fragments.AudioEditFragment;
 import bs23.com.dragsite.fragments.BaseEditFragment;
@@ -753,6 +754,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void changeStyle(Style... styleArgs)
     {
-
+        final IStyleChanger iStyleChanger= (IStyleChanger) findViewById(styleArgs[0].getWidgetId());
+        for(int i=0;i<styleArgs.length;i++)
+        {
+            iStyleChanger.applyStyle(styleArgs[i].getAttributeName(),styleArgs[i].getAttributeValue());
+        }
     }
 }

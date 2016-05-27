@@ -8,7 +8,6 @@ import android.content.Context;
 public abstract class BaseTextWidgets extends BaseLinearLayout {
 
     private String titleText="";
-    public static final String TYPE="title";
     private String textSize=textSizes[1];
     public static String[] textSizes={"Small","Medium","Large"};
 

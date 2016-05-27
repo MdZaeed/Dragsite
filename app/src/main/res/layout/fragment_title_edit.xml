@@ -39,6 +39,25 @@
             <View
                 style="@style/DividerStyle"/>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Text"
+                    style="@style/HoveringTextBoxStyle"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/habijabi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ASDa"
+                style="@style/SpecialButtonStyle"/>
+
         </LinearLayout>
     </ScrollView>
 

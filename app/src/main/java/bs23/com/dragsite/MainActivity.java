@@ -48,6 +48,7 @@ import bs23.com.dragsite.fragments.SocialIconsEditFragment;
 import bs23.com.dragsite.fragments.TitleEditFragment;
 import bs23.com.dragsite.fragments.YoutubeEditFragment;
 import bs23.com.dragsite.model.ElementsModel;
+import bs23.com.dragsite.model.Style;
 import bs23.com.dragsite.widgets.AudioWidget;
 import bs23.com.dragsite.widgets.BaseLinearLayout;
 import bs23.com.dragsite.widgets.BlockquoteWidget;
@@ -83,16 +84,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText focusedEditText;
     PopupWindow popupWindow;
 
-    /*
-    LatLng dhaka;
-*/
     MapView mapView;
     private int id = 99;
     Bundle savedInstanceState;
     MapsWidget currentMapsWidget;
-/*
-    private List<GoogleMap> maps;
-*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
 
-        //setting action bar
-
         Toolbar actionToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(actionToolbar);
-
-        //setting action bar ends
 
         mainRelativeLayout = (SoftKeyboardLsnedRelativeLayout) findViewById(R.id.rl_main);
         mainScrollView = (ScrollView) findViewById(R.id.sv_main);
@@ -119,9 +110,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         slidingUpPanelLayout.setTouchEnabled(false);
 
-/*
-        Log.i("Json R:",JsonReader.getInstance(this).readFromFile().toString());
-*/
         List<BaseLinearLayout> baseLinearLayouts=JsonReader.getInstance(this).readFromFile();
 
         for(BaseLinearLayout baseLinearLayout: baseLinearLayouts)
@@ -761,5 +749,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tempList.add(tempBaseLinearLayout.getId());
         }
         return tempList;
+    }
+
+    public void changeStyle(Style... styleArgs)
+    {
+
     }
 }

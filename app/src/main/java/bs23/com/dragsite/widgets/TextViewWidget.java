@@ -11,7 +11,6 @@ import bs23.com.dragsite.R;
 public class TextViewWidget extends BaseLinearLayout {
 
     Context context;
-    boolean isButtonPressedHere;
 
     public TextViewWidget(Context context) {
         super(context);

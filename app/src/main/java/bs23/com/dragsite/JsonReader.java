@@ -96,6 +96,7 @@ public class JsonReader {
                 }else if(tempJsonObject.get(JsonKeys.WIDGET_TYPE).equals(TitleViewWidget.TYPE))
                 {
                     TitleViewWidget titleViewWidget=new TitleViewWidget(context.getApplicationContext());
+                    titleViewWidget.setTitleText(tempJsonObject.getString(JsonKeys.TITLE_WIDGET_TEXT));
                     baseLinearLayouts.add(titleViewWidget);
                 }
             }

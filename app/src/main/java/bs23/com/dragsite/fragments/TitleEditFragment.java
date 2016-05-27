@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +23,7 @@ import java.util.Arrays;
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
 import bs23.com.dragsite.SoftKeyboardLsnedRelativeLayout;
-import bs23.com.dragsite.widgets.DividerWidget;
 import bs23.com.dragsite.widgets.TitleViewWidget;
-
-import static bs23.com.dragsite.MainActivity.*;
 
 /**
  * Created by BS-86 on 4/28/2016.
@@ -66,22 +62,9 @@ public class TitleEditFragment extends BaseEditFragment {
             }
         });
 
-        final EditText editText = (EditText) view.findViewById(R.id.et_title);
-        editText.setText(titleViewWidget.getTitleText());
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                titleViewWidget.setTitleText(editText.getText().toString());
-                return false;
-            }
-        });
-
         titleViewWidget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
-                Log.i("Second click","Clicked");
-*/
                 EditText editText = (EditText) titleViewWidget.findViewById(R.id.et_title);
                 TextView textView = (TextView) titleViewWidget.findViewById(R.id.tv_title);
                 setEditTextEdit(editText, textView, titleViewWidget);
@@ -133,7 +116,7 @@ public class TitleEditFragment extends BaseEditFragment {
 
         ((MainActivity) getActivity()).mainRelativeLayout.removeSoftKeyboardLsner();
 
-        titleViewWidget.setTitleText(focusedTextView.getText().toString());
+        titleViewWidget.setTitleTextAndUI(focusedTextView.getText().toString());
 
         ((MainActivity) getActivity()).mainScrollView.post(
                 new Runnable() {

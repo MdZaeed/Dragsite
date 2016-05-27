@@ -12,14 +12,9 @@ import bs23.com.dragsite.R;
 import bs23.com.dragsite.utils.JsonKeys;
 
 
-public class TitleViewWidget extends BaseLinearLayout {
+public class TitleViewWidget extends BaseTextWidgets {
 
     Context context;
-    boolean isButtonPressedHere=false;
-    private String titleText="";
-    public static final String TYPE="title";
-    private String textSize=textSizes[1];
-    public static String[] textSizes={"Small","Medium","Large"};
 
     public TitleViewWidget(Context context) {
         super(context);
@@ -33,25 +28,15 @@ public class TitleViewWidget extends BaseLinearLayout {
 
         addBottomVIew(context);
 
+        if(!getTitleText().equals("")) {
+            setTextOnWidget(getTitleText());
+        }
         JsonWriter.getInstance(context).createTitleWidget(this);
     }
 
-    public String getTitleText() {
-        return titleText;
-    }
-
-    public void setTitleText(String titleText) {
-        this.titleText = titleText;
-
+    @Override
+    protected void setTextOnWidget(String titleText) {
         ((TextView)this.findViewById(R.id.tv_title)).setText(titleText);
         JsonWriter.getInstance(context).writeToFile(getId(), JsonKeys.TITLE_WIDGET_TEXT,titleText);
-    }
-
-    public String getTextSize() {
-        return textSize;
-    }
-
-    public void setTextSize(String textSize) {
-        this.textSize = textSize;
     }
 }

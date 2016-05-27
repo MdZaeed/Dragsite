@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@android:color/holo_blue_dark">
+    android:orientation="vertical">
 
     <include layout="@layout/fragment_header" />
 
@@ -39,18 +38,6 @@
 
             <View
                 style="@style/DividerStyle"/>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/et_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Text"
-                    style="@style/HoveringTextBoxStyle"/>
-            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
     </ScrollView>

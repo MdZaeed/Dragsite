@@ -56,7 +56,9 @@ public class JsonWriter {
 
         new AsyncFileWriter().execute(String.valueOf(jsonObject));
 
+/*
         printArray();
+*/
 
 /*        FileOutputStream outputStream;
 
@@ -134,7 +136,9 @@ public class JsonWriter {
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject obj = jsonArray.getJSONObject(i);
+/*
                 Log.i("Json Object", obj.toString());
+*/
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -163,7 +167,9 @@ public class JsonWriter {
             e.printStackTrace();
         }
 
+/*
         Log.i("Json" , String.valueOf(jsonObject));
+*/
 
         new AsyncFileWriter().execute(String.valueOf(jsonObject));
     }

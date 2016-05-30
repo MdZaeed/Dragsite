@@ -28,8 +28,10 @@ public class ImageEditFragment extends BaseEditFragment {
     private EditText captionEditText;
     private Button linkButton;
 
-    public static ImageEditFragment newInstance() {
-        return new ImageEditFragment();
+    public static ImageEditFragment newInstance(Bundle styleBundle) {
+        ImageEditFragment imageEditFragment=new ImageEditFragment();
+        imageEditFragment.setArguments(styleBundle);
+        return imageEditFragment;
     }
 
     @Nullable
@@ -90,23 +92,27 @@ public class ImageEditFragment extends BaseEditFragment {
         advancedOptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageEditAdvancedFragment imageEditAdvancedFragment=ImageEditAdvancedFragment.newInstance();
-                imageEditAdvancedFragment.setFragmentManager1(getFragmentManager1());
+                Bundle bundle=new Bundle();
+                bundle.putInt(JsonKeys.WIDGET_IDS,getArguments().getInt(JsonKeys.WIDGET_IDS));
+                bundle.putString(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,getArguments().getString(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT));
+                ImageEditAdvancedFragment imageEditAdvancedFragment=ImageEditAdvancedFragment.newInstance(bundle);
+/*                imageEditAdvancedFragment.setFragmentManager1(getFragmentManager1());
                 getFragmentManager1().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
                         .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), imageEditAdvancedFragment)
                         .addToBackStack("null")
-                        .commit();
+                        .commit();*/
+                swapFragments(imageEditAdvancedFragment);
             }
         });
 
         captionEditText=(EditText) view.findViewById(R.id.et_image_caption);
-        captionEditText.setText(getImageViewWidget().getCaptionString());
+        captionEditText.setText(getArguments().getString(JsonKeys.IMAGE_WIDGET_CAPTION));
         captionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 /*
-                getImageViewWidget().setCaptionString(captionEditText.getText().toString());
+                getImageViewWidget().setCaptionStringAndUI(captionEditText.getText().toString());
 */
 
                 ((MainActivity)getActivity()).changeStyle(new StyleChange(getImageViewWidget().getId(), JsonKeys.IMAGE_WIDGET_CAPTION,captionEditText.getText().toString()));
@@ -119,12 +125,13 @@ public class ImageEditFragment extends BaseEditFragment {
             @Override
             public void onClick(View v) {
                 ImageEditLinkFragment imageEditLinkFragment=ImageEditLinkFragment.newInstance();
-                imageEditLinkFragment.setFragmentManager1(getFragmentManager1());
+/*                imageEditLinkFragment.setFragmentManager1(getFragmentManager1());
                 getFragmentManager1().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
                         .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), imageEditLinkFragment)
                         .addToBackStack("null")
-                        .commit();
+                        .commit();*/
+                swapFragments(imageEditLinkFragment);
             }
         });
     }

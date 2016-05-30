@@ -11,7 +11,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.model.StyleChange;
+import bs23.com.dragsite.utils.JsonKeys;
 
 /**
  * Created by BS-86 on 4/28/2016.
@@ -29,8 +32,10 @@ public class ImageEditAdvancedFragment extends BaseSecondLevelEditFragment {
         return inflater.inflate(R.layout.fragment_image_advanced, container, false);
     }
 
-    public static ImageEditAdvancedFragment newInstance() {
-        return new ImageEditAdvancedFragment();
+    public static ImageEditAdvancedFragment newInstance(Bundle args) {
+        ImageEditAdvancedFragment imageEditAdvancedFragment=new ImageEditAdvancedFragment();
+        imageEditAdvancedFragment.setArguments(args);
+        return imageEditAdvancedFragment;
     }
 
     @Override
@@ -72,12 +77,15 @@ public class ImageEditAdvancedFragment extends BaseSecondLevelEditFragment {
         });
 
         altEditText=(EditText) view.findViewById(R.id.et_alt_image_text);
-        altEditText.setText(imageEditFragment.getImageViewWidget().getAlternateText());
+        altEditText.setText(getArguments().getString(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT));
 
         altEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+/*
                 imageEditFragment.getImageViewWidget().setAlternateText(altEditText.getText().toString());
+*/
+                ((MainActivity) getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS),JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,altEditText.getText().toString()));
                 return false;
             }
         });

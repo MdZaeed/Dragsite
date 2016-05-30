@@ -23,7 +23,7 @@ Step 2: on the SpaceEditFragment, find the corcerned widget from the first edit 
 Step 3: Extend the BaseLinearLayoutWithSpacingNeeds class from your Widget class
 Step 4: set initial spacingAbove and Below and add the widget's layout in the mainView
 Step 4: give the spacing Above spinner and below spinner the ids sp_spacing_above and sp_spacing_below respectively
-Step 5: Dont forget to add the onclick action
+Step 5: Do not forget to add the onclick action
  */
 
 

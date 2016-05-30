@@ -63,7 +63,9 @@ public class JsonReader {
             }
             br.close();
 
+/*
             Log.i("Read",text.toString());
+*/
             jsonObject=new JSONObject(text.toString());
         }
         catch (IOException e) {
@@ -92,6 +94,10 @@ public class JsonReader {
                 if(tempJsonObject.get(JsonKeys.WIDGET_TYPE).equals(ImageViewWidget.TYPE))
                 {
                     ImageViewWidget imageViewWidget=new ImageViewWidget(context.getApplicationContext());
+/*
+                    imageViewWidget.setCaptionStringAndUI(JsonKeys.IMAGE_WIDGET_CAPTION);
+*/
+                    imageViewWidget.setCaptionString(tempJsonObject.getString(JsonKeys.IMAGE_WIDGET_CAPTION));
                     baseLinearLayouts.add(imageViewWidget);
                 }else if(tempJsonObject.get(JsonKeys.WIDGET_TYPE).equals(TitleViewWidget.TYPE))
                 {

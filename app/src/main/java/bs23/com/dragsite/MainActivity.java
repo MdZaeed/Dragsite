@@ -584,7 +584,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TextView textView = (TextView) child.findViewById(R.id.tv_text_widget);
             setEditTextEdit(editText, textView,null);
         } else if (child instanceof ImageViewWidget) {
-            ImageEditFragment imageEditFragment = ImageEditFragment.newInstance();
+            ImageEditFragment imageEditFragment = ImageEditFragment.newInstance(((ImageViewWidget)child).createStyleBundle());
             imageEditFragment.setImageViewWidget((ImageViewWidget) child);
             beginFragmentTransaction(imageEditFragment);
             fragmentList.add(imageEditFragment);

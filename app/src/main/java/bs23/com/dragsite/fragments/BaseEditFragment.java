@@ -80,4 +80,14 @@ public abstract class BaseEditFragment extends Fragment {
     public void setFragmentManager1(android.support.v4.app.FragmentManager fragmentManager1) {
         this.fragmentManager1 = fragmentManager1;
     }
+
+    protected void swapFragments(BaseEditFragment baseEditFragment)
+    {
+        baseEditFragment.setFragmentManager1(getFragmentManager1());
+        getFragmentManager1().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
+                .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), baseEditFragment)
+                .addToBackStack("null")
+                .commit();
+    }
 }

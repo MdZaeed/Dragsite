@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.model.Style;
+import bs23.com.dragsite.model.StyleChange;
 
 /**
  * Created by BrainStation on 4/15/16.
@@ -22,6 +24,7 @@ public abstract class BaseEditFragment extends Fragment {
 
     protected OnViewReady mCallback;
     Button backButton;
+    protected OnStyleChanged mStyleChanged;
 
     public BaseEditFragment() {
     }
@@ -31,6 +34,7 @@ public abstract class BaseEditFragment extends Fragment {
         super.onAttach(context);
         try {
             mCallback = (OnViewReady) getActivity();
+            mStyleChanged=(OnStyleChanged) getActivity();
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
@@ -63,6 +67,10 @@ public abstract class BaseEditFragment extends Fragment {
 
     public interface OnViewReady {
         void onReady(View view);
+    }
+
+    public interface OnStyleChanged{
+        void changeStyle(StyleChange... styleArgs);
     }
 
     public android.support.v4.app.FragmentManager getFragmentManager1() {

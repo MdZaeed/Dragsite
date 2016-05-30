@@ -1,15 +1,21 @@
 package bs23.com.dragsite.widgets;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import bs23.com.dragsite.Interfaces.IStyleChanger;
 import bs23.com.dragsite.JsonWriter;
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.model.Style;
 import bs23.com.dragsite.utils.JsonKeys;
 
 
@@ -51,4 +57,14 @@ public class TitleViewWidget extends BaseTextWidgets implements IStyleChanger {
             setTitleTextAndUI(attributeValue);
         }
     }
+
+    public Bundle createStyleBundle()
+    {
+        Bundle bundle=new Bundle();
+        bundle.putInt(JsonKeys.WIDGET_IDS,getId());
+        bundle.putString(JsonKeys.TITLE_WIDGET_TEXT,getTitleText());
+        bundle.putString("",getTextSize());
+        return bundle;
+    }
+
 }

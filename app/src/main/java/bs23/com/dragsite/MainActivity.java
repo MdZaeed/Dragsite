@@ -50,6 +50,7 @@ import bs23.com.dragsite.fragments.TitleEditFragment;
 import bs23.com.dragsite.fragments.YoutubeEditFragment;
 import bs23.com.dragsite.model.ElementsModel;
 import bs23.com.dragsite.model.Style;
+import bs23.com.dragsite.model.StyleChange;
 import bs23.com.dragsite.widgets.AudioWidget;
 import bs23.com.dragsite.widgets.BaseLinearLayout;
 import bs23.com.dragsite.widgets.BlockquoteWidget;
@@ -68,7 +69,7 @@ import bs23.com.dragsite.widgets.TextViewWidget;
 import bs23.com.dragsite.widgets.TitleViewWidget;
 import bs23.com.dragsite.widgets.YoutubeWidget;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, BaseEditFragment.OnViewReady {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, BaseEditFragment.OnViewReady, BaseEditFragment.OnStyleChanged {
     public android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
     public ScrollView mainScrollView;
@@ -221,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setBottomPaneLinearLayout(LinearLayout bottomPaneLinearLayout) {
         this.bottomPaneLinearLayout = bottomPaneLinearLayout;
     }
+
 
     class MyDragListener implements View.OnDragListener {
 
@@ -573,7 +575,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 /*            EditText editText = (EditText) child.findViewById(R.id.et_title);
             TextView textView = (TextView) child.findViewById(R.id.tv_title);
             setEditTextEdit(editText, textView, (TitleViewWidget) child);*/
-            TitleEditFragment titleEditFragment= TitleEditFragment.newInstance();
+            TitleEditFragment titleEditFragment= TitleEditFragment.newInstance(((TitleViewWidget) child).createStyleBundle());
             titleEditFragment.setTitleViewWidget((TitleViewWidget) child);
             beginFragmentTransaction(titleEditFragment);
             fragmentList.add(titleEditFragment);
@@ -752,7 +754,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return tempList;
     }
 
-    public void changeStyle(Style... styleArgs)
+    @Override
+    public void changeStyle(StyleChange... styleArgs)
     {
         final IStyleChanger iStyleChanger= (IStyleChanger) findViewById(styleArgs[0].getWidgetId());
         for(int i=0;i<styleArgs.length;i++)

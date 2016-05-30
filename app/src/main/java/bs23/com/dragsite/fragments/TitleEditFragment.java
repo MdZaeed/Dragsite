@@ -25,7 +25,7 @@ import java.util.Arrays;
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
 import bs23.com.dragsite.SoftKeyboardLsnedRelativeLayout;
-import bs23.com.dragsite.model.Style;
+import bs23.com.dragsite.model.StyleChange;
 import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.TitleViewWidget;
 
@@ -44,8 +44,10 @@ public class TitleEditFragment extends BaseEditFragment {
         return inflater.inflate(R.layout.fragment_title_edit, container, false);
     }
 
-    public static TitleEditFragment newInstance() {
-        return new TitleEditFragment();
+    public static TitleEditFragment newInstance(Bundle child) {
+        TitleEditFragment titleEditFragment=new TitleEditFragment();
+        titleEditFragment.setArguments(child);
+        return titleEditFragment;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class TitleEditFragment extends BaseEditFragment {
         super.onViewCreated(view, savedInstanceState);
 
         Spinner spinner = (Spinner) view.findViewById(R.id.sp_title_size);
-        spinner.setSelection(Arrays.asList(TitleViewWidget.textSizes).indexOf(titleViewWidget.getTextSize()));
+        spinner.setSelection(Arrays.asList(TitleViewWidget.textSizes).indexOf(getArguments().get("")));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -67,11 +69,11 @@ public class TitleEditFragment extends BaseEditFragment {
         });
 
         final EditText editText = (EditText) view.findViewById(R.id.et_title);
-        editText.setText(titleViewWidget.getTitleText());
+        editText.setText(getArguments().getString(JsonKeys.TITLE_WIDGET_TEXT));
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                ((MainActivity)getActivity()).changeStyle(new Style(titleViewWidget.getId(), JsonKeys.TITLE_WIDGET_TEXT,editText.getText().toString()));
+                mStyleChanged.changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS), JsonKeys.TITLE_WIDGET_TEXT,editText.getText().toString()));
                 return false;
             }
         });
@@ -81,7 +83,7 @@ public class TitleEditFragment extends BaseEditFragment {
             @Override
             public void onClick(View v) {
                 Log.i("adas","sda");
-                ((MainActivity)getActivity()).changeStyle(new Style(titleViewWidget.getId(), JsonKeys.TITLE_WIDGET_TEXT,editText.getText().toString()));
+                mStyleChanged.changeStyle(new StyleChange(titleViewWidget.getId(), JsonKeys.TITLE_WIDGET_TEXT,editText.getText().toString()));
             }
         });
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.model.Style;
+import bs23.com.dragsite.model.StyleChange;
 import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.ImageViewWidget;
 
@@ -109,7 +109,7 @@ public class ImageEditFragment extends BaseEditFragment {
                 getImageViewWidget().setCaptionString(captionEditText.getText().toString());
 */
 
-                ((MainActivity)getActivity()).changeStyle(new Style(getImageViewWidget().getId(), JsonKeys.IMAGE_WIDGET_CAPTION,captionEditText.getText().toString()));
+                ((MainActivity)getActivity()).changeStyle(new StyleChange(getImageViewWidget().getId(), JsonKeys.IMAGE_WIDGET_CAPTION,captionEditText.getText().toString()));
                 return false;
             }
         });

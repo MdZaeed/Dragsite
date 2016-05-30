@@ -3,13 +3,13 @@ package bs23.com.dragsite.model;
 /**
  * Created by BS-86 on 5/27/2016.
  */
-public class Style {
+public class StyleChange {
 
     private int widgetId;
     private String attributeName;
     private String attributeValue;
 
-    public Style(int widgetId, String attributeName, String attributeValue)
+    public StyleChange(int widgetId, String attributeName, String attributeValue)
     {
         this.setWidgetId(widgetId);
         this.setAttributeName(attributeName);

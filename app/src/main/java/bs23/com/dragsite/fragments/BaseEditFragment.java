@@ -113,9 +113,15 @@ public abstract class BaseEditFragment extends Fragment {
         iFragManagement.swapFragment(baseEditFragment);
     }
 
-    protected void styleChangeRequest(String styleName,String styleValue)
+    protected void styleChangeRequest(String styleName,String styleValue,int valueType)
     {
         ((MainActivity) getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS),styleName,styleValue));
-        getArguments().putString(styleName,styleValue);
+
+        if(valueType==0) {
+            getArguments().putString(styleName, styleValue);
+        }else if(valueType==1)
+        {
+            getArguments().putInt(styleName, Integer.parseInt(styleValue));
+        }
     }
 }

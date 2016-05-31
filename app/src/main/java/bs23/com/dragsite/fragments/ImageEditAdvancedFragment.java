@@ -88,7 +88,7 @@ public class ImageEditAdvancedFragment extends BaseSecondLevelEditFragment {
 /*
                 ((MainActivity) getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS),JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,altEditText.getText().toString()));
 */
-                styleChangeRequest(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,altEditText.getText().toString());
+                styleChangeRequest(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,altEditText.getText().toString(),0);
                 return false;
             }
         });

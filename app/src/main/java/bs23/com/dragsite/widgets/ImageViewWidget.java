@@ -22,8 +22,8 @@ import bs23.com.dragsite.utils.JsonKeys;
 public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements IStyleChanger {
 
     Context context;
-    private int spacingLeft;
-    private int spacingRight;
+    private int spacingLeft = 0;
+    private int spacingRight = 0;
     private int borderSize;
     private int borderColor;
     private String alternateText = "Picture";
@@ -57,42 +57,60 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements
         textView = (TextView) this.findViewById(R.id.tv_image_widget);
         imageView = (ImageView) this.findViewById(R.id.iv_image_widget);
 
-        setCaptionStringAndUI(getCaptionString());
-
         JsonWriter.getInstance(context).createImageWidgetObject(this);
+
+        setCaptionStringAndUI(getCaptionString());
+        setSpacingAboveAndUi(changePxToDp(spacingAbove));
+        setSpacingBelowAndUi(changePxToDp(spacingBelow));
+        setSpacingLeftAndUi(changePxToDp(spacingLeft));
+        setSpacingRightAndUi(changePxToDp(spacingRight));
+    }
+
+    public void setSpacingAbove(int spacingAbove) {
+        this.spacingAbove = spacingAbove;
+    }
+
+    public void setSpacingBelow(int spacingBelow) {
+        this.spacingBelow = spacingBelow;
+    }
+
+    public void setSpacingLeft(int spacingLeft) {
+        this.spacingLeft = spacingLeft;
+    }
+
+    public void setSpacingRight(int spacingRight) {
+        this.spacingRight = spacingRight;
     }
 
     @Override
-    public void setSpacingAbove(int spacingAbove) {
+    public void setSpacingAboveAndUi(int spacingAbove) {
         this.spacingAbove = dpToPx(spacingAbove);
         if (getMainView() == null) {
             setMainView(this.findViewById(R.id.view_divider));
         }
 
         getMainView().setPadding(getSpacingLeft(), spacingAbove, getSpacingRight(), this.spacingBelow);
+
+        JsonWriter.getInstance(getContext()).writeToFile(getId(), JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_ABOVE, this.spacingAbove);
     }
 
     @Override
-    public void setSpacingBelow(int spacingBelow) {
+    public void setSpacingBelowAndUi(int spacingBelow) {
         this.spacingBelow = dpToPx(spacingBelow);
         if (getMainView() == null) {
             setMainView(this.findViewById(R.id.view_divider));
         }
 
-/*
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) getMainView().getLayoutParams();
-        layoutParams.setMargins(0, spacingAbove, 0, this.spacingBelow);
-        getMainView().setLayoutParams(layoutParams);
-*/
-
         getMainView().setPadding(getSpacingLeft(), spacingAbove, getSpacingRight(), this.spacingBelow);
+
+        JsonWriter.getInstance(getContext()).writeToFile(getId(), JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_BELOW, this.spacingBelow);
     }
 
     public int getSpacingLeft() {
         return changePxToDp(spacingLeft);
     }
 
-    public void setSpacingLeft(int spacingLeft) {
+    public void setSpacingLeftAndUi(int spacingLeft) {
         this.spacingLeft = dpToPx(spacingLeft);
         if (getMainView() == null) {
             setMainView(this.findViewById(R.id.view_divider));
@@ -105,13 +123,15 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements
 */
 
         getMainView().setPadding(getSpacingLeft(), spacingAbove, getSpacingRight(), spacingBelow);
+
+        JsonWriter.getInstance(getContext()).writeToFile(getId(), JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_LEFT, this.spacingLeft);
     }
 
     public int getSpacingRight() {
         return changePxToDp(spacingRight);
     }
 
-    public void setSpacingRight(int spacingRight) {
+    public void setSpacingRightAndUi(int spacingRight) {
         this.spacingRight = dpToPx(spacingRight);
         if (getMainView() == null) {
             setMainView(this.findViewById(R.id.view_divider));
@@ -124,6 +144,8 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements
 */
 
         getMainView().setPadding(getSpacingLeft(), spacingAbove, getSpacingRight(), spacingBelow);
+
+        JsonWriter.getInstance(getContext()).writeToFile(getId(), JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_RIGHT, this.spacingRight);
     }
 
     public int getBorderSize() {
@@ -221,10 +243,16 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements
 
         if (attributeName.equals(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION)) {
             setCaptionStringAndUI(attributeValue);
-        }
-        else if(attributeName.equals(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT))
-        {
+        } else if (attributeName.equals(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT)) {
             setAlternateText(attributeValue);
+        } else if (attributeName.equals(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_ABOVE)) {
+            setSpacingAboveAndUi(Integer.parseInt(attributeValue));
+        } else if (attributeName.equals(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_BELOW)) {
+            setSpacingBelowAndUi(Integer.parseInt(attributeValue));
+        } else if (attributeName.equals(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_LEFT)) {
+            setSpacingLeftAndUi(Integer.parseInt(attributeValue));
+        } else if (attributeName.equals(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_RIGHT)) {
+            setSpacingRightAndUi(Integer.parseInt(attributeValue));
         }
     }
 
@@ -233,6 +261,10 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements
         bundle.putInt(JsonKeys.WIDGET_IDS, getId());
         bundle.putString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION, getCaptionString());
         bundle.putString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, getAlternateText());
+        bundle.putInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_ABOVE, getSpacingAbove());
+        bundle.putInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_BELOW, getSpacingBelow());
+        bundle.putInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_LEFT, getSpacingLeft());
+        bundle.putInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_RIGHT, getSpacingRight());
         return bundle;
     }
 }

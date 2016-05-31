@@ -111,7 +111,7 @@ public class YoutubeWidget extends BaseLinearLayoutWithSpacingNeeds {
         return spacingAbove;
     }
 
-    public void setSpacingAbove(String spacingAbove) {
+    public void setSpacingAboveAndUi(String spacingAbove) {
         this.spacingAbove = spacingAbove;
     }
 
@@ -119,7 +119,7 @@ public class YoutubeWidget extends BaseLinearLayoutWithSpacingNeeds {
         return spacingBelow;
     }
 
-    public void setSpacingBelow(String spacingBelow) {
+    public void setSpacingBelowAndUi(String spacingBelow) {
         this.spacingBelow = spacingBelow;
     }*/
 
@@ -144,7 +144,7 @@ public class YoutubeWidget extends BaseLinearLayoutWithSpacingNeeds {
         return changePxToDp(spacingAbove);
     }
 
-    public void setSpacingAbove(int spacingAbove) {
+    public void setSpacingAboveAndUi(int spacingAbove) {
         this.spacingAbove = dpToPx(spacingAbove);
 
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) this.getLayoutParams();
@@ -156,7 +156,7 @@ public class YoutubeWidget extends BaseLinearLayoutWithSpacingNeeds {
         return changePxToDp(spacingBelow);
     }
 
-    public void setSpacingBelow(int spacingBelow) {
+    public void setSpacingBelowAndUi(int spacingBelow) {
         this.spacingBelow = dpToPx(spacingBelow);
 
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) this.getLayoutParams();

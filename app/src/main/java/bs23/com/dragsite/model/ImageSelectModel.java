@@ -10,8 +10,6 @@ public class ImageSelectModel {
     private File file;
     private boolean isSelected;
     public int VIEW_TYPE;
-    private String caption="";
-    private String link="";
 
     public ImageSelectModel(File file,boolean isSelected,int VIEW_TYPE)
     {
@@ -34,25 +32,5 @@ public class ImageSelectModel {
 
     public void setSelected(boolean selected) {
         this.isSelected = selected;
-    }
-
-    public String getCaption() {
-        return caption;
-    }
-
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        if (!link.equals("")) {
-            this.link = "http://" + link;
-        }else{
-            this.link = link;
-        }
     }
 }

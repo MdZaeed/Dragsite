@@ -77,13 +77,20 @@ public class ImageEditFragment extends BaseEditFragment {
         spacingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageEditSpacingFragment imageEditSpacingFragment=ImageEditSpacingFragment.newInstance();
-                imageEditSpacingFragment.setFragmentManager1(getFragmentManager1());
+                Bundle bundle=new Bundle();
+                bundle.putInt(JsonKeys.WIDGET_IDS,getArguments().getInt(JsonKeys.WIDGET_IDS));
+                bundle.putInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_ABOVE,getArguments().getInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_ABOVE));
+                bundle.putInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_BELOW,getArguments().getInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_BELOW));
+                bundle.putInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_LEFT,getArguments().getInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_LEFT));
+                bundle.putInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_RIGHT,getArguments().getInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_RIGHT));
+                ImageEditSpacingFragment imageEditSpacingFragment=ImageEditSpacingFragment.newInstance(bundle);
+/*                imageEditSpacingFragment.setFragmentManager1(getFragmentManager1());
                 getFragmentManager1().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
                         .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), imageEditSpacingFragment)
                         .addToBackStack("null")
-                        .commit();
+                        .commit();*/
+                swapFragments(imageEditSpacingFragment);
             }
         });
 

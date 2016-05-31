@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.model.StyleChange;
+import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.BaseLinearLayoutWithSpacingNeeds;
 
 /**
@@ -32,7 +35,7 @@ public abstract class BaseSpacingFragmentForSecondLevel extends BaseSecondLevelE
     Spinner spacingAboveSpinner;
     Spinner spacingBelowSpinner;
     BaseLinearLayoutWithSpacingNeeds ownWidget;
-    private int perCategoryDifference=5;
+    private int perCategoryDifference = 5;
 
     @Nullable
     @Override
@@ -42,16 +45,23 @@ public abstract class BaseSpacingFragmentForSecondLevel extends BaseSecondLevelE
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        spacingAboveSpinner=(Spinner) view.findViewById(R.id.sp_spacing_above);
-        spacingBelowSpinner=(Spinner) view.findViewById(R.id.sp_spacing_below);
+        spacingAboveSpinner = (Spinner) view.findViewById(R.id.sp_spacing_above);
+        spacingBelowSpinner = (Spinner) view.findViewById(R.id.sp_spacing_below);
 
-        spacingAboveSpinner.setSelection((ownWidget.getSpacingAbove()/ getPerCategoryDifference()));
-        spacingBelowSpinner.setSelection((ownWidget.getSpacingBelow()/ getPerCategoryDifference()));
+        spacingAboveSpinner.setSelection((getArguments().getInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_ABOVE) / getPerCategoryDifference()));
+        spacingBelowSpinner.setSelection((getArguments().getInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_BELOW) / getPerCategoryDifference()));
 
         spacingAboveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ownWidget.setSpacingAbove(position* getPerCategoryDifference());
+/*
+                ownWidget.setSpacingAboveAndUi(position* getPerCategoryDifference());
+*/
+/*
+                ((MainActivity) getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS),JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_ABOVE,position*getPerCategoryDifference()+""));
+*/
+                styleChangeRequest(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_ABOVE, position * getPerCategoryDifference() + "",1);
+
             }
 
             @Override
@@ -63,7 +73,13 @@ public abstract class BaseSpacingFragmentForSecondLevel extends BaseSecondLevelE
         spacingBelowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ownWidget.setSpacingBelow(position* getPerCategoryDifference());
+/*
+                ownWidget.setSpacingBelowAndUi(position* getPerCategoryDifference());
+*/
+/*
+                ((MainActivity) getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS),JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_BELOW,position*getPerCategoryDifference()+""));
+*/
+                styleChangeRequest(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_BELOW, position * getPerCategoryDifference() + "",1);
             }
 
             @Override

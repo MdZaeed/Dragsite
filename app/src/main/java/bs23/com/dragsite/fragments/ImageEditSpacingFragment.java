@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
+import bs23.com.dragsite.model.StyleChange;
+import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.ImageViewWidget;
 
 /**
@@ -26,28 +29,36 @@ public class ImageEditSpacingFragment extends BaseSpacingFragmentForSecondLevel 
         return inflater.inflate(R.layout.fragment_image_spacing, container, false);
     }
 
-    public static ImageEditSpacingFragment newInstance() {
-        return new ImageEditSpacingFragment();
+    public static ImageEditSpacingFragment newInstance(Bundle bundle) {
+        ImageEditSpacingFragment imageEditSpacingFragment = new ImageEditSpacingFragment();
+        imageEditSpacingFragment.setArguments(bundle);
+        return imageEditSpacingFragment;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        imageEditFragment=(ImageEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
+        imageEditFragment = (ImageEditFragment) getFragmentManager1().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
 
-        ownWidget=imageEditFragment.getImageViewWidget();
+        ownWidget = imageEditFragment.getImageViewWidget();
 
         super.onViewCreated(view, savedInstanceState);
 
-        spacingLeftSpinner=(Spinner) view.findViewById(R.id.sp_spacing_left);
-        spacingRightSpinner=(Spinner) view.findViewById(R.id.sp_spacing_right);
+        spacingLeftSpinner = (Spinner) view.findViewById(R.id.sp_spacing_left);
+        spacingRightSpinner = (Spinner) view.findViewById(R.id.sp_spacing_right);
 
-        spacingRightSpinner.setSelection((((ImageViewWidget)ownWidget).getSpacingRight()/ getPerCategoryDifference()));
-        spacingLeftSpinner.setSelection((((ImageViewWidget)ownWidget).getSpacingLeft()/ getPerCategoryDifference()));
+        spacingRightSpinner.setSelection((getArguments().getInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_RIGHT) / getPerCategoryDifference()));
+        spacingLeftSpinner.setSelection((getArguments().getInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_LEFT) / getPerCategoryDifference()));
 
         spacingLeftSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ((ImageViewWidget)ownWidget).setSpacingLeft(position* getPerCategoryDifference());
+/*
+                ((ImageViewWidget)ownWidget).setSpacingLeftAndUi(position* getPerCategoryDifference());
+*/
+/*
+                ((MainActivity) getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS),JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_LEFT,position*getPerCategoryDifference()+""));
+*/
+                styleChangeRequest(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_LEFT, position * getPerCategoryDifference() + "",1);
             }
 
             @Override
@@ -59,7 +70,13 @@ public class ImageEditSpacingFragment extends BaseSpacingFragmentForSecondLevel 
         spacingRightSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ((ImageViewWidget)ownWidget).setSpacingRight(position* getPerCategoryDifference());
+/*
+                ((ImageViewWidget)ownWidget).setSpacingRightAndUi(position* getPerCategoryDifference());
+*/
+/*
+                ((MainActivity) getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS),JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_RIGHT,position*getPerCategoryDifference()+""));
+*/
+                styleChangeRequest(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_RIGHT, position * getPerCategoryDifference() + "",1);
             }
 
             @Override
@@ -78,9 +95,9 @@ public class ImageEditSpacingFragment extends BaseSpacingFragmentForSecondLevel 
         spacingAboveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                youtubeEditFragment.getYoutubeWidget().setSpacingAbove(position*perCategoryDifference);
+                youtubeEditFragment.getYoutubeWidget().setSpacingAboveAndUi(position*perCategoryDifference);
 *//*
-                ownWidget.getYoutubeWidget().setSpacingAbove(spacingList.get(position));
+                ownWidget.getYoutubeWidget().setSpacingAboveAndUi(spacingList.get(position));
 *//*
             }
 
@@ -93,9 +110,9 @@ public class ImageEditSpacingFragment extends BaseSpacingFragmentForSecondLevel 
         spacingBelowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                youtubeEditFragment.getYoutubeWidget().setSpacingBelow(position*perCategoryDifference);
+                youtubeEditFragment.getYoutubeWidget().setSpacingBelowAndUi(position*perCategoryDifference);
 *//*
-                ownWidget.getYoutubeWidget().setSpacingBelow(spacingList.get(position));
+                ownWidget.getYoutubeWidget().setSpacingBelowAndUi(spacingList.get(position));
 *//*
             }
 

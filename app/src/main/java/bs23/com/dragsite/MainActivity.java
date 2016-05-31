@@ -784,7 +784,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (String key: bundle.keySet())
         {
             if(!key.equals(JsonKeys.WIDGET_IDS)) {
-                baseEditFragment.getArguments().putString(key, bundle.getString(key));
+                if (bundle.get(key) instanceof String) {
+                    baseEditFragment.getArguments().putString(key, bundle.getString(key));
+                } else if (bundle.get(key) instanceof Integer)
+                {
+                    baseEditFragment.getArguments().putInt(key, bundle.getInt(key));
+                }
             }
         }
 

@@ -98,6 +98,10 @@ public class JsonReader {
                     imageViewWidget.setCaptionStringAndUI(JsonKeys.IMAGE_WIDGET_CAPTION);
 */
                     imageViewWidget.setCaptionString(tempJsonObject.getString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION));
+                    imageViewWidget.setSpacingAbove(tempJsonObject.getInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_ABOVE));
+                    imageViewWidget.setSpacingBelow(tempJsonObject.getInt(JsonKeys.CommonKeys.IMAGE_WIDGET_SPACING_BELOW));
+                    imageViewWidget.setSpacingLeft(tempJsonObject.getInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_LEFT));
+                    imageViewWidget.setSpacingRight(tempJsonObject.getInt(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_SPACING_RIGHT));
                     baseLinearLayouts.add(imageViewWidget);
                 }else if(tempJsonObject.get(JsonKeys.WIDGET_TYPE).equals(TitleViewWidget.TYPE))
                 {

@@ -56,9 +56,6 @@ public class JsonWriter {
 
         new AsyncFileWriter().execute(String.valueOf(jsonObject));
 
-/*
-        printArray();
-*/
 
 /*        FileOutputStream outputStream;
 
@@ -78,6 +75,8 @@ public class JsonWriter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        new AsyncFileWriter().execute(String.valueOf(jsonObject));
     }
 
     public void writeToFile(int id, String key, Double value) {
@@ -104,7 +103,6 @@ public class JsonWriter {
             jsonObject.put(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, imageViewWidget.getAlternateText());
             jsonObject.put(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION, imageViewWidget.getCaptionString());
             jsonObject.put(JsonKeys.WIDGET_TYPE, ImageViewWidget.TYPE);
-
             this.jsonObject.put(String.valueOf(imageViewWidget.getId()), jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();

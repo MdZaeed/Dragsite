@@ -38,7 +38,7 @@ public abstract class BaseSpacingFragmentForFirstLevel extends BaseEditFragment 
         spacingAboveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ownWidget.setSpacingAbove(position* getPerCategoryDifference());
+                ownWidget.setSpacingAboveAndUi(position* getPerCategoryDifference());
             }
 
             @Override
@@ -50,7 +50,7 @@ public abstract class BaseSpacingFragmentForFirstLevel extends BaseEditFragment 
         spacingBelowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ownWidget.setSpacingBelow(position* getPerCategoryDifference());
+                ownWidget.setSpacingBelowAndUi(position* getPerCategoryDifference());
             }
 
             @Override

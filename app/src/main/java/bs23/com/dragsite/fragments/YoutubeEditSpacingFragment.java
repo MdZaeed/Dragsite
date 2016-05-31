@@ -43,9 +43,9 @@ public class YoutubeEditSpacingFragment extends BaseSpacingFragmentForSecondLeve
         spacingAboveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                youtubeEditFragment.getYoutubeWidget().setSpacingAbove(position*perCategoryDifference);
+                youtubeEditFragment.getYoutubeWidget().setSpacingAboveAndUi(position*perCategoryDifference);
 *//*
-                ownWidget.getYoutubeWidget().setSpacingAbove(spacingList.get(position));
+                ownWidget.getYoutubeWidget().setSpacingAboveAndUi(spacingList.get(position));
 *//*
             }
 
@@ -58,9 +58,9 @@ public class YoutubeEditSpacingFragment extends BaseSpacingFragmentForSecondLeve
         spacingBelowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                youtubeEditFragment.getYoutubeWidget().setSpacingBelow(position*perCategoryDifference);
+                youtubeEditFragment.getYoutubeWidget().setSpacingBelowAndUi(position*perCategoryDifference);
 *//*
-                ownWidget.getYoutubeWidget().setSpacingBelow(spacingList.get(position));
+                ownWidget.getYoutubeWidget().setSpacingBelowAndUi(spacingList.get(position));
 *//*
             }
 

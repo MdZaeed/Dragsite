@@ -43,7 +43,7 @@ public abstract class BaseLinearLayoutWithSpacingNeeds extends BaseLinearLayout 
         return changePxToDp(spacingAbove);
     }
 
-    public void setSpacingAbove(int spacingAbove) {
+    public void setSpacingAboveAndUi(int spacingAbove) {
         this.spacingAbove = dpToPx(spacingAbove);
         if (getMainView() == null) {
             setMainView(this.findViewById(R.id.view_divider));
@@ -61,7 +61,7 @@ public abstract class BaseLinearLayoutWithSpacingNeeds extends BaseLinearLayout 
         return changePxToDp(spacingBelow);
     }
 
-    public void setSpacingBelow(int spacingBelow) {
+    public void setSpacingBelowAndUi(int spacingBelow) {
         this.spacingBelow = dpToPx(spacingBelow);
         if (getMainView() == null) {
             setMainView(this.findViewById(R.id.view_divider));

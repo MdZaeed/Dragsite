@@ -26,7 +26,6 @@ public class ImageEditFragment extends BaseEditFragment {
     private ImageViewWidget imageViewWidget;
     private String additionMood="ADD IMAGE";
     private EditText captionEditText;
-    private Button linkButton;
 
     public static ImageEditFragment newInstance(Bundle styleBundle) {
         ImageEditFragment imageEditFragment=new ImageEditFragment();
@@ -94,7 +93,7 @@ public class ImageEditFragment extends BaseEditFragment {
             public void onClick(View v) {
                 Bundle bundle=new Bundle();
                 bundle.putInt(JsonKeys.WIDGET_IDS,getArguments().getInt(JsonKeys.WIDGET_IDS));
-                bundle.putString(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,getArguments().getString(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT));
+                bundle.putString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,getArguments().getString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT));
                 ImageEditAdvancedFragment imageEditAdvancedFragment=ImageEditAdvancedFragment.newInstance(bundle);
 /*                imageEditAdvancedFragment.setFragmentManager1(getFragmentManager1());
                 getFragmentManager1().beginTransaction()
@@ -107,7 +106,7 @@ public class ImageEditFragment extends BaseEditFragment {
         });
 
         captionEditText=(EditText) view.findViewById(R.id.et_image_caption);
-        captionEditText.setText(getArguments().getString(JsonKeys.IMAGE_WIDGET_CAPTION));
+        captionEditText.setText(getArguments().getString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION));
         captionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -115,12 +114,12 @@ public class ImageEditFragment extends BaseEditFragment {
                 getImageViewWidget().setCaptionStringAndUI(captionEditText.getText().toString());
 */
 
-                ((MainActivity)getActivity()).changeStyle(new StyleChange(getImageViewWidget().getId(), JsonKeys.IMAGE_WIDGET_CAPTION,captionEditText.getText().toString()));
+                ((MainActivity)getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS), JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION,captionEditText.getText().toString()));
                 return false;
             }
         });
 
-        linkButton=(Button) view.findViewById(R.id.btn_image_link);
+        Button linkButton = (Button) view.findViewById(R.id.btn_image_link);
         linkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

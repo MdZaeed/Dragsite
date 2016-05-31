@@ -101,8 +101,8 @@ public class JsonWriter {
     public void createImageWidgetObject(ImageViewWidget imageViewWidget) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, imageViewWidget.getAlternateText());
-            jsonObject.put(JsonKeys.IMAGE_WIDGET_CAPTION, imageViewWidget.getCaptionString());
+            jsonObject.put(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, imageViewWidget.getAlternateText());
+            jsonObject.put(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION, imageViewWidget.getCaptionString());
             jsonObject.put(JsonKeys.WIDGET_TYPE, ImageViewWidget.TYPE);
 
             this.jsonObject.put(String.valueOf(imageViewWidget.getId()), jsonObject);

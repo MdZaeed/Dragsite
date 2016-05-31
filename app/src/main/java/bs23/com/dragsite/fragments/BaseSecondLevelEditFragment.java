@@ -29,7 +29,11 @@ public abstract class BaseSecondLevelEditFragment extends BaseEditFragment {
 
     protected void backButtonClick()
     {
-        getFragmentManager1().popBackStack();
+        /*getFragmentManager1().popBackStack();*/
+
+        if(iFragManagement!=null) {
+            iFragManagement.onFragmentDestroy(getArguments());
+        }
     }
 
 }

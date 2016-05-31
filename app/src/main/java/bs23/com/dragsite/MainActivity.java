@@ -51,6 +51,7 @@ import bs23.com.dragsite.fragments.YoutubeEditFragment;
 import bs23.com.dragsite.model.ElementsModel;
 import bs23.com.dragsite.model.Style;
 import bs23.com.dragsite.model.StyleChange;
+import bs23.com.dragsite.utils.JsonKeys;
 import bs23.com.dragsite.widgets.AudioWidget;
 import bs23.com.dragsite.widgets.BaseLinearLayout;
 import bs23.com.dragsite.widgets.BlockquoteWidget;
@@ -69,7 +70,10 @@ import bs23.com.dragsite.widgets.TextViewWidget;
 import bs23.com.dragsite.widgets.TitleViewWidget;
 import bs23.com.dragsite.widgets.YoutubeWidget;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, BaseEditFragment.OnViewReady, BaseEditFragment.OnStyleChanged {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback,
+        BaseEditFragment.OnViewReady,
+        BaseEditFragment.OnStyleChanged,
+        BaseEditFragment.IFragManagement{
     public android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
     public ScrollView mainScrollView;
@@ -222,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setBottomPaneLinearLayout(LinearLayout bottomPaneLinearLayout) {
         this.bottomPaneLinearLayout = bottomPaneLinearLayout;
     }
-
 
     class MyDragListener implements View.OnDragListener {
 
@@ -762,5 +765,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             iStyleChanger.applyStyle(styleArgs[i].getAttributeName(),styleArgs[i].getAttributeValue());
         }
+    }
+
+    @Override
+    public void swapFragment(BaseEditFragment baseEditFragment) {
+        baseEditFragment.setFragmentManager1(getSupportFragmentManager());
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
+                .replace(getBottomPaneLinearLayout().getId(), baseEditFragment)
+                .addToBackStack("null")
+                .commit();
+    }
+
+    @Override
+    public void onFragmentDestroy(Bundle bundle) {
+        BaseEditFragment baseEditFragment= (BaseEditFragment) getSupportFragmentManager().findFragmentByTag(BaseEditFragment.FRAGMENT_NAME);
+
+        for (String key: bundle.keySet())
+        {
+            if(!key.equals(JsonKeys.WIDGET_IDS)) {
+                baseEditFragment.getArguments().putString(key, bundle.getString(key));
+            }
+        }
+
+        getSupportFragmentManager().popBackStack();
     }
 }

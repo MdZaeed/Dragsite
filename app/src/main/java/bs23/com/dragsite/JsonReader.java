@@ -97,7 +97,7 @@ public class JsonReader {
 /*
                     imageViewWidget.setCaptionStringAndUI(JsonKeys.IMAGE_WIDGET_CAPTION);
 */
-                    imageViewWidget.setCaptionString(tempJsonObject.getString(JsonKeys.IMAGE_WIDGET_CAPTION));
+                    imageViewWidget.setCaptionString(tempJsonObject.getString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION));
                     baseLinearLayouts.add(imageViewWidget);
                 }else if(tempJsonObject.get(JsonKeys.WIDGET_TYPE).equals(TitleViewWidget.TYPE))
                 {

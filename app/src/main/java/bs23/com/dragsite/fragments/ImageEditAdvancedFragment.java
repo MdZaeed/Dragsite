@@ -77,7 +77,7 @@ public class ImageEditAdvancedFragment extends BaseSecondLevelEditFragment {
         });
 
         altEditText=(EditText) view.findViewById(R.id.et_alt_image_text);
-        altEditText.setText(getArguments().getString(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT));
+        altEditText.setText(getArguments().getString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT));
 
         altEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -85,7 +85,10 @@ public class ImageEditAdvancedFragment extends BaseSecondLevelEditFragment {
 /*
                 imageEditFragment.getImageViewWidget().setAlternateText(altEditText.getText().toString());
 */
+/*
                 ((MainActivity) getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS),JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,altEditText.getText().toString()));
+*/
+                styleChangeRequest(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT,altEditText.getText().toString());
                 return false;
             }
         });

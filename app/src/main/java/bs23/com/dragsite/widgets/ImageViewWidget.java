@@ -161,7 +161,7 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements
     private void setAlternateText(String alternateText) {
         this.alternateText = alternateText;
 
-        JsonWriter.getInstance(getContext()).writeToFile(getId(), JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, alternateText);
+        JsonWriter.getInstance(getContext()).writeToFile(getId(), JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, alternateText);
     }
 
     public String getCaptionString() {
@@ -183,7 +183,7 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements
 
         ((TextView) findViewById(R.id.tv_image_caption)).setText(captionString);
 
-        JsonWriter.getInstance(getContext()).writeToFile(getId(), JsonKeys.IMAGE_WIDGET_CAPTION, captionString);
+        JsonWriter.getInstance(getContext()).writeToFile(getId(), JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION, captionString);
 
     }
 
@@ -219,10 +219,10 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements
     @Override
     public void applyStyle(String attributeName, String attributeValue) {
 
-        if (attributeName.equals(JsonKeys.IMAGE_WIDGET_CAPTION)) {
+        if (attributeName.equals(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION)) {
             setCaptionStringAndUI(attributeValue);
         }
-        else if(attributeName.equals(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT))
+        else if(attributeName.equals(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT))
         {
             setAlternateText(attributeValue);
         }
@@ -231,8 +231,8 @@ public class ImageViewWidget extends BaseLinearLayoutWithSpacingNeeds implements
     public Bundle createStyleBundle() {
         Bundle bundle = new Bundle();
         bundle.putInt(JsonKeys.WIDGET_IDS, getId());
-        bundle.putString(JsonKeys.IMAGE_WIDGET_CAPTION, getCaptionString());
-        bundle.putString(JsonKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, getAlternateText());
+        bundle.putString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_CAPTION, getCaptionString());
+        bundle.putString(JsonKeys.ImageWidgetKeys.IMAGE_WIDGET_ALTERNATIVE_TEXT, getAlternateText());
         return bundle;
     }
 }

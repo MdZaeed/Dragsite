@@ -11,8 +11,8 @@ import android.widget.Button;
 
 import bs23.com.dragsite.MainActivity;
 import bs23.com.dragsite.R;
-import bs23.com.dragsite.model.Style;
 import bs23.com.dragsite.model.StyleChange;
+import bs23.com.dragsite.utils.JsonKeys;
 
 /**
  * Created by BrainStation on 4/15/16.
@@ -25,6 +25,7 @@ public abstract class BaseEditFragment extends Fragment {
     protected OnViewReady mCallback;
     Button backButton;
     protected OnStyleChanged mStyleChanged;
+    protected IFragManagement iFragManagement;
 
     public BaseEditFragment() {
     }
@@ -35,6 +36,7 @@ public abstract class BaseEditFragment extends Fragment {
         try {
             mCallback = (OnViewReady) getActivity();
             mStyleChanged=(OnStyleChanged) getActivity();
+            iFragManagement=(IFragManagement) getActivity();
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
@@ -73,6 +75,11 @@ public abstract class BaseEditFragment extends Fragment {
         void changeStyle(StyleChange... styleArgs);
     }
 
+    public interface IFragManagement {
+        void swapFragment(BaseEditFragment baseEditFragment);
+        void onFragmentDestroy(Bundle bundle);
+    }
+
     public android.support.v4.app.FragmentManager getFragmentManager1() {
         return fragmentManager1;
     }
@@ -81,7 +88,7 @@ public abstract class BaseEditFragment extends Fragment {
         this.fragmentManager1 = fragmentManager1;
     }
 
-    protected void swapFragments(BaseEditFragment baseEditFragment)
+/*    protected void swapFragments(BaseEditFragment baseEditFragment)
     {
         baseEditFragment.setFragmentManager1(getFragmentManager1());
         getFragmentManager1().beginTransaction()
@@ -89,5 +96,26 @@ public abstract class BaseEditFragment extends Fragment {
                 .replace(((MainActivity)getActivity()).getBottomPaneLinearLayout().getId(), baseEditFragment)
                 .addToBackStack("null")
                 .commit();
+    }*/
+
+/*    protected void swapFragments(BaseEditFragment baseEditFragment)
+    {
+        baseEditFragment.setFragmentManager1(getFragmentManager1());
+        getChildFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, 0,android.R.anim.slide_in_left,0)
+                .add(baseEditFragment,null)
+                .addToBackStack("null")
+                .commit();
+    }*/
+
+    protected void swapFragments(BaseEditFragment baseEditFragment)
+    {
+        iFragManagement.swapFragment(baseEditFragment);
+    }
+
+    protected void styleChangeRequest(String styleName,String styleValue)
+    {
+        ((MainActivity) getActivity()).changeStyle(new StyleChange(getArguments().getInt(JsonKeys.WIDGET_IDS),styleName,styleValue));
+        getArguments().putString(styleName,styleValue);
     }
 }
